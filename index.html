@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía Interactiva de IA | GrupoO2</title>
+    <title>Guía IA en Entornos Empresariales | GrupoO2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Corporate Calm -->
-    <!-- Application Structure Plan: Se ha diseñado una aplicación de página única con una barra de navegación lateral fija para un acceso no lineal al contenido. La estructura se divide en secciones temáticas interactivas: "Inicio" (bienvenida), "¿Qué es la IA?" (fundamentos), "Ejemplos Prácticos" (con tarjetas clickeables que revelan detalles), "✨ Tu Asistente de Prompts IA ✨" (nueva sección LLM para generar prompts específicos), "Uso Responsable" (dividido en políticas y buenas prácticas con elementos visuales) y un "Quiz Interactivo" para reforzar el aprendizaje. Esta arquitectura se eligió porque convierte la lectura pasiva en una exploración activa, permitiendo a los usuarios de GrupoO2, especialmente a los no técnicos, aprender a su propio ritmo y enfocarse en las áreas de mayor interés, mejorando así la retención y el compromiso. La nueva sección de asistente de prompts refuerza la guía práctica. -->
-    <!-- Visualization & Content Choices: La información del informe se ha reestructurado para una experiencia interactiva. Los "Ejemplos Prácticos" (Meta: Organizar/Comparar) usan tarjetas HTML/Tailwind con JS para mostrar/ocultar contenido, lo que facilita la comparación "Sin IA" vs "Con IA". Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) se presentan como una cuadrícula de tarjetas para una fácil asimilación visual. Se ha añadido un gráfico de barras con Chart.js (Meta: Informar/Comparar) para visualizar el "Impacto Potencial de la IA", transformando conceptos abstractos en datos visuales. La nueva sección "✨ Tu Asistente de Prompts IA ✨" (Meta: Informar/Engage) utiliza una llamada a la API de Gemini (gemini-2.0-flash) para generar prompts dinámicamente, mostrando el poder de la IA de forma directa. Finalmente, se creó un "Quiz Interactivo" (Meta: Engagement/Evaluación) con JS para una autoevaluación lúdica. Estas elecciones priorizan la interacción y la claridad visual para un público no especializado, con la adición de una característica LLM para la aplicación práctica. -->
+    <!-- Application Structure Plan: La aplicación es una SPA con una navegación lateral fija para un acceso directo a las "diapositivas". La estructura se divide lógicamente en: "Inicio" (bienvenida), "¿Qué es la IA?" (conceptos básicos), "IA en Acción" (ejemplos prácticos interactivos con detalles de tareas de oficina como Excel y no-code), "Beneficios", "Uso Responsable" (políticas interactivas y buenas prácticas), y "Próximos Pasos". Esta arquitectura permite una experiencia de "presentación" no lineal, donde el usuario puede explorar a su ritmo, enfocándose en lo relevante para él y facilitando la comprensión de conceptos complejos para un público no técnico. La interactividad de las tarjetas y el gráfico mejora la retención. -->
+    <!-- Visualization & Content Choices: Se utilizan tarjetas HTML/Tailwind con JavaScript para los "Ejemplos Prácticos" (Meta: Organizar/Informar/Comparar), permitiendo mostrar "Antes vs. Después" con un clic, lo que es ideal para la audiencia no técnica. Esto incluye ejemplos específicos de oficina (Excel, no-code, fórmulas). Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) se presentan con "flip cards" HTML/CSS/JS, que revelan detalles al pasar el ratón, ofreciendo información concisa y visualmente atractiva. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) para ilustrar los "Beneficios" de la IA, transformando ideas abstractas en datos tangibles. Los "Puntos de Reflexión" se insertan como texto en las secciones para sugerir interacciones durante una presentación en vivo. NO se usan gráficos SVG ni la librería Mermaid JS. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -74,18 +74,6 @@
                 height: 350px;
             }
         }
-        .quiz-option.selected {
-            border-color: #0ea5e9; /* sky-500 */
-            box-shadow: 0 0 0 2px #0ea5e9;
-        }
-        .quiz-option.correct {
-            background-color: #dcfce7; /* green-100 */
-            border-color: #22c55e; /* green-500 */
-        }
-        .quiz-option.incorrect {
-            background-color: #fee2e2; /* red-100 */
-            border-color: #ef4444; /* red-500 */
-        }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
@@ -104,20 +92,17 @@
             <a href="#que-es-ia" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">🧠</span> ¿Qué es la IA?
             </a>
-            <a href="#ejemplos" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">💡</span> Ejemplos Prácticos
-            </a>
-            <a href="#generador-prompts" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">✨</span> Asistente de Prompts
-            </a>
-            <a href="#responsable" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">🛡️</span> Uso Responsable
+            <a href="#ia-en-accion" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">💡</span> IA en Acción
             </a>
             <a href="#beneficios" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">📈</span> Beneficios
             </a>
-            <a href="#quiz" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">❓</span> Quiz Interactivo
+            <a href="#responsabilidad" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🛡️</span> Responsabilidad
+            </a>
+            <a href="#proximos-pasos" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🚀</span> Próximos Pasos
             </a>
         </nav>
         <div class="mt-auto pt-8 text-center text-xs text-slate-400">
@@ -136,98 +121,101 @@
         
         <section id="inicio" class="main-content">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">Bienvenido a la Guía Interactiva de IA</h2>
-                <p class="text-lg text-slate-600 mb-6">Esta es una herramienta diseñada para todo el equipo de GrupoO2. Nuestro objetivo es simple: desmitificar la Inteligencia Artificial y mostrarte cómo puedes usarla de forma sencilla y responsable para potenciar tu trabajo diario. No necesitas ser un experto en informática para aprovecharla. ¡Explora las secciones y descubre el potencial de la IA!</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div class="bg-slate-100 p-6 rounded-xl">
-                        <h3 class="font-bold text-xl mb-2 text-slate-800">¿Qué aprenderás aquí?</h3>
-                        <ul class="list-disc list-inside space-y-2 text-slate-600">
-                            <li>Qué es la IA y por qué es relevante para nosotros.</li>
-                            <li>Ejemplos prácticos que puedes aplicar hoy mismo.</li>
-                            <li>Las políticas clave para un uso seguro y ético.</li>
-                            <li>Los beneficios directos para tu productividad.</li>
-                        </ul>
-                    </div>
-                    <div class="bg-slate-100 p-6 rounded-xl">
-                         <h3 class="font-bold text-xl mb-3 text-slate-800">Impacto Potencial de la IA</h3>
-                         <div class="chart-container">
-                            <canvas id="impactoChart"></canvas>
-                         </div>
-                    </div>
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">IA en tu Día a Día: Herramientas para el Futuro en GrupoO2</h2>
+                <p class="text-lg text-slate-600 mb-6">Esta guía interactiva está diseñada para ti, el equipo de GrupoO2. Queremos mostrarte cómo la Inteligencia Artificial, que quizás antes te parecía compleja, es en realidad una herramienta práctica y útil para mejorar tus tareas diarias y hacer nuestro trabajo más eficiente. ¡Prepárate para descubrir cómo la IA puede convertirse en tu nueva aliada!</p>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Qué tarea rutinaria de tu día a día te gustaría que fuera más sencilla o rápida?</p>
                 </div>
             </div>
         </section>
 
         <section id="que-es-ia" class="main-content hidden">
              <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">🧠 ¿Qué es la Inteligencia Artificial?</h2>
-                <p class="text-lg text-slate-600 mb-6">Esta sección te introduce a los conceptos básicos de la IA. Aquí entenderás qué es, cómo funciona a un nivel simple y por qué es una herramienta tan poderosa para nuestro trabajo en GrupoO2. La idea es que veas a la IA no como algo complejo, sino como un asistente digital inteligente a tu disposición.</p>
-                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200">
-                    <p class="text-xl text-center text-sky-800">En pocas palabras, la IA es un conjunto de programas de computadora que pueden <strong>aprender, razonar y realizar tareas</strong> que normalmente requieren inteligencia humana.</p>
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🧠 ¿Qué es la Inteligencia Artificial? Desmitificando el Concepto</h2>
+                <p class="text-lg text-slate-600 mb-6">En esta sección, vamos a entender de forma sencilla qué es la IA y por qué es tan relevante hoy. No te preocupes por la jerga técnica; la IA es, en esencia, un asistente inteligente diseñado para ayudarnos a realizar tareas de manera más eficiente. Su propósito es potenciar nuestras capacidades, no reemplazarnos.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-5xl">🤖</span>
+                        <div>
+                            <h3 class="font-bold text-xl text-slate-800">IA: Tu Asistente Digital</h3>
+                            <p class="text-slate-600">Es un programa que puede aprender, razonar y realizar tareas que requieren inteligencia humana.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-5xl">⏰</span>
+                        <div>
+                            <h3 class="font-bold text-xl text-slate-800">¿Por qué hablamos de IA ahora?</h3>
+                            <p class="text-slate-600">La tecnología ha avanzado mucho, haciendo la IA más accesible y útil para optimizar nuestro trabajo diario.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                    <div class="bg-slate-100 p-4 rounded-xl">
-                        <p class="text-4xl mb-2">✍️</p>
-                        <h3 class="font-semibold text-slate-700">Redactar textos</h3>
-                    </div>
-                     <div class="bg-slate-100 p-4 rounded-xl">
-                        <p class="text-4xl mb-2">📋</p>
-                        <h3 class="font-semibold text-slate-700">Resumir documentos</h3>
-                    </div>
-                     <div class="bg-slate-100 p-4 rounded-xl">
-                        <p class="text-4xl mb-2">💡</p>
-                        <h3 class="font-semibold text-slate-700">Generar ideas</h3>
-                    </div>
-                     <div class="bg-slate-100 p-4 rounded-xl">
-                        <p class="text-4xl mb-2">🗓️</p>
-                        <h3 class="font-semibold text-slate-700">Organizar tareas</h3>
-                    </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Consideras que la IA es más una ayuda o una amenaza en el trabajo?</p>
                 </div>
             </div>
         </section>
 
-        <section id="ejemplos" class="main-content hidden">
+        <section id="ia-en-accion" class="main-content hidden">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">💡 Ejemplos Prácticos</h2>
-                <p class="text-lg text-slate-600 mb-8">La mejor forma de entender la IA es viéndola en acción. En esta sección, encontrarás ejemplos concretos de cómo puedes usar estas herramientas en tu día a día, sin importar tu rol. Haz clic en cada tarjeta para descubrir cómo la IA puede transformar una tarea común, comparando el "antes" y el "después".</p>
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">💡 La IA en Acción: Aplicaciones Prácticas en el Negocio</h2>
+                <p class="text-lg text-slate-600 mb-8">Aquí te mostramos ejemplos concretos y tangibles de cómo la IA puede usarse hoy en GrupoO2 para mejorar tu día a día en la oficina. Haz clic en cada tarjeta para ver cómo la IA te ayuda.</p>
                 <div id="examples-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 </div>
-                 <div id="example-details" class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-200 hidden"></div>
-            </div>
-        </section>
-
-        <section id="generador-prompts" class="main-content hidden">
-            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">✨ Tu Asistente de Prompts IA ✨</h2>
-                <p class="text-lg text-slate-600 mb-8">¿Quieres obtener mejores resultados de la Inteligencia Artificial? ¡La clave está en cómo le preguntas! En esta sección, puedes introducir una tarea general y nuestro asistente de IA (impulsado por Gemini) te ayudará a generar prompts más específicos, claros y efectivos. ¡Verás cómo una buena pregunta puede hacer la diferencia!</p>
-                
-                <div class="mb-6">
-                    <label for="prompt-input" class="block text-lg font-medium text-slate-700 mb-2">Describe la tarea que quieres que la IA te ayude a realizar (Ej: "escribir un correo de agradecimiento", "resumir un artículo técnico"):</label>
-                    <textarea id="prompt-input" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all" rows="4" placeholder="Ej: Redactar un reporte de ventas mensual"></textarea>
-                </div>
-                
-                <button id="generate-prompts-btn" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-lg transition-colors text-lg w-full md:w-auto shadow-md">
-                    Generar Prompts ✨
-                </button>
-
-                <div id="loading-indicator" class="mt-4 text-center text-slate-500 hidden">
-                    Cargando ideas... por favor espera.
-                </div>
-
-                <div id="prompts-output" class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-200 hidden">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">Prompts Sugeridos:</h3>
-                    <div id="output-content" class="text-slate-700 leading-relaxed"></div>
-                </div>
-                <div id="error-message" class="mt-4 p-3 bg-red-100 border border-red-300 text-red-800 rounded-lg hidden">
-                    Hubo un error al generar los prompts. Por favor, inténtalo de nuevo.
+                <div id="example-details" class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-200 hidden"></div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: De estos ejemplos, ¿cuál te parece más útil para tu rol?</p>
                 </div>
             </div>
         </section>
 
-        <section id="responsable" class="main-content hidden">
+        <section id="beneficios" class="main-content hidden">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">🛡️ Uso Responsable: Políticas y Prácticas</h2>
-                <p class="text-lg text-slate-600 mb-8">La IA es poderosa, y un gran poder conlleva una gran responsabilidad. Esta sección es la más importante de la guía. Aquí aprenderás las "reglas de oro" para usar la IA de forma segura, ética y protegiendo la información de GrupoO2 y nuestros clientes. Familiarízate con estas políticas para convertirte en un usuario de IA ejemplar.</p>
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">📈 Beneficios y Oportunidades: ¿Cómo nos Potencia la IA?</h2>
+                <p class="text-lg text-slate-600 mb-8">La IA no solo simplifica tareas, sino que nos abre un mundo de oportunidades. Nos permite ser más eficientes, productivos y nos libera para enfocarnos en tareas que realmente agregan valor y requieren nuestra creatividad humana.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 border border-green-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">⏱️</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-green-800">Mayor Eficiencia y Productividad</h3>
+                            <p class="text-green-700">Automatiza lo repetitivo, optimiza tu tiempo.</p>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">✨</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-800">Enfoque en Tareas de Alto Valor</h3>
+                            <p class="text-blue-700">Libera tu mente para la estrategia y la innovación.</p>
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">💡</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-purple-800">Fomento de la Creatividad e Innovación</h3>
+                            <p class="text-purple-700">Nuevas ideas y soluciones con el apoyo de la IA.</p>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">🎓</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-yellow-700">Desarrollo Profesional</h3>
+                            <p class="text-yellow-700">Adquiere habilidades relevantes para el futuro del trabajo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container mt-10">
+                    <canvas id="impactoBeneficiosChart"></canvas>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Cómo crees que la IA podría ayudarte a sentirte más realizado en tu trabajo?</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="responsabilidad" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🛡️ Nuestra Responsabilidad: Uso Ético y Seguro de la IA</h2>
+                <p class="text-lg text-slate-600 mb-8">La IA es una herramienta poderosa y, como tal, requiere un uso responsable. En GrupoO2, la gobernanza de la IA significa asegurarnos de que la usemos de forma segura, ética y efectiva, protegiendo nuestra información y la de nuestros clientes. ¡Tu compromiso es clave!</p>
                 
                 <h3 class="text-2xl font-bold text-slate-800 mb-4">Políticas Clave de Uso</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -235,12 +223,12 @@
                         <div class="card-flip-inner">
                             <div class="card-front bg-red-100 border-2 border-red-300 p-6 flex flex-col items-center justify-center text-center">
                                 <p class="text-5xl mb-3">🔒</p>
-                                <h4 class="text-xl font-bold text-red-800">No a la Info. Confidencial</h4>
+                                <h4 class="text-xl font-bold text-red-800">Privacidad de Datos</h4>
                                 <p class="text-sm text-red-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
                             <div class="card-back bg-red-100 border-2 border-red-300 p-6 text-red-800 overflow-y-auto">
-                                <h4 class="font-bold text-lg mb-2">¡NUNCA COMPARTAS INFORMACIÓN SENSIBLE!</h4>
-                                <p class="text-sm">No ingreses datos de clientes, financieros, estrategias o información personal en herramientas de IA públicas. Esta es la regla MÁS importante.</p>
+                                <h4 class="font-bold text-lg mb-2">¡NUNCA COMPARTAS INFORMACIÓN CONFIDENCIAL!</h4>
+                                <p class="text-sm">No ingreses datos de clientes, financieros, estrategias o personales en herramientas de IA públicas. La información sensible debe procesarse manualmente.</p>
                             </div>
                         </div>
                     </div>
@@ -248,12 +236,12 @@
                         <div class="card-flip-inner">
                             <div class="card-front bg-amber-100 border-2 border-amber-300 p-6 flex flex-col items-center justify-center text-center">
                                 <p class="text-5xl mb-3">🤔</p>
-                                <h4 class="text-xl font-bold text-amber-800">Verifica la Información</h4>
+                                <h4 class="text-xl font-bold text-amber-800">Sesgos y Equidad</h4>
                                 <p class="text-sm text-amber-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
                             <div class="card-back bg-amber-100 border-2 border-amber-300 p-6 text-amber-800 overflow-y-auto">
-                                <h4 class="font-bold text-lg mb-2">La IA no es Infalible</h4>
-                                <p class="text-sm">La IA puede cometer errores o "alucinar". Siempre verifica los datos y hechos importantes antes de usarlos. Tú eres el responsable final.</p>
+                                <h4 class="font-bold text-lg mb-2">La IA puede reflejar sesgos humanos</h4>
+                                <p class="text-sm">La IA aprende de los datos con los que fue entrenada. Por eso, es fundamental aplicar tu pensamiento crítico para detectar y corregir posibles sesgos en sus resultados.</p>
                             </div>
                         </div>
                     </div>
@@ -265,90 +253,94 @@
                                 <p class="text-sm text-sky-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
                             <div class="card-back bg-sky-100 border-2 border-sky-300 p-6 text-sky-800 overflow-y-auto">
-                                <h4 class="font-bold text-lg mb-2">Es un Asistente, no un Reemplazo</h4>
-                                <p class="text-sm">Usa la IA como una herramienta de apoyo. Revisa y edita siempre su trabajo para que cumpla con los estándares de calidad y el tono de GrupoO2.</p>
+                                <h4 class="font-bold text-lg mb-2">La IA es un Asistente, no un Sustituto</h4>
+                                <p class="text-sm">Tu juicio, experiencia y ética son irremplazables. Revisa, edita y valida siempre cualquier contenido o resultado generado por la IA antes de utilizarlo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100 border-2 border-slate-300 p-6 flex flex-col items-center justify-center text-center">
+                                <p class="text-5xl mb-3">🔍</p>
+                                <h4 class="text-xl font-bold text-slate-800">Transparencia</h4>
+                                <p class="text-sm text-slate-600 mt-2">(Pasa el mouse para saber más)</p>
+                            </div>
+                            <div class="card-back bg-slate-100 border-2 border-slate-300 p-6 text-slate-800 overflow-y-auto">
+                                <h4 class="font-bold text-lg mb-2">Entender cómo funciona</h4>
+                                <p class="text-sm">Es importante conocer las limitaciones y el alcance de las herramientas de IA que utilizamos. Si no entiendes algo, ¡pregunta y busca aclaración!</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h3 class="text-2xl font-bold text-slate-800 mt-10 mb-4">Buenas Prácticas para el Día a Día</h3>
+                <h3 class="text-2xl font-bold text-slate-800 mt-10 mb-4">Directrices para un Uso Responsable</h3>
                 <div class="space-y-4">
                     <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
                         <span class="text-2xl pt-1">🚀</span>
                         <div>
                             <h4 class="font-semibold text-slate-800">Empieza con Tareas Sencillas</h4>
-                            <p class="text-sm text-slate-600">Practica corrigiendo textos o generando listas de ideas antes de abordar tareas más complejas.</p>
+                            <p class="text-sm text-slate-600">Practica corrigiendo textos o generando listas de ideas antes de abordar tareas más complejas. Gana confianza.</p>
                         </div>
                     </div>
                     <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
                         <span class="text-2xl pt-1">🎯</span>
                         <div>
-                            <h4 class="font-semibold text-slate-800">Sé Específico en tus Instrucciones</h4>
-                            <p class="text-sm text-slate-600">Cuanto más claro y detallado sea tu "prompt" (tu pregunta), mejor será la respuesta de la IA.</p>
+                            <h4 class="font-semibold text-slate-800">Sé Específico en tus Instrucciones (Prompts)</h4>
+                            <p class="text-sm text-slate-600">Cuanto más clara y detallada sea tu pregunta, mejor será la respuesta de la IA. Piensa en el tono, propósito y audiencia.</p>
                         </div>
                     </div>
                     <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
                         <span class="text-2xl pt-1">🧐</span>
                         <div>
-                            <h4 class="font-semibold text-slate-800">Revisa Siempre la Salida</h4>
-                            <p class="text-sm text-slate-600">La IA te da un borrador. Tú eres el responsable final de la calidad y la veracidad del contenido.</p>
+                            <h4 class="font-semibold text-slate-800">Revisa Siempre la Salida de la IA</h4>
+                            <p class="text-sm text-slate-600">La IA te da un borrador o sugerencia. Tú eres el responsable final de la calidad, veracidad y adecuación del contenido.</p>
                         </div>
                     </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Pregunta para el Grupo: ¿Cuál de estas políticas te parece más importante en tu trabajo diario y por qué?</p>
                 </div>
             </div>
         </section>
 
-        <section id="beneficios" class="main-content hidden">
+        <section id="proximos-pasos" class="main-content hidden">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">📈 Beneficios de Integrar la IA</h2>
-                 <p class="text-lg text-slate-600 mb-8">Adoptar la IA de forma responsable no es solo una cuestión de modernización, sino que trae beneficios tangibles para ti y para la empresa. Esta sección resume las ventajas clave que obtendrás al integrar estas herramientas en tu flujo de trabajo, ayudándote a ser más eficiente, creativo y valioso en tu rol.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-green-50 border border-green-200 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-4xl">⏱️</span>
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🚀 Próximos Pasos: Integrando la IA en Nuestra Cultura</h2>
+                <p class="text-lg text-slate-600 mb-6">La IA no es el futuro, es el presente. Queremos construir una cultura en GrupoO2 donde la IA sea una aliada para tu crecimiento y para la eficiencia de la empresa. ¡Tu participación es esencial!</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-5xl">💡</span>
                         <div>
-                            <h3 class="font-bold text-lg text-green-800">Mayor Productividad</h3>
-                            <p class="text-green-700">Dedica menos tiempo a tareas repetitivas y más a lo que realmente importa.</p>
+                            <h3 class="font-bold text-xl text-slate-800">Fomenta la Experimentación</h3>
+                            <p class="text-slate-600">No tengas miedo de probar nuevas herramientas de IA. La práctica es clave para descubrir su potencial.</p>
                         </div>
                     </div>
-                    <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-4xl">⭐</span>
+                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-5xl">📚</span>
                         <div>
-                            <h3 class="font-bold text-lg text-blue-800">Mejor Calidad</h3>
-                            <p class="text-blue-700">Obtén borradores, ideas y resúmenes de alta calidad más rápidamente.</p>
+                            <h3 class="font-bold text-xl text-slate-800">Aprendizaje Continuo</h3>
+                            <p class="text-slate-600">Mantente al tanto de las novedades. Esta guía es un punto de partida, pero el aprendizaje no se detiene.</p>
                         </div>
                     </div>
-                    <div class="bg-purple-50 border border-purple-200 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-4xl">🚀</span>
+                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-5xl">🤝</span>
                         <div>
-                            <h3 class="font-bold text-lg text-purple-800">Innovación y Creatividad</h3>
-                            <p class="text-purple-700">Fomenta la generación de nuevas ideas y soluciones a problemas.</p>
+                            <h3 class="font-bold text-xl text-slate-800">Canales de Soporte</h3>
+                            <p class="text-slate-600">Si tienes dudas, preguntas o necesitas ayuda, acércate a tu líder o al área de soporte técnico de GrupoO2.</p>
                         </div>
                     </div>
-                    <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-4xl">🎓</span>
+                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-5xl">📣</span>
                         <div>
-                            <h3 class="font-bold text-lg text-yellow-800">Desarrollo Profesional</h3>
-                            <p class="text-yellow-700">Adquiere nuevas habilidades digitales muy demandadas en el mercado actual.</p>
+                            <h3 class="font-bold text-xl text-slate-800">Comparte tu Experiencia</h3>
+                            <p class="text-slate-600">Tus éxitos y desafíos con la IA pueden inspirar a otros. ¡Comparte lo que aprendas!</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="quiz" class="main-content hidden">
-            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">❓ Quiz Interactivo: Pon a Prueba tu Conocimiento</h2>
-                <p class="text-lg text-slate-600 mb-8">¡Es hora de comprobar lo que has aprendido! Este breve quiz te ayudará a reforzar los conceptos más importantes sobre el uso responsable de la IA. No te preocupes, no es una evaluación, sino una forma divertida de asegurar que todos estamos en la misma página. ¡Buena suerte!</p>
-                
-                <div id="quiz-container" class="space-y-6"></div>
-                
-                <div id="quiz-result" class="mt-8 text-center hidden">
-                    <h3 id="quiz-result-title" class="text-2xl font-bold"></h3>
-                    <p id="quiz-result-text" class="text-slate-600 mt-2"></p>
-                    <button id="quiz-retry-btn" class="mt-4 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                        Intentar de nuevo
-                    </button>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">¡Juntos, construiremos un futuro laboral más eficiente, inteligente e innovador en GrupoO2 gracias a la IA!</p>
                 </div>
             </div>
         </section>
@@ -366,85 +358,62 @@
                 {
                     icon: '✉️',
                     title: 'Redacción de Correos',
-                    description: '¿Necesitas redactar un correo formal o una propuesta?',
+                    description: '¿Necesitas redactar un correo formal o una propuesta rápidamente?',
                     details: {
-                        sinIA: 'Te tomas mucho tiempo pensando en la estructura y las palabras exactas, o buscando ejemplos.',
-                        conIA: 'Puedes pedirle a una IA generativa (como ChatGPT o Gemini) que redacte un borrador.',
-                        prompt: '<strong>Ejemplo de prompt:</strong> "Redacta un correo formal para un cliente, informándole sobre la finalización exitosa de nuestro proyecto X. El tono debe ser profesional y amable."'
+                        sinIA: 'Te tomas mucho tiempo pensando en la estructura y las palabras exactas, o buscando ejemplos en correos anteriores.',
+                        conIA: 'Puedes pedirle a una IA generativa que redacte un borrador completo, ajustando el tono y el propósito. Solo revisas y envías.',
+                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Redacta un correo formal para el gerente de proyectos, solicitando una actualización urgente sobre el estado del proyecto X. El tono debe ser respetuoso pero firme."'
+                    }
+                },
+                {
+                    icon: '📊',
+                    title: 'Análisis de Datos en Excel',
+                    description: '¿Necesitas identificar tendencias o resumir grandes volúmenes de datos en Excel?',
+                    details: {
+                        sinIA: 'Pasar horas revisando manualmente filas y columnas, creando tablas dinámicas complejas o gráficos que no transmiten el mensaje.',
+                        conIA: 'Copia y pega tus datos (¡recuerda, sin información confidencial!) en una IA y pídele que identifique tendencias, resuma información clave o te sugiera gráficos.',
+                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Analiza estos datos de ventas [pega datos clave de una muestra no confidencial] e identifica los 3 productos con mejor rendimiento en el último trimestre y las 2 tendencias de compra principales."'
+                    }
+                },
+                {
+                    icon: '💻',
+                    title: 'Fórmulas y Automatización (No-Code)',
+                    description: '¿Necesitas una fórmula compleja en Excel o automatizar una tarea simple sin programar?',
+                    details: {
+                        sinIA: 'Buscar en manuales extensos, foros complicados, o intentar aprender lenguajes de script que no conoces.',
+                        conIA: 'Describe lo que necesitas en lenguaje simple y la IA te proporcionará la fórmula exacta, o el paso a paso para una automatización "no-code" con herramientas existentes.',
+                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Genera una fórmula de Excel para calcular el promedio de la columna \'Puntaje\' solo para las filas donde la columna \'Estado\' sea \'Completado\'." o "Dame los pasos para crear una automatización que mueva archivos PDF con la palabra \'Factura\' a una carpeta específica en mi equipo."'
                     }
                 },
                 {
                     icon: '📄',
                     title: 'Resúmenes de Informes',
-                    description: '¿Tienes que leer un informe de 50 páginas para ayer?',
+                    description: '¿Tienes que leer un informe de 50 páginas o revisar notas de reunión y necesitas los puntos clave rápidamente?',
                     details: {
-                        sinIA: 'Leer todo el documento, subrayar, tomar notas, lo que consume mucho tiempo.',
-                        conIA: 'Puedes usar una herramienta de IA para que te dé un resumen con los puntos clave.',
-                        prompt: '<strong>Ejemplo de prompt:</strong> "Resume este informe [pega el texto] destacando los 3 resultados más importantes y las 2 recomendaciones."'
-                    }
-                },
-                {
-                    icon: '📅',
-                    title: 'Planificación de Tareas',
-                    description: '¿Te sientes abrumado por una lista de tareas sin orden?',
-                    details: {
-                        sinIA: 'Organizas a mano, lo que puede ser ineficiente o llevar a olvidar algo.',
-                        conIA: 'Puedes pedirle que te ayude a estructurar tus tareas o a generar un plan de acción.',
-                        prompt: '<strong>Ejemplo de prompt:</strong> "Organiza estas tareas [lista de tareas] por prioridad y sugiere una secuencia lógica."'
+                        sinIA: 'Leer todo el documento, subrayar, tomar notas, lo que consume mucho tiempo valioso.',
+                        conIA: 'Pega el texto del informe (¡siempre que no sea confidencial!) o las notas en una herramienta de IA y pídele un resumen conciso con los puntos más importantes.',
+                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Resume este informe técnico [pega el texto del informe] destacando las 3 conclusiones más importantes y las 2 acciones recomendadas."'
                     }
                 },
                 {
                     icon: '💡',
-                    title: 'Lluvia de Ideas',
-                    description: '¿Necesitas nuevas ideas para una campaña o proyecto?',
+                    title: 'Creatividad e Innovación (Generación de Ideas)',
+                    description: '¿Necesitas nuevas ideas para un proyecto, una campaña de marketing, o para resolver un problema?',
                     details: {
-                        sinIA: 'A veces la creatividad no fluye, o te quedas sin ideas nuevas.',
-                        conIA: 'La IA puede actuar como un "cerebro" adicional, generándote un sinfín de ideas.',
-                        prompt: '<strong>Ejemplo de prompt:</strong> "Genera 10 ideas creativas para una campaña de concientización sobre ciberseguridad."'
+                        sinIA: 'Sentirte "bloqueado" creativamente, o que las ideas no fluyen en el equipo.',
+                        conIA: 'La IA puede actuar como un "cerebro" adicional, generándote un sinfín de ideas para que las explores y adaptes a tus necesidades.',
+                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Genera 10 ideas innovadoras para una campaña interna de bienestar para empleados de oficina, enfocándose en bajo costo y alta participación."'
                     }
                 },
                 {
                     icon: '💬',
-                    title: 'Atención al Cliente',
-                    description: '¿Quieres mejorar la rapidez y calidad de tus respuestas?',
+                    title: 'Mejora de la Comunicación y Atención Interna',
+                    description: 'Si trabajas con clientes o en soporte interno, ¿quieres mejorar la calidad y rapidez de tus respuestas?',
                     details: {
-                        sinIA: 'Buscas respuestas en manuales extensos o tardas en formular la respuesta perfecta.',
-                        conIA: 'Puedes usarla para simular escenarios o generar respuestas estandarizadas y claras.',
-                        prompt: '<strong>Ejemplo de prompt:</strong> "Redacta una respuesta empática para un cliente frustrado por un retraso. Ofrece una disculpa y una solución."'
+                        sinIA: 'Buscar respuestas en manuales extensos, o tardar en formular la respuesta perfecta para una situación común.',
+                        conIA: 'Puedes usarla para generar borradores de respuestas estandarizadas y claras, o incluso para simular escenarios de interacción y practicar tus respuestas.',
+                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Redacta una respuesta concisa y empática para un colega que reporta un error recurrente en un sistema interno, indicando que ya estamos investigando y le daremos una actualización en 24 horas."'
                     }
-                }
-            ];
-
-            const quizData = [
-                {
-                    question: "¿Cuál es la regla MÁS importante al usar una IA pública en el trabajo?",
-                    options: [
-                        "Usarla solo para tareas creativas.",
-                        "Nunca introducir información confidencial de la empresa o clientes.",
-                        "Verificar siempre la ortografía.",
-                        "Pedirle que escriba en un tono amable."
-                    ],
-                    answer: 1
-                },
-                {
-                    question: "Si una IA te da un dato numérico para un informe, ¿qué debes hacer?",
-                    options: [
-                        "Confiar ciegamente, ya que la IA no se equivoca.",
-                        "Copiar y pegar el dato directamente en el informe.",
-                        "Verificar el dato con una fuente fiable antes de usarlo.",
-                        "Preguntarle a la IA si está segura de su respuesta."
-                    ],
-                    answer: 2
-                },
-                {
-                    question: "La IA en GrupoO2 debe ser vista como:",
-                    options: [
-                        "Un reemplazo para mi trabajo diario.",
-                        "Una herramienta de apoyo que requiere mi supervisión y juicio.",
-                        "Algo que solo los expertos en informática pueden usar.",
-                        "Una moda pasajera sin beneficios reales."
-                    ],
-                    answer: 1
                 }
             ];
 
@@ -486,6 +455,7 @@
             
             function populateExamples() {
                 const grid = document.getElementById('examples-grid');
+                grid.innerHTML = '';
                 examplesData.forEach((ex, index) => {
                     const card = document.createElement('div');
                     card.className = 'bg-slate-100 p-6 rounded-xl border-2 border-transparent hover:border-sky-500 hover:shadow-lg cursor-pointer transition-all duration-300 transform hover:-translate-y-1';
@@ -520,159 +490,9 @@
                 `;
                 detailsContainer.classList.remove('hidden');
             }
-
-            // LLM Integration for Prompt Generator
-            const generatePromptsBtn = document.getElementById('generate-prompts-btn');
-            const promptInput = document.getElementById('prompt-input');
-            const promptsOutput = document.getElementById('prompts-output');
-            const outputContent = document.getElementById('output-content');
-            const loadingIndicator = document.getElementById('loading-indicator');
-            const errorMessage = document.getElementById('error-message');
-
-            generatePromptsBtn.addEventListener('click', async () => {
-                const userInput = promptInput.value.trim();
-                if (!userInput) {
-                    outputContent.innerHTML = '<p class="text-red-500">Por favor, introduce una tarea para generar prompts.</p>';
-                    promptsOutput.classList.remove('hidden');
-                    return;
-                }
-
-                loadingIndicator.classList.remove('hidden');
-                promptsOutput.classList.add('hidden');
-                errorMessage.classList.add('hidden');
-                outputContent.innerHTML = '';
-
-                try {
-                    let chatHistory = [];
-                    chatHistory.push({ role: "user", parts: [{ text: `El usuario quiere usar una herramienta de IA para la siguiente tarea: '${userInput}'. Sugiere 3-5 prompts específicos y detallados que el usuario podría usar, pidiéndole a la IA que considere el tono, el propósito, la audiencia y los detalles clave. Formatea la respuesta como una lista numerada de prompts.` }] });
-                    
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; 
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        outputContent.innerHTML = text.replace(/\n/g, '<br>'); // Display new lines as <br>
-                        promptsOutput.classList.remove('hidden');
-                    } else {
-                        outputContent.innerHTML = '<p class="text-amber-700">No se pudieron generar prompts. Intenta con una descripción diferente.</p>';
-                        promptsOutput.classList.remove('hidden');
-                    }
-
-                } catch (error) {
-                    console.error('Error al llamar a la API de Gemini:', error);
-                    errorMessage.classList.remove('hidden');
-                } finally {
-                    loadingIndicator.classList.add('hidden');
-                }
-            });
             
-            function buildQuiz() {
-                const container = document.getElementById('quiz-container');
-                container.innerHTML = '';
-                quizData.forEach((q, index) => {
-                    const questionDiv = document.createElement('div');
-                    questionDiv.className = 'p-5 bg-slate-50 rounded-lg border border-slate-200';
-                    questionDiv.innerHTML = `<p class="font-semibold text-slate-800 mb-4">${index + 1}. ${q.question}</p>`;
-                    
-                    const optionsDiv = document.createElement('div');
-                    optionsDiv.className = 'space-y-3';
-                    q.options.forEach((opt, optIndex) => {
-                        const optionLabel = document.createElement('label');
-                        optionLabel.className = 'quiz-option block p-3 border-2 border-slate-300 rounded-lg cursor-pointer hover:bg-slate-200 transition-colors';
-                        optionLabel.innerHTML = `
-                            <input type="radio" name="question-${index}" value="${optIndex}" class="hidden">
-                            <span>${opt}</span>
-                        `;
-                        optionLabel.addEventListener('click', () => {
-                             const parent = optionLabel.closest('.space-y-3');
-                             parent.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('selected'));
-                             optionLabel.classList.add('selected');
-                        });
-                        optionsDiv.appendChild(optionLabel);
-                    });
-                    
-                    questionDiv.appendChild(optionsDiv);
-                    container.appendChild(questionDiv);
-                });
-
-                const submitButton = document.createElement('button');
-                submitButton.id = 'quiz-submit-btn';
-                submitButton.className = 'mt-6 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-lg transition-colors w-full md:w-auto';
-                submitButton.textContent = 'Verificar Respuestas';
-                submitButton.addEventListener('click', checkQuizAnswers);
-                container.appendChild(submitButton);
-
-                document.getElementById('quiz-result').classList.add('hidden');
-            }
-
-            function checkQuizAnswers() {
-                let score = 0;
-                quizData.forEach((q, index) => {
-                    const selected = document.querySelector(`input[name="question-${index}"]:checked`);
-                    const options = document.querySelectorAll(`input[name="question-${index}"]`);
-                    
-                    options.forEach((opt) => {
-                        const label = opt.parentElement;
-                        label.classList.remove('correct', 'incorrect');
-                         if(parseInt(opt.value) === q.answer){
-                             label.classList.add('correct');
-                         }
-                    });
-
-                    if (selected) {
-                        const selectedLabel = selected.parentElement;
-                        if (parseInt(selected.value) === q.answer) {
-                            score++;
-                        } else {
-                           selectedLabel.classList.add('incorrect');
-                        }
-                    } 
-                });
-                
-                showQuizResult(score);
-            }
-
-            function showQuizResult(score) {
-                const resultDiv = document.getElementById('quiz-result');
-                const title = document.getElementById('quiz-result-title');
-                const text = document.getElementById('quiz-result-text');
-                
-                resultDiv.classList.remove('hidden');
-                
-                if (score === quizData.length) {
-                    title.textContent = `¡Excelente! ${score} de ${quizData.length} correctas`;
-                    title.className = "text-2xl font-bold text-green-600";
-                    text.textContent = "Has dominado los conceptos clave del uso responsable de la IA. ¡Gran trabajo!";
-                } else {
-                    title.textContent = `¡Buen intento! ${score} de ${quizData.length} correctas`;
-                    title.className = "text-2xl font-bold text-amber-600";
-                    text.textContent = "Repasa las políticas de uso responsable y vuelve a intentarlo para afianzar tu conocimiento.";
-                }
-
-                document.getElementById('quiz-submit-btn').classList.add('hidden');
-            }
-
-            document.getElementById('quiz-retry-btn').addEventListener('click', () => {
-                buildQuiz();
-            });
-
-            const impactoCtx = document.getElementById('impactoChart').getContext('2d');
-            new Chart(impactoCtx, {
+            const impactoBeneficiosCtx = document.getElementById('impactoBeneficiosChart').getContext('2d');
+            new Chart(impactoBeneficiosCtx, {
                 type: 'bar',
                 data: {
                     labels: ['Ahorro de Tiempo', 'Mejora de Calidad', 'Fomento de Innovación', 'Desarrollo Profesional'],
@@ -680,10 +500,10 @@
                         label: 'Impacto Potencial (%)',
                         data: [45, 35, 25, 20],
                         backgroundColor: [
-                            'rgba(14, 165, 233, 0.6)', // sky-500
-                            'rgba(59, 130, 246, 0.6)', // blue-500
-                            'rgba(168, 85, 247, 0.6)', // purple-500
-                            'rgba(234, 179, 8, 0.6)'  // yellow-500
+                            'rgba(14, 165, 233, 0.6)', /* sky-500 */
+                            'rgba(59, 130, 246, 0.6)', /* blue-500 */
+                            'rgba(168, 85, 247, 0.6)', /* purple-500 */
+                            'rgba(234, 179, 8, 0.6)'  /* yellow-500 */
                         ],
                         borderColor: [
                             'rgba(14, 165, 233, 1)',
@@ -726,7 +546,6 @@
             const initialHash = window.location.hash || '#inicio';
             navigateTo(initialHash);
             populateExamples();
-            buildQuiz();
         });
     </script>
 </body>
