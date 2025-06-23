@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Corporate Calm -->
-    <!-- Application Structure Plan: La aplicación es una SPA con una navegación lateral fija para un acceso directo a las "diapositivas". La estructura se divide lógicamente en: "Inicio" (bienvenida), "¿Qué es la IA?" (conceptos básicos), "IA en Acción" (ejemplos prácticos interactivos con detalles de tareas de oficina como Excel y no-code), "Beneficios", "Uso Responsable" (políticas interactivas y buenas prácticas), y "Próximos Pasos". Esta arquitectura permite una experiencia de "presentación" no lineal, donde el usuario puede explorar a su ritmo, enfocándose en lo relevante para él y facilitando la comprensión de conceptos complejos para un público no técnico. La interactividad de las tarjetas y el gráfico mejora la retención. -->
-    <!-- Visualization & Content Choices: Se utilizan tarjetas HTML/Tailwind con JavaScript para los "Ejemplos Prácticos" (Meta: Organizar/Informar/Comparar), permitiendo mostrar "Antes vs. Después" con un clic, lo que es ideal para la audiencia no técnica. Esto incluye ejemplos específicos de oficina (Excel, no-code, fórmulas). Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) se presentan con "flip cards" HTML/CSS/JS, que revelan detalles al pasar el ratón, ofreciendo información concisa y visualmente atractiva. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) para ilustrar los "Beneficios" de la IA, transformando ideas abstractas en datos tangibles. Los "Puntos de Reflexión" se insertan como texto en las secciones para sugerir interacciones durante una presentación en vivo. NO se usan gráficos SVG ni la librería Mermaid JS. -->
+    <!-- Application Structure Plan: La aplicación es una SPA con navegación lateral fija. El flujo de secciones es: "Inicio", "¿Qué es la IA?" (concepto y cómo funciona, énfasis en inputs), "El Alcance de la IA" (explicación de diferentes modelos como ChatGPT, Llama, Bert), "IA en Acción" (ejemplos prácticos en oficina), "Beneficios y Oportunidades", "Nuestra Responsabilidad" (riesgos, políticas, buenas prácticas), y "Próximos Pasos" (stack de IA de GrupoO2 y roadmap). Esta estructura lineal pero navegable permite un aprendizaje progresivo y detallado, desde lo básico hasta la implementación práctica y la gobernanza. La interactividad de las tarjetas de ejemplos y el gráfico de beneficios mejora la asimilación. -->
+    <!-- Visualization & Content Choices: La sección "¿Qué es la IA?" utiliza texto explicativo directo para aclarar el concepto y el rol de los inputs. "El Alcance de la IA" presenta los diferentes modelos de IA con descripciones concisas para informar a la audiencia. Los "Ejemplos Prácticos" (Meta: Organizar/Informar) usan tarjetas HTML/Tailwind con JS para mostrar/ocultar "Antes vs. Después", ideal para el público no técnico y cubriendo tareas de oficina (Excel, no-code). Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) emplean "flip cards" HTML/CSS/JS para presentar los riesgos clave y las responsabilidades. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) en "Beneficios" para visualizar el impacto potencial. Los "Puntos de Reflexión" y preguntas para la audiencia se mantienen como texto. Los "Próximos Pasos" listan las compañías y el roadmap como elementos textuales. NO se usan gráficos SVG ni la librería Mermaid JS. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -59,6 +59,7 @@
         }
         .card-back {
             transform: rotateY(180deg);
+            /* Removed overflow-y-auto from here */
         }
         .chart-container {
             position: relative;
@@ -91,6 +92,9 @@
             </a>
             <a href="#que-es-ia" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">🧠</span> ¿Qué es la IA?
+            </a>
+            <a href="#alcance-ia" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🌐</span> El Alcance de la IA
             </a>
             <a href="#ia-en-accion" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">💡</span> IA en Acción
@@ -131,26 +135,53 @@
 
         <section id="que-es-ia" class="main-content hidden">
              <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">🧠 ¿Qué es la Inteligencia Artificial? Desmitificando el Concepto</h2>
-                <p class="text-lg text-slate-600 mb-6">En esta sección, vamos a entender de forma sencilla qué es la IA y por qué es tan relevante hoy. No te preocupes por la jerga técnica; la IA es, en esencia, un asistente inteligente diseñado para ayudarnos a realizar tareas de manera más eficiente. Su propósito es potenciar nuestras capacidades, no reemplazarnos.</p>
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🧠 ¿Qué es la Inteligencia Artificial y Cómo Funciona?</h2>
+                <p class="text-lg text-slate-600 mb-6">La IA es como tener un asistente digital muy inteligente. En esencia, son programas de computadora diseñados para imitar la inteligencia humana, permitiéndoles aprender, razonar y realizar tareas que, antes, solo las personas podían hacer.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                     <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
                         <span class="text-5xl">🤖</span>
                         <div>
-                            <h3 class="font-bold text-xl text-slate-800">IA: Tu Asistente Digital</h3>
-                            <p class="text-slate-600">Es un programa que puede aprender, razonar y realizar tareas que requieren inteligencia humana.</p>
+                            <h3 class="font-bold text-xl text-slate-800">Concepto Clave: Input y Output</h3>
+                            <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (inputs) y generando una respuesta o resultado (output). ¡La calidad del resultado depende de la calidad de tu pregunta!</p>
                         </div>
                     </div>
                     <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-5xl">⏰</span>
+                        <span class="text-5xl">✅</span>
                         <div>
-                            <h3 class="font-bold text-xl text-slate-800">¿Por qué hablamos de IA ahora?</h3>
-                            <p class="text-slate-600">La tecnología ha avanzado mucho, haciendo la IA más accesible y útil para optimizar nuestro trabajo diario.</p>
+                            <h3 class="font-bold text-xl text-slate-800">IA: Potenciando Habilidades Humanas</h3>
+                            <p class="text-slate-600">Su objetivo es hacernos más eficientes y libres para tareas creativas, no reemplazarnos. Es una herramienta a tu disposición.</p>
                         </div>
                     </div>
                 </div>
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
-                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Consideras que la IA es más una ayuda o una amenaza en el trabajo?</p>
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Qué tipo de "inputs" crees que serían más útiles darle a una IA para tu trabajo?</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="alcance-ia" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🌐 El Alcance de la IA: Conociendo los Modelos</h2>
+                <p class="text-lg text-slate-600 mb-8">Existen diferentes tipos de Inteligencia Artificial, cada uno con un enfoque y utilidad particular. Aquí te presentamos algunos ejemplos de modelos de lenguaje, para que entiendas la diversidad de estas herramientas y cómo se adaptan a distintas necesidades.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">💬</p>
+                        <h3 class="font-bold text-xl text-slate-800">ChatGPT (Ej. de GPT)</h3>
+                        <p class="text-slate-600">Un modelo conversacional muy versátil. Ideal para generar textos creativos, responder preguntas generales, redactar correos o resumir documentos. Es como hablar con un experto en casi cualquier tema.</p>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">🦙</p>
+                        <h3 class="font-bold text-xl text-slate-800">Llama (Meta)</h3>
+                        <p class="text-slate-600">Una familia de modelos de código abierto, muy potentes para investigación y desarrollo. Se usa para tareas avanzadas de procesamiento de lenguaje y en aplicaciones especializadas.</p>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">📚</p>
+                        <h3 class="font-bold text-xl text-slate-800">BERT (Google)</h3>
+                        <p class="text-slate-600">Centrado en entender el contexto de las palabras en frases. Es excelente para búsqueda de información, análisis de sentimientos y comprensión lectora en grandes volúmenes de texto.</p>
+                    </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Pregunta: ¿Conocías la diversidad de modelos de IA? ¿Cuál te llama más la atención para tu trabajo?</p>
                 </div>
             </div>
         </section>
@@ -223,12 +254,12 @@
                         <div class="card-flip-inner">
                             <div class="card-front bg-red-100 border-2 border-red-300 p-6 flex flex-col items-center justify-center text-center">
                                 <p class="text-5xl mb-3">🔒</p>
-                                <h4 class="text-xl font-bold text-red-800">Privacidad de Datos</h4>
+                                <h4 class="text-xl font-bold text-red-800">Privacidad de Datos (Riesgo Principal)</h4>
                                 <p class="text-sm text-red-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
-                            <div class="card-back bg-red-100 border-2 border-red-300 p-6 text-red-800 overflow-y-auto">
+                            <div class="card-back bg-red-100 border-2 border-red-300 p-6 text-red-800">
                                 <h4 class="font-bold text-lg mb-2">¡NUNCA COMPARTAS INFORMACIÓN CONFIDENCIAL!</h4>
-                                <p class="text-sm">No ingreses datos de clientes, financieros, estrategias o personales en herramientas de IA públicas. La información sensible debe procesarse manualmente.</p>
+                                <p class="text-sm">No ingreses datos de clientes, financieros, estrategias o personales en herramientas de IA públicas. La información sensible debe procesarse manualmente para evitar filtraciones.</p>
                             </div>
                         </div>
                     </div>
@@ -236,12 +267,12 @@
                         <div class="card-flip-inner">
                             <div class="card-front bg-amber-100 border-2 border-amber-300 p-6 flex flex-col items-center justify-center text-center">
                                 <p class="text-5xl mb-3">🤔</p>
-                                <h4 class="text-xl font-bold text-amber-800">Sesgos y Equidad</h4>
+                                <h4 class="text-xl font-bold text-amber-800">Sesgos y Equidad (Riesgo Potencial)</h4>
                                 <p class="text-sm text-amber-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
-                            <div class="card-back bg-amber-100 border-2 border-amber-300 p-6 text-amber-800 overflow-y-auto">
+                            <div class="card-back bg-amber-100 border-2 border-amber-300 p-6 text-amber-800">
                                 <h4 class="font-bold text-lg mb-2">La IA puede reflejar sesgos humanos</h4>
-                                <p class="text-sm">La IA aprende de los datos con los que fue entrenada. Por eso, es fundamental aplicar tu pensamiento crítico para detectar y corregir posibles sesgos en sus resultados.</p>
+                                <p class="text-sm">La IA aprende de los datos con los que fue entrenada. Por eso, es fundamental aplicar tu pensamiento crítico para detectar y corregir posibles sesgos en sus resultados y asegurar la equidad.</p>
                             </div>
                         </div>
                     </div>
@@ -249,12 +280,12 @@
                         <div class="card-flip-inner">
                             <div class="card-front bg-sky-100 border-2 border-sky-300 p-6 flex flex-col items-center justify-center text-center">
                                 <p class="text-5xl mb-3">🧑‍💻</p>
-                                <h4 class="text-xl font-bold text-sky-800">Supervisión Humana</h4>
+                                <h4 class="text-xl font-bold text-sky-800">Supervisión Humana (Tu Rol Clave)</h4>
                                 <p class="text-sm text-sky-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
-                            <div class="card-back bg-sky-100 border-2 border-sky-300 p-6 text-sky-800 overflow-y-auto">
+                            <div class="card-back bg-sky-100 border-2 border-sky-300 p-6 text-sky-800">
                                 <h4 class="font-bold text-lg mb-2">La IA es un Asistente, no un Sustituto</h4>
-                                <p class="text-sm">Tu juicio, experiencia y ética son irremplazables. Revisa, edita y valida siempre cualquier contenido o resultado generado por la IA antes de utilizarlo.</p>
+                                <p class="text-sm">Tu juicio, experiencia y ética son irremplazables. Revisa, edita y valida siempre cualquier contenido o resultado generado por la IA antes de utilizarlo en decisiones importantes.</p>
                             </div>
                         </div>
                     </div>
@@ -262,12 +293,12 @@
                         <div class="card-flip-inner">
                             <div class="card-front bg-slate-100 border-2 border-slate-300 p-6 flex flex-col items-center justify-center text-center">
                                 <p class="text-5xl mb-3">🔍</p>
-                                <h4 class="text-xl font-bold text-slate-800">Transparencia</h4>
+                                <h4 class="text-xl font-bold text-slate-800">Transparencia (Entender la Herramienta)</h4>
                                 <p class="text-sm text-slate-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
-                            <div class="card-back bg-slate-100 border-2 border-slate-300 p-6 text-slate-800 overflow-y-auto">
-                                <h4 class="font-bold text-lg mb-2">Entender cómo funciona</h4>
-                                <p class="text-sm">Es importante conocer las limitaciones y el alcance de las herramientas de IA que utilizamos. Si no entiendes algo, ¡pregunta y busca aclaración!</p>
+                            <div class="card-back bg-slate-100 border-2 border-slate-300 p-6 text-slate-800">
+                                <h4 class="font-bold text-lg mb-2">Conoce sus límites y funciones</h4>
+                                <p class="text-sm">Es importante conocer las limitaciones y el alcance de las herramientas de IA que utilizas. Si no entiendes cómo funciona un resultado, ¡pregunta y busca aclaración!</p>
                             </div>
                         </div>
                     </div>
@@ -308,36 +339,37 @@
                 <h2 class="text-4xl font-bold text-sky-600 mb-4">🚀 Próximos Pasos: Integrando la IA en Nuestra Cultura</h2>
                 <p class="text-lg text-slate-600 mb-6">La IA no es el futuro, es el presente. Queremos construir una cultura en GrupoO2 donde la IA sea una aliada para tu crecimiento y para la eficiencia de la empresa. ¡Tu participación es esencial!</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-5xl">💡</span>
-                        <div>
-                            <h3 class="font-bold text-xl text-slate-800">Fomenta la Experimentación</h3>
-                            <p class="text-slate-600">No tengas miedo de probar nuevas herramientas de IA. La práctica es clave para descubrir su potencial.</p>
-                        </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">Nuestro Stack de IA Sugerido para GrupoO2</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">🔷</p>
+                        <h4 class="font-bold text-xl text-slate-800">Gemini (Google)</h4>
+                        <p class="text-slate-600">Para generación de texto, ideas y análisis conversacional. Acceso a través de Google Workspace con tu correo empresarial.</p>
                     </div>
-                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-5xl">📚</span>
-                        <div>
-                            <h3 class="font-bold text-xl text-slate-800">Aprendizaje Continuo</h3>
-                            <p class="text-slate-600">Mantente al tanto de las novedades. Esta guía es un punto de partida, pero el aprendizaje no se detiene.</p>
-                        </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">🔎</p>
+                        <h4 class="font-bold text-xl text-slate-800">Perplexity AI</h4>
+                        <p class="text-slate-600">Un motor de respuestas conversacional que te da fuentes. Ideal para investigación rápida y verificación de hechos.</p>
                     </div>
-                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-5xl">🤝</span>
-                        <div>
-                            <h3 class="font-bold text-xl text-slate-800">Canales de Soporte</h3>
-                            <p class="text-slate-600">Si tienes dudas, preguntas o necesitas ayuda, acércate a tu líder o al área de soporte técnico de GrupoO2.</p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-5xl">📣</span>
-                        <div>
-                            <h3 class="font-bold text-xl text-slate-800">Comparte tu Experiencia</h3>
-                            <p class="text-slate-600">Tus éxitos y desafíos con la IA pueden inspirar a otros. ¡Comparte lo que aprendas!</p>
-                        </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">📓</p>
+                        <h4 class="font-bold text-xl text-slate-800">NotebookLM (Google)</h4>
+                        <p class="text-slate-600">Para organizar, resumir y generar contenido a partir de tus documentos. Ideal para gestionar proyectos y análisis de información interna.</p>
                     </div>
                 </div>
+
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold mb-4">¡Importante! Creación de Cuentas:</p>
+                    <p class="text-lg text-slate-600 text-center">Pronto recibirás instrucciones detalladas para crear tus cuentas en estas plataformas utilizando **tu correo empresarial de GrupoO2**. Esto asegura la seguridad y la integración con nuestras herramientas.</p>
+                </div>
+
+                <h3 class="text-2xl font-bold text-slate-800 mt-10 mb-4">Roadmap de Capacitación y Soporte</h3>
+                <ul class="list-disc list-inside space-y-3 text-slate-600 text-lg">
+                    <li>**Capacitaciones Personalizadas:** Próximamente, ofreceremos talleres y sesiones prácticas adaptadas a las necesidades específicas de cada área.</li>
+                    <li>**Recursos Internos:** Acceso a una biblioteca de tutoriales y guías rápidas sobre el uso de la IA en GrupoO2.</li>
+                    <li>**Formulario de Atención y Necesidades:** Habilitaremos un canal para que puedas compartir tus ideas, dudas y necesidades sobre la IA, ¡tu feedback es vital!</li>
+                    <li>**Comunidad de Práctica:** Fomentaremos espacios para compartir experiencias y casos de éxito entre colegas.</li>
+                </ul>
 
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
                     <p class="text-xl text-center text-sky-800 font-semibold">¡Juntos, construiremos un futuro laboral más eficiente, inteligente e innovador en GrupoO2 gracias a la IA!</p>
@@ -495,10 +527,10 @@
             new Chart(impactoBeneficiosCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Ahorro de Tiempo', 'Mejora de Calidad', 'Fomento de Innovación', 'Desarrollo Profesional'],
+                    labels: ['Mayor Eficiencia', 'Enfoque en Valor', 'Más Creatividad', 'Desarrollo Profesional'],
                     datasets: [{
                         label: 'Impacto Potencial (%)',
-                        data: [45, 35, 25, 20],
+                        data: [50, 40, 30, 25],
                         backgroundColor: [
                             'rgba(14, 165, 233, 0.6)', /* sky-500 */
                             'rgba(59, 130, 246, 0.6)', /* blue-500 */
