@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Corporate Calm -->
-    <!-- Application Structure Plan: La aplicación es una SPA con navegación lateral fija. El flujo de secciones es: "Inicio" (objetivo general y resumen del contenido), "¿Qué es la IA?" (concepto actualizado, cómo funciona, importancia de inputs, ejemplos de modelos con distinción open/no-open source y fotos), "El Alcance de la IA" (detalles de modelos), "IA en Acción" (ejemplos prácticos en oficina), "Beneficios y Oportunidades", "Nuestra Responsabilidad" (riesgos, políticas, buenas prácticas), y "Próximos Pasos" (stack de IA de GrupoO2 y roadmap). Esta estructura lineal pero navegable permite un aprendizaje progresivo y detallado, desde lo básico hasta la implementación práctica y la gobernanza. La interactividad de las tarjetas de ejemplos y el gráfico de beneficios mejora la asimilación. -->
-    <!-- Visualization & Content Choices: La sección "Inicio" utiliza texto para el objetivo y resumen. La sección "¿Qué es la IA?" incorpora texto actualizado para la definición, la imagen provista (URL de la imagen del diagrama conceptual) para el diagrama conceptual, y una cuadrícula de imágenes (URLs directas) y texto para diferenciar los modelos de IA, enfatizando los inputs del usuario. "El Alcance de la IA" presenta los diferentes modelos de IA con descripciones concisas. Los "Ejemplos Prácticos" (Meta: Organizar/Informar) usan tarjetas HTML/Tailwind con JS para mostrar/ocultar "Antes vs. Después". Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) emplean "flip cards" HTML/CSS/JS para presentar los riesgos clave y las responsabilidades. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) en "Beneficios" para visualizar el impacto potencial. Los "Puntos de Reflexión" y preguntas para la audiencia se mantienen como texto. Los "Próximos Pasos" listan las compañías y el roadmap como elementos textuales. NO se usan gráficos SVG ni la librería Mermaid JS. -->
+    <!-- Application Structure Plan: La aplicación es una SPA con navegación lateral fija. El flujo de secciones es: "Inicio" (objetivo general y resumen del contenido), "¿Qué es la IA?" (concepto actualizado, cómo funciona, importancia de inputs, ejemplos de modelos con distinción open/no-open source y fotos), "El Alcance de la IA" (detalles de modelos enfocados en casos de uso específicos), "IA en Acción" (ejemplos prácticos en oficina, ahora actualizados con más diversidad), "Beneficios y Oportunidades", "Nuestra Responsabilidad" (riesgos, políticas, buenas prácticas), y "Próximos Pasos" (stack de IA de GrupoO2 y roadmap). Esta estructura lineal pero navegable permite un aprendizaje progresivo y detallado, desde lo básico hasta la implementación práctica y la gobernanza. La interactividad de las tarjetas de ejemplos y el gráfico de beneficios mejora la asimilación. -->
+    <!-- Visualization & Content Choices: La sección "Inicio" utiliza texto para el objetivo y resumen. La sección "¿Qué es la IA?" incorpora texto actualizado para la definición, la imagen provista (URL de la imagen del diagrama conceptual) para el diagrama conceptual, y una cuadrícula de imágenes (URLs directas) y texto para diferenciar los modelos de IA, enfatizando los inputs del usuario. "El Alcance de la IA" presenta los diferentes modelos de IA con descripciones concisas, ahora con un enfoque en casos de uso específicos y 6 ejemplos. Los "Ejemplos Prácticos" (Meta: Organizar/Informar) usan tarjetas HTML/Tailwind con JS para mostrar/ocultar "Antes vs. Después" y ahora incluyen nuevos casos de uso más específicos. Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) emplean "flip cards" HTML/CSS/JS para presentar los riesgos clave y las responsabilidades. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) en "Beneficios" para visualizar el impacto potencial. Los "Puntos de Reflexión" y preguntas para la audiencia se mantienen como texto. Los "Próximos Pasos" listan las compañías y el roadmap como elementos textuales. NO se usan gráficos SVG ni la librería Mermaid JS. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -93,7 +93,7 @@
                 <span class="mr-3 text-xl">🧠</span> ¿Qué es la IA?
             </a>
             <a href="#alcance-ia" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">🌐</span> El Alcance de la IA
+                <span class="mr-3 text-xl">🌐</span> Alcance de la IA
             </a>
             <a href="#ia-en-accion" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">💡</span> IA en Acción
@@ -109,7 +109,7 @@
             </a>
         </nav>
         <div class="mt-auto pt-8 text-center text-xs text-slate-400">
-            <p>&copy; 2024 GrupoO2</p>
+            <p>&copy; 2025 GrupoO2</p>
             <p>Material de concientización</p>
         </div>
     </aside>
@@ -125,19 +125,19 @@
         <section id="inicio" class="main-content">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
                 <h2 class="text-4xl font-bold text-sky-600 mb-4">IA en tu Día a Día: Herramientas para el Futuro en GrupoO2</h2>
-                <p class="text-lg text-slate-600 mb-6">**<b>Objetivo General:**</b>Este documento busca interiorizar y nivelar los conocimientos de todo el personal de GrupoO2 acerca de qué es la Inteligencia Artificial y cómo podemos aprovecharla de manera responsable.</p>
-                <p class="text-lg text-slate-600 mb-6">**En esta guía interactiva abordaremos:**
+                <p class="text-lg text-slate-600 mb-6"><b>Objetivo General:</b> Este documento busca interiorizar y nivelar los conocimientos de todo el personal de GrupoO2 acerca de qué es la Inteligencia Artificial y cómo podemos aprovecharla de manera responsable.</p>
+                <p class="text-lg text-slate-600 mb-6"><b>En esta guía interactiva abordaremos:</b>
                     <ul class="list-disc list-inside ml-4 text-slate-600 space-y-1">
-                        <li>**Qué es la IA y cómo funciona:** Aprendiendo el concepto y entendiendo su lógica.</li>
-                        <li>**El alcance de la IA:** Conociendo los diferentes tipos de modelos y sus utilidades.</li>
-                        <li>**IA en Acción:** Ejemplos prácticos para mejorar tus tareas diarias en la oficina.</li>
-                        <li>**Beneficios y Oportunidades:** Cómo la IA potencia nuestra eficiencia y creatividad.</li>
-                        <li>**Nuestra Responsabilidad:** Entendiendo los riesgos, las políticas y las buenas prácticas para un uso ético y seguro.</li>
-                        <li>**Próximos Pasos:** El stack de IA de GrupoO2 y nuestro roadmap de apoyo.</li>
+                        <li><b>Qué es la IA y cómo funciona:</b> Aprendiendo el concepto y entendiendo su lógica.</li>
+                        <li><b>El alcance de la IA:</b> Conociendo los diferentes tipos de modelos y sus utilidades.</li>
+                        <li><b>IA en Acción:</b> Ejemplos prácticos para mejorar tus tareas diarias en la oficina.</li>
+                        <li><b>Beneficios y Oportunidades:</b> Cómo la IA potencia nuestra eficiencia y creatividad.</li>
+                        <li><b>Nuestra Responsabilidad:</b> Entendiendo los riesgos, las políticas y las buenas prácticas para un uso ético y seguro.</li>
+                        <li><b>Próximos Pasos:</b> El stack de IA de GrupoO2 y nuestro roadmap de apoyo.</li>
                     </ul>
                 </p>
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
-                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Qué tarea rutinaria de tu día a día te gustaría que fuera más sencilla o rápida? ¡Te escuchamos!</p>
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Qué tarea rutinaria de tu día a día te gustaría que fuera más sencilla o rápida? ¡Cuentanos!</p>
                 </div>
             </div>
         </section>
@@ -145,15 +145,15 @@
         <section id="que-es-ia" class="main-content hidden">
              <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
                 <h2 class="text-4xl font-bold text-sky-600 mb-4">🧠 ¿Qué es la Inteligencia Artificial y Cómo Funciona?</h2>
-                <p class="text-lg text-slate-600 mb-6">La **Inteligencia Artificial (IA)** es una rama de las ciencias de la computación que permite que las máquinas puedan **simular el aprendizaje humano**, incluyendo capacidades como la comprensión, resolución de problemas, toma de decisiones y reconocimiento de patrones.</p>
+                <p class="text-lg text-slate-600 mb-6">La <b>Inteligencia Artificial (IA)</b> es una rama de las ciencias de la computación que permite que las máquinas puedan <b>simular el aprendizaje humano</b>, incluyendo capacidades como la comprensión, resolución de problemas, toma de decisiones y reconocimiento de patrones.</p>
                 
                 <div class="flex justify-center my-8">
-                    <img src="https://synoptekmark.b-cdn.net/wp-content/uploads/2023/07/ai-ml-dl-and-generative-ai-face-off.webp" alt="Diagrama de Inteligencia Artificial" class="rounded-lg shadow-md max-w-xl h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F0F0F0/333333?text=Error+al+cargar+imagen';">
+                    <img src="https://synoptekmark.b-cdn.net/wp-content/uploads/2023/07/ai-ml-dl-and-generative-ai-face-off.webp" alt="[Image of Diagrama de Inteligencia Artificial]" class="rounded-lg shadow-md max-w-xl h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F0F0F0/333333?text=Error+al+cargar+imagen';">
                 </div>
 
                 <div class="bg-slate-100 p-6 rounded-xl mb-6">
                     <h3 class="font-bold text-xl text-slate-800 mb-2">Concepto Clave: Tú das el Input, la IA da el Output</h3>
-                    <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (llamados **inputs** o "prompts") y generando una respuesta, un análisis o un resultado (llamado **output**). ¡Es crucial entender que **la calidad del resultado depende directamente de la claridad y precisión de tu input**!</p>
+                    <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (llamados <b>inputs</b> o "prompts") y generando una respuesta, un análisis o un resultado (llamado <b>output</b>). ¡Es crucial entender que <b>la calidad del resultado depende directamente de la claridad y precisión de tu input</b>!</p>
                 </div>
 
                 <p class="text-lg text-slate-600 mb-6">Hoy en día, la IA está más presente en nuestro día a día de lo que imaginamos. Muchos de ustedes ya están interactuando con ella, a veces sin darse cuenta. Desde las recomendaciones en servicios de streaming hasta los asistentes de voz en sus teléfonos. Pero veamos ejemplos de modelos de lenguaje que podemos usar activamente:</p>
@@ -161,48 +161,47 @@
                 <h3 class="font-bold text-xl text-slate-800 mb-4">Modelos de IA más conocidos:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://mcit.gov.qa/wp-content/uploads/sites/4/2023/02/MCIT-and-Microsoft-Launch-OpenAI-GPT-to-Empower-Government-Innovation.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://mcit.gov.qa/wp-content/uploads/sites/4/2023/02/MCIT-and-Microsoft-Launch-OpenAI-GPT-to-Empower-Government-Innovation.jpg" alt="[Image of Logo GPT (OpenAI)]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">GPT (OpenAI)</h4>
-                        <p class="text-sm text-slate-600">Modelos de lenguaje grandes muy potentes, conocidos por **ChatGPT**. Versátiles para generar texto, código, resúmenes, ideas. Gran capacidad conversacional.</p>
+                        <p class="text-sm text-slate-600">Modelos de lenguaje grandes muy potentes, conocidos por <b>ChatGPT</b>. Versátiles para generar texto, código, resúmenes, ideas. Gran capacidad conversacional.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">No podemos ver cómo fueron entrenados.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="Logo Gemini" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="[Image of Logo Gemini (Google)]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">Gemini (Google)</h4>
                         <p class="text-sm text-slate-600">Modelos multimodales que entienden y operan con texto, imágenes, audio y video. Muy versátiles para diversas tareas empresariales.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">Su proceso de entrenamiento no es público.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://osher.com.au/images/posts/how-to-build-ai-agent-claude-ai_0d2d6bcc.png" alt="Logo Claude" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://osher.com.au/images/posts/how-to-build-ai-agent-claude-ai_0d2d6bcc.png" alt="[Image of Logo Claude (Anthropic)]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">Claude (Anthropic)</h4>
                         <p class="text-sm text-slate-600">Diseñado con énfasis en la seguridad y la utilidad, es ideal para conversaciones más largas y tareas que requieren gran cantidad de texto.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://bcrnews.com.ar/wp-content/uploads/2025/03/DeepSeek.jpg" alt="Logo DeepSeek" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://bcrnews.com.ar/wp-content/uploads/2025/03/DeepSeek.jpg" alt="[Image of Logo DeepSeek]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">DeepSeek (Open Source)</h4>
                         <p class="text-sm text-slate-600">Un modelo de código abierto, especialmente bueno para la generación de código y tareas de programación, pero también útil en otras áreas.</p>
                         <p class="text-sm font-bold mt-2 text-green-600">Open Source</p>
                         <p class="text-xs text-green-500">Podemos ver y entender su entrenamiento.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://zorgle.co.uk/wp-content/uploads/2024/11/Perplexity-logo.png" alt="Logo Perplexity AI" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://assets.bizclikmedia.net/1800/b9c92286e658119663b97a2267aee9d1:0006bf344b145b7046bf9b5f43b7a786/perplexity-logo.webp" alt="[Image of Logo Perplexity AI]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">Perplexity AI</h4>
                         <p class="text-sm text-slate-600">Un motor de respuestas conversacional que te da fuentes. Ideal para investigación rápida y verificación de hechos.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="Logo NotebookLM" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="[Image of Logo NotebookLM]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">NotebookLM (Google)</h4>
                         <p class="text-sm text-slate-600">Para organizar, resumir y generar contenido a partir de tus documentos. Ideal para gestionar proyectos y análisis de información interna.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
                     </div>
-                    <!-- Agrega más modelos open source si lo deseas aquí -->
                 </div>
                 
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
@@ -213,27 +212,43 @@
 
         <section id="alcance-ia" class="main-content hidden">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">🌐 El Alcance de la IA: Conociendo los Modelos</h2>
-                <p class="text-lg text-slate-600 mb-8">Existen diferentes tipos de Inteligencia Artificial, cada uno con un enfoque y utilidad particular. Aquí te presentamos algunos ejemplos de modelos de lenguaje, para que entiendas la diversidad de estas herramientas y cómo se adaptan a distintas necesidades.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🌐 El Alcance de la IA: Modelos para Casos de Uso Específicos</h2>
+                <p class="text-lg text-slate-600 mb-8">La Inteligencia Artificial se manifiesta en una amplia gama de modelos, cada uno diseñado para resolver necesidades muy específicas. Aquí te presentamos algunos ejemplos clave que ilustran cómo la IA se adapta a distintos escenarios y desafíos empresariales.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-slate-100 p-6 rounded-xl text-center">
                         <p class="text-5xl mb-3">💬</p>
-                        <h3 class="font-bold text-xl text-slate-800">ChatGPT (Ej. de GPT)</h3>
-                        <p class="text-slate-600">Un modelo conversacional muy versátil. Ideal para generar textos creativos, responder preguntas generales, redactar correos o resumir documentos. Es como hablar con un experto en casi cualquier tema.</p>
+                        <h3 class="font-bold text-xl text-slate-800">Modelos Conversacionales (Ej: ChatGPT)</h3>
+                        <p class="text-slate-600">Versátiles para generar textos creativos, responder preguntas generales, redactar correos o resumir documentos. Es como hablar con un experto en casi cualquier tema.</p>
                     </div>
                     <div class="bg-slate-100 p-6 rounded-xl text-center">
                         <p class="text-5xl mb-3">🦙</p>
-                        <h3 class="font-bold text-xl text-slate-800">Llama (Meta)</h3>
-                        <p class="text-slate-600">Una familia de modelos de código abierto, muy potentes para investigación y desarrollo. Se usa para tareas avanzadas de procesamiento de lenguaje y en aplicaciones especializadas.</p>
+                        <h3 class="font-bold text-xl text-slate-800">Modelos de Investigación Abierta (Ej: Llama)</h3>
+                        <p class="text-slate-600">Familias de modelos de código abierto, muy potentes para investigación y desarrollo. Se usan para tareas avanzadas de procesamiento de lenguaje y en aplicaciones especializadas.</p>
                     </div>
                     <div class="bg-slate-100 p-6 rounded-xl text-center">
                         <p class="text-5xl mb-3">📚</p>
-                        <h3 class="font-bold text-xl text-slate-800">BERT (Google)</h3>
-                        <p class="text-slate-600">Centrado en entender el contexto de las palabras en frases. Es excelente para búsqueda de información, análisis de sentimientos y comprensión lectora en grandes volúmenes de texto.</p>
+                        <h3 class="font-bold text-xl text-slate-800">Modelos de Comprensión Textual (Ej: BERT)</h3>
+                        <p class="text-slate-600">Centrados en entender el contexto de las palabras en frases. Son excelentes para búsqueda de información, análisis de sentimientos y comprensión lectora en grandes volúmenes de texto.</p>
+                    </div>
+                    <!-- Nuevos modelos específicos -->
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">🎨</p>
+                        <h3 class="font-bold text-xl text-slate-800">Generación de Imágenes (Ej: DALL-E)</h3>
+                        <p class="text-slate-600">Especializados en crear imágenes realistas o artísticas a partir de descripciones de texto. Útil para marketing, diseño y creación de contenido visual rápido.</p>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">🔬</p>
+                        <h3 class="font-bold text-xl text-slate-800">Modelos de Bioinformática (Ej: AlphaFold)</h3>
+                        <p class="text-slate-600">Capaces de predecir la estructura 3D de las proteínas. Transformador para la investigación médica, el desarrollo de fármacos y la biotecnología.</p>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <p class="text-5xl mb-3">💼</p>
+                        <h3 class="font-bold text-xl text-slate-800">IA para CRM/Ventas (Ej: Salesforce Einstein)</h3>
+                        <p class="text-slate-600">Integrada en plataformas de gestión de clientes para predecir comportamientos, automatizar tareas de ventas y personalizar la interacción con el cliente.</p>
                     </div>
                 </div>
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
-                    <p class="text-xl text-center text-sky-800 font-semibold">Pregunta: ¿Conocías la diversidad de modelos de IA? ¿Cuál te llama más la atención para tu trabajo?</p>
+                    <p class="text-xl text-center text-sky-800 font-semibold">Pregunta: ¿Qué otras aplicaciones de IA específicas visualizas en tu área de trabajo?</p>
                 </div>
             </div>
         </section>
@@ -412,15 +427,15 @@
 
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
                     <p class="text-xl text-center text-sky-800 font-semibold mb-4">¡Importante! Creación de Cuentas:</p>
-                    <p class="text-lg text-slate-600 text-center">Pronto recibirás instrucciones detalladas para crear tus cuentas en estas plataformas utilizando **tu correo empresarial de GrupoO2**. Esto asegura la seguridad y la integración con nuestras herramientas.</p>
+                    <p class="text-lg text-slate-600 text-center">Pronto recibirás instrucciones detalladas para crear tus cuentas en estas plataformas utilizando <b>tu correo empresarial de GrupoO2</b>. Esto asegura la seguridad y la integración con nuestras herramientas.</p>
                 </div>
 
                 <h3 class="text-2xl font-bold text-slate-800 mt-10 mb-4">Roadmap de Capacitación y Soporte</h3>
                 <ul class="list-disc list-inside space-y-3 text-slate-600 text-lg">
-                    <li>**Capacitaciones Personalizadas:** Próximamente, ofreceremos talleres y sesiones prácticas adaptadas a las necesidades específicas de cada área.</li>
-                    <li>**Recursos Internos:** Acceso a una biblioteca de tutoriales y guías rápidas sobre el uso de la IA en GrupoO2.</li>
-                    <li>**Formulario de Atención y Necesidades:** Habilitaremos un canal para que puedas compartir tus ideas, dudas y necesidades sobre la IA, ¡tu feedback es vital!</li>
-                    <li>**Comunidad de Práctica:** Fomentaremos espacios para compartir experiencias y casos de éxito entre colegas.</li>
+                    <li><b>Capacitaciones Personalizadas:</b> Próximamente, ofreceremos talleres y sesiones prácticas adaptadas a las necesidades específicas de cada área.</li>
+                    <li><b>Recursos Internos:</b> Acceso a una biblioteca de tutoriales y guías rápidas sobre el uso de la IA en GrupoO2.</li>
+                    <li><b>Formulario de Atención y Necesidades:</b> Habilitaremos un canal para que puedas compartir tus ideas, dudas y necesidades sobre la IA, ¡tu feedback es vital!</li>
+                    <li><b>Comunidad de Práctica:</b> Fomentaremos espacios para compartir experiencias y casos de éxito entre colegas.</li>
                 </ul>
 
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
@@ -446,7 +461,7 @@
                     details: {
                         sinIA: 'Te tomas mucho tiempo pensando en la estructura y las palabras exactas, o buscando ejemplos en correos anteriores.',
                         conIA: 'Puedes pedirle a una IA generativa que redacte un borrador completo, ajustando el tono y el propósito. Solo revisas y envías.',
-                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Redacta un correo formal para el gerente de proyectos, solicitando una actualización urgente sobre el estado del proyecto X. El tono debe ser respetuoso pero firme."'
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Redacta un correo formal para el gerente de proyectos, solicitando una actualización urgente sobre el estado del proyecto X. El tono debe ser respetuoso pero firme."'
                     }
                 },
                 {
@@ -456,7 +471,7 @@
                     details: {
                         sinIA: 'Pasar horas revisando manualmente filas y columnas, creando tablas dinámicas complejas o gráficos que no transmiten el mensaje.',
                         conIA: 'Copia y pega tus datos (¡recuerda, sin información confidencial!) en una IA y pídele que identifique tendencias, resuma información clave o te sugiera gráficos.',
-                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Analiza estos datos de ventas [pega datos clave de una muestra no confidencial] e identifica los 3 productos con mejor rendimiento en el último trimestre y las 2 tendencias de compra principales."'
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Analiza estos datos de ventas [pega datos clave de una muestra no confidencial] e identifica los 3 productos con mejor rendimiento en el último trimestre y las 2 tendencias de compra principales."'
                     }
                 },
                 {
@@ -466,7 +481,7 @@
                     details: {
                         sinIA: 'Buscar en manuales extensos, foros complicados, o intentar aprender lenguajes de script que no conoces.',
                         conIA: 'Describe lo que necesitas en lenguaje simple y la IA te proporcionará la fórmula exacta, o el paso a paso para una automatización "no-code" con herramientas existentes.',
-                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Genera una fórmula de Excel para calcular el promedio de la columna \'Puntaje\' solo para las filas donde la columna \'Estado\' sea \'Completado\'." o "Dame los pasos para crear una automatización que mueva archivos PDF con la palabra \'Factura\' a una carpeta específica en mi equipo."'
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Genera una fórmula de Excel para calcular el promedio de la columna \'Puntaje\' solo para las filas donde la columna \'Estado\' sea \'Completado\'." o "Dame los pasos para crear una automatización que mueva archivos PDF con la palabra \'Factura\' a una carpeta específica en mi equipo."'
                     }
                 },
                 {
@@ -476,7 +491,7 @@
                     details: {
                         sinIA: 'Leer todo el documento, subrayar, tomar notas, lo que consume mucho tiempo valioso.',
                         conIA: 'Pega el texto del informe (¡siempre que no sea confidencial!) o las notas en una herramienta de IA y pídele un resumen conciso con los puntos más importantes.',
-                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Resume este informe técnico [pega el texto del informe] destacando las 3 conclusiones más importantes y las 2 acciones recomendadas."'
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Resume este informe técnico [pega el texto del informe] destacando las 3 conclusiones más importantes y las 2 acciones recomendadas."'
                     }
                 },
                 {
@@ -486,7 +501,7 @@
                     details: {
                         sinIA: 'Sentirte "bloqueado" creativamente, o que las ideas no fluyen en el equipo.',
                         conIA: 'La IA puede actuar como un "cerebro" adicional, generándote un sinfín de ideas para que las explores y adaptes a tus necesidades.',
-                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Genera 10 ideas innovadoras para una campaña interna de bienestar para empleados de oficina, enfocándose en bajo costo y alta participación."'
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Genera 10 ideas innovadoras para una campaña interna de bienestar para empleados de oficina, enfocándose en bajo costo y alta participación."'
                     }
                 },
                 {
@@ -496,7 +511,27 @@
                     details: {
                         sinIA: 'Buscar respuestas en manuales extensos, o tardar en formular la respuesta perfecta para una situación común.',
                         conIA: 'Puedes usarla para generar borradores de respuestas estandarizadas y claras, o incluso para simular escenarios de interacción y practicar tus respuestas.',
-                        prompt: '<strong>Cómo usarlo:</strong> Pide a la IA: "Redacta una respuesta concisa y empática para un colega que reporta un error recurrente en un sistema interno, indicando que ya estamos investigando y le daremos una actualización en 24 horas."'
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Redacta una respuesta concisa y empática para un colega que reporta un error recurrente en un sistema interno, indicando que ya estamos investigando y le daremos una actualización en 24 horas."'
+                    }
+                },
+                {
+                    icon: '🖼️',
+                    title: 'Creación de Contenido Visual',
+                    description: '¿Necesitas imágenes para presentaciones, redes sociales o campañas sin ser diseñador gráfico?',
+                    details: {
+                        sinIA: 'Depender de diseñadores, buscar imágenes de stock genéricas, o intentar crear algo con herramientas complejas sin experiencia.',
+                        conIA: 'Describe la imagen que necesitas a una IA generativa de imágenes (como DALL-E) y obtén propuestas visuales en segundos, que luego puedes ajustar.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Crea una imagen de estilo minimalista que represente la colaboración en un entorno de oficina moderno, con colores suaves y un enfoque en la diversidad del equipo."'
+                    }
+                },
+                {
+                    icon: '🤝',
+                    title: 'Asistencia en CRM y Ventas',
+                    description: '¿Cómo la IA puede potenciar tus interacciones con clientes y optimizar procesos de venta?',
+                    details: {
+                        sinIA: 'Análisis manual de leads, escribir correos de seguimiento genéricos, o predecir ventas basándose solo en la intuición.',
+                        conIA: 'La IA integrada en un CRM (como Salesforce Einstein) puede puntuar leads, personalizar mensajes de correo, y ofrecer previsiones de ventas más precisas.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA (en tu sistema CRM con capacidades de IA): "Analiza el historial de interacción de este cliente y sugiere los 3 próximos pasos más efectivos para cerrar la venta."'
                     }
                 }
             ];
