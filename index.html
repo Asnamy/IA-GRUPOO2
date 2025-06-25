@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Corporate Calm -->
-    <!-- Application Structure Plan: La aplicación es una SPA con navegación lateral fija. El flujo de secciones es: "Inicio", "¿Qué es la IA?" (concepto y cómo funciona, énfasis en inputs), "El Alcance de la IA" (explicación de diferentes modelos como ChatGPT, Llama, Bert), "IA en Acción" (ejemplos prácticos en oficina), "Beneficios y Oportunidades", "Nuestra Responsabilidad" (riesgos, políticas, buenas prácticas), y "Próximos Pasos" (stack de IA de GrupoO2 y roadmap). Esta estructura lineal pero navegable permite un aprendizaje progresivo y detallado, desde lo básico hasta la implementación práctica y la gobernanza. La interactividad de las tarjetas de ejemplos y el gráfico de beneficios mejora la asimilación. -->
-    <!-- Visualization & Content Choices: La sección "¿Qué es la IA?" utiliza texto explicativo directo para aclarar el concepto y el rol de los inputs. "El Alcance de la IA" presenta los diferentes modelos de IA con descripciones concisas para informar a la audiencia. Los "Ejemplos Prácticos" (Meta: Organizar/Informar) usan tarjetas HTML/Tailwind con JS para mostrar/ocultar "Antes vs. Después", ideal para el público no técnico y cubriendo tareas de oficina (Excel, no-code). Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) emplean "flip cards" HTML/CSS/JS para presentar los riesgos clave y las responsabilidades. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) en "Beneficios" para visualizar el impacto potencial. Los "Puntos de Reflexión" y preguntas para la audiencia se mantienen como texto. Los "Próximos Pasos" listan las compañías y el roadmap como elementos textuales. NO se usan gráficos SVG ni la librería Mermaid JS. -->
+    <!-- Application Structure Plan: La aplicación es una SPA con navegación lateral fija. El flujo de secciones es: "Inicio" (objetivo general y resumen del contenido), "¿Qué es la IA?" (concepto actualizado, cómo funciona, importancia de inputs, ejemplos de modelos con distinción open/no-open source y fotos), "El Alcance de la IA" (detalles de modelos), "IA en Acción" (ejemplos prácticos en oficina), "Beneficios y Oportunidades", "Nuestra Responsabilidad" (riesgos, políticas, buenas prácticas), y "Próximos Pasos" (stack de IA de GrupoO2 y roadmap). Esta estructura lineal pero navegable permite un aprendizaje progresivo y detallado, desde lo básico hasta la implementación práctica y la gobernanza. La interactividad de las tarjetas de ejemplos y el gráfico de beneficios mejora la asimilación. -->
+    <!-- Visualization & Content Choices: La sección "Inicio" utiliza texto para el objetivo y resumen. La sección "¿Qué es la IA?" incorpora texto actualizado para la definición, la imagen provista (URL de la imagen del diagrama conceptual) para el diagrama conceptual, y una cuadrícula de imágenes (URLs directas) y texto para diferenciar los modelos de IA, enfatizando los inputs del usuario. "El Alcance de la IA" presenta los diferentes modelos de IA con descripciones concisas. Los "Ejemplos Prácticos" (Meta: Organizar/Informar) usan tarjetas HTML/Tailwind con JS para mostrar/ocultar "Antes vs. Después". Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) emplean "flip cards" HTML/CSS/JS para presentar los riesgos clave y las responsabilidades. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) en "Beneficios" para visualizar el impacto potencial. Los "Puntos de Reflexión" y preguntas para la audiencia se mantienen como texto. Los "Próximos Pasos" listan las compañías y el roadmap como elementos textuales. NO se usan gráficos SVG ni la librería Mermaid JS. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -59,7 +59,6 @@
         }
         .card-back {
             transform: rotateY(180deg);
-            /* Removed overflow-y-auto from here */
         }
         .chart-container {
             position: relative;
@@ -110,7 +109,7 @@
             </a>
         </nav>
         <div class="mt-auto pt-8 text-center text-xs text-slate-400">
-            <p>&copy; 2025 GrupoO2</p>
+            <p>&copy; 2024 GrupoO2</p>
             <p>Material de concientización</p>
         </div>
     </aside>
@@ -126,7 +125,17 @@
         <section id="inicio" class="main-content">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
                 <h2 class="text-4xl font-bold text-sky-600 mb-4">IA en tu Día a Día: Herramientas para el Futuro en GrupoO2</h2>
-                <p class="text-lg text-slate-600 mb-6">Esta guía interactiva está diseñada para ti, el equipo de GrupoO2. Queremos mostrarte cómo la Inteligencia Artificial, que quizás antes te parecía compleja, es en realidad una herramienta práctica y útil para mejorar tus tareas diarias y hacer nuestro trabajo más eficiente. ¡Prepárate para descubrir cómo la IA puede convertirse en tu nueva aliada!</p>
+                <p class="text-lg text-slate-600 mb-6">**Objetivo General:** Este documento busca interiorizar y nivelar los conocimientos de todo el personal de GrupoO2 acerca de qué es la Inteligencia Artificial y cómo podemos aprovecharla de manera responsable.</p>
+                <p class="text-lg text-slate-600 mb-6">**En esta guía interactiva abordaremos:**
+                    <ul class="list-disc list-inside ml-4 text-slate-600 space-y-1">
+                        <li>**Qué es la IA y cómo funciona:** Desmitificando el concepto y entendiendo su lógica.</li>
+                        <li>**El alcance de la IA:** Conociendo los diferentes tipos de modelos y sus utilidades.</li>
+                        <li>**IA en Acción:** Ejemplos prácticos para mejorar tus tareas diarias en la oficina.</li>
+                        <li>**Beneficios y Oportunidades:** Cómo la IA potencia nuestra eficiencia y creatividad.</li>
+                        <li>**Nuestra Responsabilidad:** Entendiendo los riesgos, las políticas y las buenas prácticas para un uso ético y seguro.</li>
+                        <li>**Próximos Pasos:** El stack de IA de GrupoO2 y nuestro roadmap de apoyo.</li>
+                    </ul>
+                </p>
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
                     <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Qué tarea rutinaria de tu día a día te gustaría que fuera más sencilla o rápida?</p>
                 </div>
@@ -136,25 +145,54 @@
         <section id="que-es-ia" class="main-content hidden">
              <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
                 <h2 class="text-4xl font-bold text-sky-600 mb-4">🧠 ¿Qué es la Inteligencia Artificial y Cómo Funciona?</h2>
-                <p class="text-lg text-slate-600 mb-6">La IA es como tener un asistente digital muy inteligente. En esencia, son programas de computadora diseñados para imitar la inteligencia humana, permitiéndoles aprender, razonar y realizar tareas que, antes, solo las personas podían hacer.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-5xl">🤖</span>
-                        <div>
-                            <h3 class="font-bold text-xl text-slate-800">Concepto Clave: Input y Output</h3>
-                            <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (inputs) y generando una respuesta o resultado (output). ¡La calidad del resultado depende de la calidad de tu pregunta!</p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-100 p-6 rounded-xl flex items-center space-x-4">
-                        <span class="text-5xl">✅</span>
-                        <div>
-                            <h3 class="font-bold text-xl text-slate-800">IA: Potenciando Habilidades Humanas</h3>
-                            <p class="text-slate-600">Su objetivo es hacernos más eficientes y libres para tareas creativas, no reemplazarnos. Es una herramienta a tu disposición.</p>
-                        </div>
-                    </div>
+                <p class="text-lg text-slate-600 mb-6">La **Inteligencia Artificial (IA)** es una rama de las ciencias de la computación que permite que las máquinas puedan **simular el aprendizaje humano**, incluyendo capacidades como la comprensión, resolución de problemas, toma de decisiones y reconocimiento de patrones.</p>
+                
+                <div class="flex justify-center my-8">
+                    <img src="https://synoptekmark.b-cdn.net/wp-content/uploads/2023/07/ai-ml-dl-and-generative-ai-face-off.webp" alt="Diagrama de Inteligencia Artificial" class="rounded-lg shadow-md max-w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F0F0F0/333333?text=Error+al+cargar+imagen';">
                 </div>
+
+                <div class="bg-slate-100 p-6 rounded-xl mb-6">
+                    <h3 class="font-bold text-xl text-slate-800 mb-2">Concepto Clave: Tú das el Input, la IA da el Output</h3>
+                    <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (llamados **inputs** o "prompts") y generando una respuesta, un análisis o un resultado (llamado **output**). ¡Es crucial entender que **la calidad del resultado depende directamente de la claridad y precisión de tu input**!</p>
+                </div>
+
+                <p class="text-lg text-slate-600 mb-6">Hoy en día, la IA está más presente en nuestro día a día de lo que imaginamos. Muchos de ustedes ya están interactuando con ella, a veces sin darse cuenta. Desde las recomendaciones en servicios de streaming hasta los asistentes de voz en sus teléfonos. Pero veamos ejemplos de modelos de lenguaje que podemos usar activamente:</p>
+                
+                <h3 class="font-bold text-xl text-slate-800 mb-4">Modelos de IA más conocidos:</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://mcit.gov.qa/wp-content/uploads/sites/4/2023/02/MCIT-and-Microsoft-Launch-OpenAI-GPT-to-Empower-Government-Innovation.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">GPT (OpenAI)</h4>
+                        <p class="text-sm text-slate-600">Modelos de lenguaje grandes muy potentes, conocidos por **ChatGPT**. Versátiles para generar texto, código, resúmenes, ideas. Gran capacidad conversacional.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">No podemos ver cómo fueron entrenados.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="Logo Gemini" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">Gemini (Google)</h4>
+                        <p class="text-sm text-slate-600">Modelos multimodales que entienden y operan con texto, imágenes, audio y video. Muy versátiles para diversas tareas empresariales.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">Su proceso de entrenamiento no es público.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://i.gzn.jp/img/2024/11/15/anthropic-claude-nuclear-info/00.png" alt="Logo Claude" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">Claude (Anthropic)</h4>
+                        <p class="text-sm text-slate-600">Diseñado con énfasis en la seguridad y la utilidad, es ideal para conversaciones más largas y tareas que requieren gran cantidad de texto.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://bcrnews.com.ar/wp-content/uploads/2025/03/DeepSeek.jpg" alt="Logo DeepSeek" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">DeepSeek (Open Source)</h4>
+                        <p class="text-sm text-slate-600">Un modelo de código abierto, especialmente bueno para la generación de código y tareas de programación, pero también útil en otras áreas.</p>
+                        <p class="text-sm font-bold mt-2 text-green-600">Open Source</p>
+                        <p class="text-xs text-green-500">Podemos ver y entender su entrenamiento.</p>
+                    </div>
+                    <!-- Agrega más modelos open source si lo deseas aquí -->
+                </div>
+                
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
-                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Qué tipo de "inputs" crees que serían más útiles darle a una IA para tu trabajo?</p>
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Habías interactuado ya con alguno de estos modelos? ¿Qué te sorprende más de su funcionamiento?</p>
                 </div>
             </div>
         </section>
