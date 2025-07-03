@@ -9,10 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Corporate Calm -->
-    <!-- Application Structure Plan: La aplicación es una SPA con navegación lateral fija. El flujo de secciones es: "Inicio" (objetivo general y resumen del contenido), "¿Qué es la IA?" (concepto actualizado, cómo funciona, importancia de inputs, ejemplos de modelos con distinción open/no-open source y fotos), "El Alcance de la IA" (detalles de modelos enfocados en casos de uso específicos), "IA en Acción" (ejemplos prácticos en oficina, ahora actualizados con más diversidad), "Beneficios y Oportunidades", "Nuestra Responsabilidad" (riesgos, políticas, buenas prácticas), y "Próximos Pasos" (stack de IA de GrupoO2 y roadmap). Esta estructura lineal pero navegable permite un aprendizaje progresivo y detallado, desde lo básico hasta la implementación práctica y la gobernanza. La interactividad de las tarjetas de ejemplos y el gráfico de beneficios mejora la asimilación. -->
-    <!-- Visualization & Content Choices: La sección "Inicio" utiliza texto para el objetivo y resumen. La sección "¿Qué es la IA?" incorpora texto actualizado para la definición, la imagen provista (URL de la imagen del diagrama conceptual) para el diagrama conceptual, y una cuadrícula de imágenes (URLs directas) y texto para diferenciar los modelos de IA, enfatizando los inputs del usuario. "El Alcance de la IA" presenta los diferentes modelos de IA con descripciones concisas, ahora con un enfoque en casos de uso específicos y 6 ejemplos. Los "Ejemplos Prácticos" (Meta: Organizar/Informar) usan tarjetas HTML/Tailwind con JS para mostrar/ocultar "Antes vs. Después" y ahora incluyen nuevos casos de uso más específicos. Las "Políticas de Uso Responsable" (Meta: Informar/Organizar) emplean "flip cards" HTML/CSS/JS para presentar los riesgos clave y las responsabilidades. Se incluye un gráfico de barras (Chart.js - Meta: Informar/Comparar) en "Beneficios" para visualizar el impacto potencial. Los "Puntos de Reflexión" y preguntas para la audiencia se mantienen como texto. Los "Próximos Pasos" listan las compañías y el roadmap como elementos textuales. NO se usan gráficos SVG ni la librería Mermaid JS. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -38,6 +34,7 @@
         }
         .card-flip {
             perspective: 1000px;
+            height: 100%; /* Ensure flip cards have consistent height */
         }
         .card-flip-inner {
             position: relative;
@@ -45,6 +42,9 @@
             height: 100%;
             transition: transform 0.6s;
             transform-style: preserve-3d;
+            border-radius: 0.75rem; /* rounded-xl */
+            border: 2px solid #e2e8f0; /* slate-200 */
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
         }
         .card-flip:hover .card-flip-inner {
             transform: rotateY(180deg);
@@ -56,9 +56,23 @@
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             border-radius: 0.75rem; /* rounded-xl */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem; /* p-6 */
+            text-align: center;
         }
         .card-back {
             transform: rotateY(180deg);
+            background-color: #f0f9ff; /* sky-50 */
+            border: 2px solid #bae6fd; /* sky-200 */
+            color: #0c4a6e; /* sky-900 */
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .card-front {
+            background-color: #f1f5f9; /* slate-100 */
         }
         .chart-container {
             position: relative;
@@ -73,6 +87,24 @@
             .chart-container {
                 height: 350px;
             }
+        }
+        .team-member-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .team-member-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid #0ea5e9; /* sky-500 */
         }
     </style>
 </head>
@@ -93,7 +125,7 @@
                 <span class="mr-3 text-xl">🧠</span> ¿Qué es la IA?
             </a>
             <a href="#alcance-ia" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">🌐</span> Alcance de la IA
+                <span class="mr-3 text-xl">🌐</span> El Alcance de la IA
             </a>
             <a href="#ia-en-accion" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">💡</span> IA en Acción
@@ -103,6 +135,12 @@
             </a>
             <a href="#responsabilidad" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">🛡️</span> Responsabilidad
+            </a>
+            <a href="#noticias" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">📰</span> Noticias
+            </a>
+            <a href="#equipo" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">👨‍💻</span> Equipo
             </a>
             <a href="#proximos-pasos" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">🚀</span> Próximos Pasos
@@ -148,12 +186,12 @@
                 <p class="text-lg text-slate-600 mb-6">La <b>Inteligencia Artificial (IA)</b> es una rama de las ciencias de la computación que permite que las máquinas puedan <b>simular el aprendizaje humano</b>, incluyendo capacidades como la comprensión, resolución de problemas, toma de decisiones y reconocimiento de patrones.</p>
                 
                 <div class="flex justify-center my-8">
-                    <img src="https://synoptekmark.b-cdn.net/wp-content/uploads/2023/07/ai-ml-dl-and-generative-ai-face-off.webp" alt="[Image of Diagrama de Inteligencia Artificial]" class="rounded-lg shadow-md max-w-xl h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F0F0F0/333333?text=Error+al+cargar+imagen';">
+                    <img src="https://synoptekmark.b-cdn.net/wp-content/uploads/2023/07/ai-ml-dl-and-generative-ai-face-off.webp" alt="" class="rounded-lg shadow-md max-w-xl h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F0F0F0/333333?text=Error+al+cargar+imagen';">
                 </div>
 
                 <div class="bg-slate-100 p-6 rounded-xl mb-6">
-                    <h3 class="font-bold text-xl text-slate-800 mb-2">Concepto Clave: Tú das el Input, la IA da el Output</h3>
-                    <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (llamados <b>inputs</b> o "prompts") y generando una respuesta, un análisis o un resultado (llamado <b>output</b>). ¡Es crucial entender que <b>la calidad del resultado depende directamente de la claridad y precisión de tu input</b>!</p>
+                    <h3 class="font-bold text-xl text-slate-800 mb-2">Concepto Clave: Tú das la Entrada, la IA da el Resultado</h3>
+                    <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (llamados <b>entradas</b> o "prompts") y generando una respuesta, un análisis o un <b>resultado</b> (llamado <b>salida</b>). ¡Es crucial entender que <b>la calidad del resultado depende directamente de la claridad y precisión de tu entrada</b>!</p>
                 </div>
 
                 <p class="text-lg text-slate-600 mb-6">Hoy en día, la IA está más presente en nuestro día a día de lo que imaginamos. Muchos de ustedes ya están interactuando con ella, a veces sin darse cuenta. Desde las recomendaciones en servicios de streaming hasta los asistentes de voz en sus teléfonos. Pero veamos ejemplos de modelos de lenguaje que podemos usar activamente:</p>
@@ -161,42 +199,42 @@
                 <h3 class="font-bold text-xl text-slate-800 mb-4">Modelos de IA más conocidos:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://mcit.gov.qa/wp-content/uploads/sites/4/2023/02/MCIT-and-Microsoft-Launch-OpenAI-GPT-to-Empower-Government-Innovation.jpg" alt="[Image of Logo GPT (OpenAI)]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://mcit.gov.qa/wp-content/uploads/sites/4/2023/02/MCIT-and-Microsoft-Launch-OpenAI-GPT-to-Empower-Government-Innovation.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">GPT (OpenAI)</h4>
                         <p class="text-sm text-slate-600">Modelos de lenguaje grandes muy potentes, conocidos por <b>ChatGPT</b>. Versátiles para generar texto, código, resúmenes, ideas. Gran capacidad conversacional.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">No podemos ver cómo fueron entrenados.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="[Image of Logo Gemini (Google)]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">Gemini (Google)</h4>
                         <p class="text-sm text-slate-600">Modelos multimodales que entienden y operan con texto, imágenes, audio y video. Muy versátiles para diversas tareas empresariales.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">Su proceso de entrenamiento no es público.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://osher.com.au/images/posts/how-to-build-ai-agent-claude-ai_0d2d6bcc.png" alt="[Image of Logo Claude (Anthropic)]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://osher.com.au/images/posts/how-to-build-ai-agent-claude-ai_0d2d6bcc.png" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">Claude (Anthropic)</h4>
                         <p class="text-sm text-slate-600">Diseñado con énfasis en la seguridad y la utilidad, es ideal para conversaciones más largas y tareas que requieren gran cantidad de texto.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://bcrnews.com.ar/wp-content/uploads/2025/03/DeepSeek.jpg" alt="[Image of Logo DeepSeek]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://bcrnews.com.ar/wp-content/uploads/2025/03/DeepSeek.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">DeepSeek (Open Source)</h4>
                         <p class="text-sm text-slate-600">Un modelo de código abierto, especialmente bueno para la generación de código y tareas de programación, pero también útil en otras áreas.</p>
                         <p class="text-sm font-bold mt-2 text-green-600">Open Source</p>
                         <p class="text-xs text-green-500">Podemos ver y entender su entrenamiento.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://assets.bizclikmedia.net/1800/b9c92286e658119663b97a2267aee9d1:0006bf344b145b7046bf9b5f43b7a786/perplexity-logo.webp" alt="[Image of Logo Perplexity AI]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://assets.bizclikmedia.net/1800/b9c92286e658119663b97a2267aee9d1:0006bf344b145b7046bf9b5f43b7a786/perplexity-logo.webp" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">Perplexity AI</h4>
                         <p class="text-sm text-slate-600">Un motor de respuestas conversacional que te da fuentes. Ideal para investigación rápida y verificación de hechos.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
                         <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
                     </div>
                     <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
-                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="[Image of Logo NotebookLM]" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-semibold text-slate-800">NotebookLM (Google)</h4>
                         <p class="text-sm text-slate-600">Para organizar, resumir y generar contenido a partir de tus documentos. Ideal para gestionar proyectos y análisis de información interna.</p>
                         <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
@@ -213,38 +251,85 @@
         <section id="alcance-ia" class="main-content hidden">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
                 <h2 class="text-4xl font-bold text-sky-600 mb-4">🌐 El Alcance de la IA: Modelos para Casos de Uso Específicos</h2>
-                <p class="text-lg text-slate-600 mb-8">La Inteligencia Artificial se manifiesta en una amplia gama de modelos, cada uno diseñado para resolver necesidades muy específicas. Aquí te presentamos algunos ejemplos clave que ilustran cómo la IA se adapta a distintos escenarios y desafíos empresariales.</p>
+                <p class="text-lg text-slate-600 mb-8">La Inteligencia Artificial se manifiesta en una amplia gama de modelos, cada uno diseñado para resolver necesidades muy específicas. Aquí te presentamos algunos ejemplos clave que ilustran cómo la IA se adapta a distintos escenarios y desafíos empresariales. ¡Pasa el mouse sobre las tarjetas para ver ejemplos de cómo usar la IA!</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <p class="text-5xl mb-3">💬</p>
-                        <h3 class="font-bold text-xl text-slate-800">Modelos Conversacionales (Ej: ChatGPT)</h3>
-                        <p class="text-slate-600">Versátiles para generar textos creativos, responder preguntas generales, redactar correos o resumir documentos. Es como hablar con un experto en casi cualquier tema.</p>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">💬</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos Conversacionales (Ej: ChatGPT)</h3>
+                                <p class="text-slate-600">Versátiles para generar textos creativos, responder preguntas generales, redactar correos o resumir documentos. Es como hablar con un experto en casi cualquier tema.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Redacta un email formal a un cliente para informarle sobre una actualización de nuestro servicio, destacando los beneficios principales y la fecha de implementación."</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <p class="text-5xl mb-3">🦙</p>
-                        <h3 class="font-bold text-xl text-slate-800">Modelos de Investigación Abierta (Ej: Llama)</h3>
-                        <p class="text-slate-600">Familias de modelos de código abierto, muy potentes para investigación y desarrollo. Se usan para tareas avanzadas de procesamiento de lenguaje y en aplicaciones especializadas.</p>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">🦙</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos de Investigación Abierta (Ej: Llama)</h3>
+                                <p class="text-slate-600">Familias de modelos de código abierto, muy potentes para investigación y desarrollo. Se usan para tareas avanzadas de procesamiento de lenguaje y en aplicaciones especializadas.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Analiza el siguiente conjunto de datos [pegar datos de ejemplo] e identifica patrones y anomalías que puedan indicar un fraude en transacciones financieras."</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <p class="text-5xl mb-3">📚</p>
-                        <h3 class="font-bold text-xl text-slate-800">Modelos de Comprensión Textual (Ej: BERT)</h3>
-                        <p class="text-slate-600">Centrados en entender el contexto de las palabras en frases. Son excelentes para búsqueda de información, análisis de sentimientos y comprensión lectora en grandes volúmenes de texto.</p>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">📚</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos de Comprensión Textual (Ej: BERT)</h3>
+                                <p class="text-slate-600">Centrados en entender el contexto de las palabras en frases. Son excelentes para búsqueda de información, análisis de sentimientos y comprensión lectora en grandes volúmenes de texto.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Dada esta conversación de chat de soporte [pegar chat], clasifica el sentimiento general del cliente (positivo, negativo, neutro) y extrae las tres quejas recurrentes más importantes."</p>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Nuevos modelos específicos -->
-                    <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <p class="text-5xl mb-3">🎨</p>
-                        <h3 class="font-bold text-xl text-slate-800">Generación de Imágenes (Ej: DALL-E)</h3>
-                        <p class="text-slate-600">Especializados en crear imágenes realistas o artísticas a partir de descripciones de texto. Útil para marketing, diseño y creación de contenido visual rápido.</p>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">🎨</p>
+                                <h3 class="font-bold text-xl text-slate-800">Generación de Imágenes (Ej: DALL-E)</h3>
+                                <p class="text-slate-600">Especializados en crear imágenes realistas o artísticas a partir de descripciones de texto. Útil para marketing, diseño y creación de contenido visual rápido.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Genera una imagen digital de un equipo trabajando colaborativamente en una oficina moderna y luminosa, con un estilo vibrante y optimista."</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <p class="text-5xl mb-3">🔬</p>
-                        <h3 class="font-bold text-xl text-slate-800">Modelos de Bioinformática (Ej: AlphaFold)</h3>
-                        <p class="text-slate-600">Capaces de predecir la estructura 3D de las proteínas. Transformador para la investigación médica, el desarrollo de fármacos y la biotecnología.</p>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">🔬</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos de Bioinformática (Ej: AlphaFold)</h3>
+                                <p class="text-slate-600">Capaces de predecir la estructura 3D de las proteínas. Transformador para la investigación médica, el desarrollo de fármacos y la biotecnología.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Describe la estructura molecular de la proteína [nombre de proteína] y su función principal en el organismo humano para un informe de investigación."</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <p class="text-5xl mb-3">💼</p>
-                        <h3 class="font-bold text-xl text-slate-800">IA para CRM/Ventas (Ej: Salesforce Einstein)</h3>
-                        <p class="text-slate-600">Integrada en plataformas de gestión de clientes para predecir comportamientos, automatizar tareas de ventas y personalizar la interacción con el cliente.</p>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">💼</p>
+                                <h3 class="font-bold text-xl text-slate-800">IA para CRM/Ventas (Ej: Salesforce Einstein)</h3>
+                                <p class="text-slate-600">Integrada en plataformas de gestión de clientes para predecir comportamientos, automatizar tareas de ventas y personalizar la interacción con el cliente.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Basado en el historial de interacción del cliente X en el CRM, ¿cuál es la probabilidad de que renueve su contrato el próximo mes y qué producto adicional podríamos ofrecerle para maximizar la venta?"</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
@@ -401,6 +486,54 @@
             </div>
         </section>
 
+        <section id="noticias" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-center">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">📰 Noticias y Actualizaciones de IA</h2>
+                <p class="text-lg text-slate-600 mb-6">Esta sección está dedicada a mantenerte informado sobre las últimas novedades y avances en el mundo de la Inteligencia Artificial que sean relevantes para GrupoO2.</p>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">¡Próximamente tendremos aquí las noticias más relevantes y cómo impactan en nuestra empresa!</p>
+                    <p class="text-md text-slate-600 mt-4">Mantente atento a las actualizaciones.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipo" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-center">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">👨‍💻 Nuestro Equipo de Desarrollo</h2>
+                <p class="text-lg text-slate-600 mb-8">Esta guía fue creada y es impulsada por el departamento de <b>ADO del GrupoO2</b>, con el compromiso de empoderar a todo el equipo con el conocimiento y las herramientas de la Inteligencia Artificial.</p>
+                
+                <h3 class="text-2xl font-bold text-slate-800 mb-6">Conoce a los creadores:</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <div class="team-member-card">
+                        <img src="https://via.placeholder.com/100/0ea5e9/ffffff?text=LA" alt="">
+                        <p class="font-semibold text-slate-800">Luis Alberto Olcay Acevedo</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://via.placeholder.com/100/0ea5e9/ffffff?text=DR" alt="">
+                        <p class="font-semibold text-slate-800">Daniel Rodriguez</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://via.placeholder.com/100/0ea5e9/ffffff?text=AC" alt="">
+                        <p class="font-semibold text-slate-800">Adan Cumana</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://via.placeholder.com/100/0ea5e9/ffffff?text=CG" alt="">
+                        <p class="font-semibold text-slate-800">Carlos Gutierrez</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://via.placeholder.com/100/0ea5e9/ffffff?text=CP" alt="">
+                        <p class="font-semibold text-slate-800">Claudio Pacheco</p>
+                    </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">¡Estamos aquí para apoyar tu viaje en el mundo de la IA!</p>
+                    <a href="#" class="mt-4 inline-block bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Contáctanos
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <section id="proximos-pasos" class="main-content hidden">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
                 <h2 class="text-4xl font-bold text-sky-600 mb-4">🚀 Próximos Pasos: Integrando la IA en Nuestra Cultura</h2>
@@ -409,17 +542,17 @@
                 <h3 class="text-2xl font-bold text-slate-800 mb-4">Nuestro Stack de IA Sugerido para GrupoO2</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="Logo Gemini (Google)" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-bold text-xl text-slate-800">Gemini (Google)</h4>
                         <p class="text-slate-600">Para generación de texto, ideas y análisis conversacional. Acceso a través de Google Workspace con tu correo empresarial.</p>
                     </div>
                     <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <img src="https://assets.bizclikmedia.net/1800/b9c92286e658119663b97a2267aee9d1:0006bf344b145b7046bf9b5f43b7a786/perplexity-logo.webp" alt="Logo Perplexity AI" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://assets.bizclikmedia.net/1800/b9c92286e658119663b97a2267aee9d1:0006bf344b145b7046bf9b5f43b7a786/perplexity-logo.webp" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-bold text-xl text-slate-800">Perplexity AI</h4>
                         <p class="text-slate-600">Un motor de respuestas conversacional que te da fuentes. Ideal para investigación rápida y verificación de hechos.</p>
                     </div>
                     <div class="bg-slate-100 p-6 rounded-xl text-center">
-                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="Logo NotebookLM (Google)" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
                         <h4 class="font-bold text-xl text-slate-800">NotebookLM (Google)</h4>
                         <p class="text-slate-600">Para organizar, resumir y generar contenido a partir de tus documentos. Ideal para gestionar proyectos y análisis de información interna.</p>
                     </div>
