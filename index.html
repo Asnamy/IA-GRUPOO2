@@ -106,6 +106,32 @@
             margin-bottom: 1rem;
             border: 3px solid #0ea5e9; /* sky-500 */
         }
+        .news-article {
+            background-color: #f1f5f9; /* slate-100 */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0; /* slate-200 */
+        }
+        .news-article h3 {
+            font-weight: bold;
+            font-size: 1.25rem; /* text-xl */
+            color: #1e293b; /* slate-800 */
+            margin-bottom: 0.5rem;
+        }
+        .news-article p {
+            font-size: 0.95rem;
+            color: #475569; /* slate-700 */
+            margin-bottom: 0.75rem;
+        }
+        .news-article a {
+            color: #0ea5e9; /* sky-500 */
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .news-article a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
@@ -133,11 +159,11 @@
             <a href="#beneficios" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">📈</span> Beneficios
             </a>
-            <a href="#responsabilidad" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">🛡️</span> Responsabilidad
+            <a href="#politica-uso-ia" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🛡️</span> Política uso IA
             </a>
-            <a href="#noticias" class="nav-link flex items-center p-3 rounded-lg">
-                <span class="mr-3 text-xl">📰</span> Noticias
+            <a href="#recursos-interesantes" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">📰</span> Recursos Interesantes
             </a>
             <a href="#equipo" class="nav-link flex items-center p-3 rounded-lg">
                 <span class="mr-3 text-xl">👨‍💻</span> Equipo
@@ -170,7 +196,8 @@
                         <li><b>El alcance de la IA:</b> Conociendo los diferentes tipos de modelos y sus utilidades.</li>
                         <li><b>IA en Acción:</b> Ejemplos prácticos para mejorar tus tareas diarias en la oficina.</li>
                         <li><b>Beneficios y Oportunidades:</b> Cómo la IA potencia nuestra eficiencia y creatividad.</li>
-                        <li><b>Nuestra Responsabilidad:</b> Entendiendo los riesgos, las políticas y las buenas prácticas para un uso ético y seguro.</li>
+                        <li><b>Política uso IA:</b> Entendiendo los riesgos, las políticas y las buenas prácticas para un uso ético y seguro.</li>
+                        <li><b>Recursos Interesantes:</b> Noticias y actualizaciones relevantes sobre IA.</li>
                         <li><b>Próximos Pasos:</b> El stack de IA de GrupoO2 y nuestro roadmap de apoyo.</li>
                     </ul>
                 </p>
@@ -395,9 +422,9 @@
             </div>
         </section>
 
-        <section id="responsabilidad" class="main-content hidden">
+        <section id="politica-uso-ia" class="main-content hidden">
             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">🛡️ Nuestra Responsabilidad: Uso Ético y Seguro de la IA</h2>
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🛡️ Política uso IA: Uso Ético y Seguro de la IA</h2>
                 <p class="text-lg text-slate-600 mb-8">La IA es una herramienta poderosa y, como tal, requiere un uso responsable. En GrupoO2, la gobernanza de la IA significa asegurarnos de que la usemos de forma segura, ética y efectiva, protegiendo nuestra información y la de nuestros clientes. ¡Tu compromiso es clave!</p>
                 
                 <h3 class="text-2xl font-bold text-slate-800 mb-4">Políticas Clave de Uso</h3>
@@ -459,6 +486,13 @@
                 <h3 class="text-2xl font-bold text-slate-800 mt-10 mb-4">Directrices para un Uso Responsable</h3>
                 <div class="space-y-4">
                     <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
+                        <span class="text-2xl pt-1">🚫</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">No Compartir Datos Sensibles</h4>
+                            <p class="text-sm text-slate-600">Nunca ingreses información confidencial de clientes (ej. nombres completos, datos financieros), ni datos personales sensibles (ej. contraseñas, números de documentos, direcciones) en ninguna herramienta de IA. Esto es crucial para la seguridad y privacidad.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
                         <span class="text-2xl pt-1">🚀</span>
                         <div>
                             <h4 class="font-semibold text-slate-800">Empieza con Tareas Sencillas</h4>
@@ -486,13 +520,45 @@
             </div>
         </section>
 
-        <section id="noticias" class="main-content hidden">
-            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-center">
-                <h2 class="text-4xl font-bold text-sky-600 mb-4">📰 Noticias y Actualizaciones de IA</h2>
+        <section id="recursos-interesantes" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">📰 Recursos Interesantes</h2>
                 <p class="text-lg text-slate-600 mb-6">Esta sección está dedicada a mantenerte informado sobre las últimas novedades y avances en el mundo de la Inteligencia Artificial que sean relevantes para GrupoO2.</p>
+                
+                <div class="space-y-6">
+                    <div class="news-article">
+                        <h3>Sam Altman (OpenAI) habla sobre el impacto de la IA en el empleo y la privacidad</h3>
+                        <p>En un evento reciente, Sam Altman, CEO de OpenAI, y Brad Lightcap, COO, abordaron el impacto de la IA en el empleo, la privacidad y los desafíos de la empresa. Altman afirmó que, hasta el momento, no hay pruebas de un reemplazo masivo de trabajos de entrada por la IA, aunque reconoce que algunas áreas y categorías de empleo podrían desaparecer. Subrayó la importancia de la privacidad de los usuarios frente a las demandas por derechos de autor.</p>
+                        <a href="https://www.infobae.com/tecno/2025/06/30/sam-altman-advierte-va-a-haber-un-impacto-negativo-real-y-va-a-suceder-mas-rapido-que-los-cambios-tecnologicos-anteriores/" target="_blank">Leer más en Infobae</a>
+                    </div>
+                    
+                    <div class="news-article">
+                        <h3>Un antiguo misterio de Babilonia resuelto gracias a la inteligencia artificial</h3>
+                        <p>La inteligencia artificial ha demostrado su capacidad para la investigación histórica al ayudar a desentrañar un antiguo misterio arqueológico de Babilonia. Este avance subraya el potencial de la IA para facilitar descubrimientos en campos humanísticos y científicos, abriendo nuevas vías para entender el pasado.</p>
+                        <a href="https://www.lanacion.com.ar/tema/inteligencia-artificial-tid58563/" target="_blank">Leer más en La Nación</a>
+                    </div>
+
+                    <div class="news-article">
+                        <h3>Apple planea reemplazar su IA por la de OpenAI y Anthropic para "salvar" a Siri</h3>
+                        <p>Se ha reportado que Apple está explorando activamente la posibilidad de integrar tecnologías de IA de OpenAI y Anthropic en sus sistemas, específicamente para potenciar y "rescatar" a Siri. Este movimiento estratégico indica la intención de Apple de mejorar drásticamente las capacidades de su asistente virtual y competir más eficazmente en el panorama de la inteligencia artificial.</p>
+                        <a href="https://andro4all.com/c/inteligencia-artificial" target="_blank">Leer más en Andro4all</a>
+                    </div>
+
+                    <div class="news-article">
+                        <h3>Desarrollan una inteligencia artificial que predice cuándo una persona puede sufrir un paro cardíaco</h3>
+                        <p>Un equipo de investigadores ha logrado desarrollar una inteligencia artificial innovadora capaz de predecir el riesgo de paro cardíaco en individuos. Este avance, que utiliza algoritmos avanzados para analizar datos médicos, promete ser una herramienta crucial en la prevención y el manejo de enfermedades cardíacas, permitiendo intervenciones tempranas que podrían salvar vidas.</p>
+                        <a href="https://tn.com.ar/tecno/novedades/2025/07/03/desarrollaron-una-inteligencia-artificial-que-predice-cuando-una-persona-puede-sufrir-un-paro-cardiaco/" target="_blank">Leer más en TN</a>
+                    </div>
+
+                    <div class="news-article">
+                        <h3>Código para ayudar a las empresas con las normas sobre IA podría llegar a finales de 2025, según la UE</h3>
+                        <p>La Unión Europea está avanzando en la creación de un código de conducta para guiar a las empresas en el cumplimiento de las futuras regulaciones sobre inteligencia artificial. Se espera que este marco esté listo para finales de 2025, reflejando el compromiso de la UE con un desarrollo ético y responsable de la IA, equilibrando la innovación con la protección de los derechos y la seguridad de los ciudadanos.</p>
+                        <a href="https://www.lanacion.com.ar/tema/inteligencia-artificial-tid58563/" target="_blank">Leer más en La Nación</a>
+                    </div>
+                </div>
+
                 <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
-                    <p class="text-xl text-center text-sky-800 font-semibold">¡Próximamente tendremos aquí las noticias más relevantes y cómo impactan en nuestra empresa!</p>
-                    <p class="text-md text-slate-600 mt-4">Mantente atento a las actualizaciones.</p>
+                    <p class="text-xl text-center text-sky-800 font-semibold">Mantente atento para más noticias y actualizaciones relevantes sobre IA.</p>
                 </div>
             </div>
         </section>
@@ -652,7 +718,7 @@
                     title: 'Creación de Contenido Visual',
                     description: '¿Necesitas imágenes para presentaciones, redes sociales o campañas sin ser diseñador gráfico?',
                     details: {
-                        sinIA: 'Buscar imágenes de stock genéricas, o intentar crear algo con herramientas complejas sin experiencia.',
+                        sinIA: 'Depender de diseñadores, buscar imágenes de stock genéricas, o intentar crear algo con herramientas complejas sin experiencia.',
                         conIA: 'Describe la imagen que necesitas a una IA generativa de imágenes (como DALL-E) y obtén propuestas visuales en segundos, que luego puedes ajustar.',
                         prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Crea una imagen de estilo minimalista que represente la colaboración en un entorno de oficina moderno, con colores suaves y un enfoque en la diversidad del equipo."'
                     }
@@ -800,5 +866,7 @@
             populateExamples();
         });
     </script>
+</body>
+</html>
 </body>
 </html>
