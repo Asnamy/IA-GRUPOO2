@@ -3,1226 +3,871 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guía IA | Grupo O2</title>
+    <title>Guía IA | GrupoO2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'corporate-blue': '#1e40af',
-                        'corporate-light': '#3b82f6',
-                        'corporate-dark': '#1e3a8a',
-                        'accent-orange': '#f97316',
-                        'accent-green': '#10b981'
-                    }
-                }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .main-content {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .nav-link {
+            transition: all 0.2s ease;
+            transform-origin: center left;
+        }
+        .nav-link.active {
+            background-color: #0ea5e9; /* sky-500 */
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .nav-link:not(.active):hover {
+            background-color: #e2e8f0; /* slate-200 */
+            transform: scale(1.02);
+        }
+        .card-flip {
+            perspective: 1000px;
+            height: 100%; /* Ensure flip cards have consistent height */
+        }
+        .card-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border-radius: 0.75rem; /* rounded-xl */
+            border: 2px solid #e2e8f0; /* slate-200 */
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        .card-flip:hover .card-flip-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 0.75rem; /* rounded-xl */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem; /* p-6 */
+            text-align: center;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: #f0f9ff; /* sky-50 */
+            border: 2px solid #bae6fd; /* sky-200 */
+            color: #0c4a6e; /* sky-900 */
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .card-front {
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
             }
         }
-    </script>
+        .team-member-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .team-member-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid #0ea5e9; /* sky-500 */
+        }
+        .news-article {
+            background-color: #f1f5f9; /* slate-100 */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0; /* slate-200 */
+        }
+        .news-article h3 {
+            font-weight: bold;
+            font-size: 1.25rem; /* text-xl */
+            color: #1e293b; /* slate-800 */
+            margin-bottom: 0.5rem;
+        }
+        .news-article p {
+            font-size: 0.95rem;
+            color: #475569; /* slate-700 */
+            margin-bottom: 0.75rem;
+        }
+        .news-article a {
+            color: #0ea5e9; /* sky-500 */
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .news-article a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans">
-    <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="fixed left-0 top-0 w-64 h-full bg-corporate-dark text-white z-50 transform transition-transform duration-300 md:translate-x-0">
-        <div class="p-6">
-            <h1 class="text-xl font-bold mb-8">Guía IA | Grupo O2</h1>
-            <nav>
-                <ul class="space-y-2">
-                    <li><a href="#inicio" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-home mr-3"></i>Inicio</a></li>
-                    <li><a href="#que-es-ia" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-brain mr-3"></i>¿Qué es la IA?</a></li>
-                    <li><a href="#alcance-ia" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-expand mr-3"></i>El Alcance de la IA</a></li>
-                    <li><a href="#ia-accion" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-bolt mr-3"></i>IA en Acción</a></li>
-                    <li><a href="#laboratorio-ia" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-flask mr-3"></i>Laboratorio IA</a></li>
-                    <li><a href="#beneficios" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-chart-line mr-3"></i>Beneficios</a></li>
-                    <li><a href="#politica" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-shield-alt mr-3"></i>Política de Uso</a></li>
-                    <li><a href="#recursos" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-newspaper mr-3"></i>Recursos</a></li>
-                    <li><a href="#equipo" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-users mr-3"></i>Equipo</a></li>
-                    <li><a href="#proximos-pasos" class="nav-link block p-3 rounded hover:bg-corporate-blue transition-colors"><i class="fas fa-road mr-3"></i>Próximos Pasos</a></li>
-                </ul>
-            </nav>
+<body class="flex h-screen overflow-hidden">
+
+    <aside id="sidebar" class="w-64 bg-white shadow-md p-4 flex-shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-20">
+        <div class="flex items-center space-x-3 mb-8">
+            <div class="p-2 bg-sky-500 rounded-lg text-white font-bold text-xl">
+                IA
+            </div>
+            <h1 class="text-xl font-bold text-slate-800">Guía IA | GrupoO2</h1>
+        </div>
+        <nav class="space-y-2">
+            <a href="#inicio" class="nav-link flex items-center p-3 rounded-lg active">
+                <span class="mr-3 text-xl">🏠</span> Inicio
+            </a>
+            <a href="#que-es-ia" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🧠</span> ¿Qué es la IA?
+            </a>
+            <a href="#alcance-ia" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🌐</span> El Alcance de la IA
+            </a>
+            <a href="#ia-en-accion" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">💡</span> IA en Acción
+            </a>
+            <a href="#beneficios" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">📈</span> Beneficios
+            </a>
+            <a href="#politica-uso-ia" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🛡️</span> Política uso IA
+            </a>
+            <a href="#recursos-interesantes" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">📰</span> Recursos Interesantes
+            </a>
+            <a href="#equipo" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">👨‍💻</span> Equipo
+            </a>
+            <a href="#proximos-pasos" class="nav-link flex items-center p-3 rounded-lg">
+                <span class="mr-3 text-xl">🚀</span> Próximos Pasos
+            </a>
+        </nav>
+        <div class="mt-auto pt-8 text-center text-xs text-slate-400">
+            <p>&copy; 2025 GrupoO2</p>
+            <p>Material de concientización</p>
         </div>
     </aside>
 
-    <!-- Mobile Menu Button -->
-    <button id="mobile-menu-btn" class="fixed top-4 left-4 z-50 md:hidden bg-corporate-dark text-white p-2 rounded">
-        <i class="fas fa-bars"></i>
+    <button id="menu-toggle" class="md:hidden fixed top-4 left-4 z-30 bg-white p-2 rounded-md shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
     </button>
-
-    <!-- Main Content -->
-    <main class="ml-0 md:ml-64 min-h-screen">
-        <!-- Section 1: INICIO -->
-        <section id="inicio" class="section-content min-h-screen p-6 md:p-12 bg-gradient-to-br from-corporate-blue to-corporate-dark text-white">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl md:text-6xl font-bold mb-6">Guía IA | Grupo O2</h2>
-                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-8">
-                        <h3 class="text-2xl font-semibold mb-4">Objetivo General</h3>
-                        <p class="text-lg leading-relaxed">
-                            Interiorizar y nivelar conocimientos sobre IA y su aprovechamiento responsable en Grupo O2
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Interactive Index -->
-                <div class="grid md:grid-cols-3 gap-6 mb-12">
-                    <div class="index-card bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all cursor-pointer" data-target="que-es-ia">
-                        <i class="fas fa-brain text-3xl mb-4 text-accent-orange"></i>
-                        <h4 class="text-xl font-semibold mb-2">¿Qué es la IA?</h4>
-                        <p>Conceptos fundamentales y modelos disponibles</p>
-                    </div>
-                    <div class="index-card bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all cursor-pointer" data-target="alcance-ia">
-                        <i class="fas fa-expand text-3xl mb-4 text-accent-green"></i>
-                        <h4 class="text-xl font-semibold mb-2">El Alcance de la IA</h4>
-                        <p>Tipos de modelos y sus aplicaciones</p>
-                    </div>
-                    <div class="index-card bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all cursor-pointer" data-target="ia-accion">
-                        <i class="fas fa-bolt text-3xl mb-4 text-accent-orange"></i>
-                        <h4 class="text-xl font-semibold mb-2">IA en Acción</h4>
-                        <p>Ejemplos prácticos y casos de uso</p>
-                    </div>
-                    <div class="index-card bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all cursor-pointer" data-target="beneficios">
-                        <i class="fas fa-chart-line text-3xl mb-4 text-accent-green"></i>
-                        <h4 class="text-xl font-semibold mb-2">Beneficios</h4>
-                        <p>Oportunidades y ventajas competitivas</p>
-                    </div>
-                    <div class="index-card bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all cursor-pointer" data-target="politica">
-                        <i class="fas fa-shield-alt text-3xl mb-4 text-accent-orange"></i>
-                        <h4 class="text-xl font-semibold mb-2">Política de Uso</h4>
-                        <p>Uso ético y seguro de la IA</p>
-                    </div>
-                    <div class="index-card bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all cursor-pointer" data-target="proximos-pasos">
-                        <i class="fas fa-road text-3xl mb-4 text-accent-green"></i>
-                        <h4 class="text-xl font-semibold mb-2">Próximos Pasos</h4>
-                        <p>Roadmap de implementación</p>
-                    </div>
-                </div>
-
-                <!-- Reflection Point -->
-                <div class="reflection-point bg-accent-orange/20 border-l-4 border-accent-orange rounded-lg p-6">
-                    <h4 class="text-xl font-semibold mb-3"><i class="fas fa-lightbulb mr-2"></i>Punto de Reflexión</h4>
-                    <p class="mb-4">¿Qué expectativas tienes sobre el uso de IA en tu trabajo diario?</p>
-                    <button class="bg-accent-orange text-white px-6 py-2 rounded hover:bg-orange-600 transition-colors" onclick="toggleReflection('reflection-1')">
-                        Participar
-                    </button>
-                    <div id="reflection-1" class="hidden mt-4">
-                        <textarea class="w-full p-3 rounded bg-white/10 text-white placeholder-gray-300" rows="3" placeholder="Comparte tus pensamientos aquí..."></textarea>
-                        <button class="mt-2 bg-accent-green text-white px-4 py-2 rounded hover:bg-green-600 transition-colors">
-                            Guardar Reflexión
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 2: ¿QUÉ ES LA IA? -->
-        <section id="que-es-ia" class="section-content min-h-screen p-6 md:p-12 bg-white">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">¿Qué es la Inteligencia Artificial?</h2>
-                
-                <div class="bg-gradient-to-r from-corporate-light to-corporate-blue text-white rounded-lg p-8 mb-12">
-                    <h3 class="text-2xl font-semibold mb-4">Definición</h3>
-                    <p class="text-lg leading-relaxed mb-6">
-                        La Inteligencia Artificial es la simulación del aprendizaje humano mediante sistemas computacionales que pueden realizar tareas que normalmente requieren inteligencia humana.
-                    </p>
-                    <div class="bg-white/20 rounded-lg p-6">
-                        <h4 class="text-xl font-semibold mb-3">Concepto Clave: Proceso "Entrada-Salida"</h4>
-                        <p>La calidad de los resultados depende directamente de la calidad de los prompts (entradas) que proporcionamos.</p>
-                    </div>
-                </div>
-
-                <!-- AI Models Cards -->
-                <h3 class="text-2xl font-bold text-corporate-dark mb-6">Modelos de IA Principales</h3>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                    <div class="ai-model-card bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-robot text-3xl text-corporate-blue mr-3"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold">GPT (OpenAI)</h4>
-                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Caja Negra</span>
-                            </div>
-                        </div>
-                        <p class="text-gray-600">Modelo conversacional avanzado para texto, análisis y creatividad.</p>
-                    </div>
-
-                    <div class="ai-model-card bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-gem text-3xl text-blue-500 mr-3"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold">Gemini (Google)</h4>
-                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Caja Negra</span>
-                            </div>
-                        </div>
-                        <p class="text-gray-600">IA multimodal de Google para texto, imágenes y análisis complejo.</p>
-                    </div>
-
-                    <div class="ai-model-card bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-user-tie text-3xl text-purple-500 mr-3"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold">Claude (Anthropic)</h4>
-                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Caja Negra</span>
-                            </div>
-                        </div>
-                        <p class="text-gray-600">IA enfocada en conversaciones seguras y análisis ético.</p>
-                    </div>
-
-                    <div class="ai-model-card bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-code text-3xl text-green-500 mr-3"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold">DeepSeek</h4>
-                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Código Abierto</span>
-                            </div>
-                        </div>
-                        <p class="text-gray-600">Modelo open source para desarrollo y personalización avanzada.</p>
-                    </div>
-
-                    <div class="ai-model-card bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-search text-3xl text-teal-500 mr-3"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold">Perplexity AI</h4>
-                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Caja Negra</span>
-                            </div>
-                        </div>
-                        <p class="text-gray-600">Motor de búsqueda con IA para investigación precisa y actualizada.</p>
-                    </div>
-
-                    <div class="ai-model-card bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-book text-3xl text-orange-500 mr-3"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold">NotebookLM (Google)</h4>
-                                <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">Caja Negra</span>
-                            </div>
-                        </div>
-                        <p class="text-gray-600">IA para análisis y síntesis de documentos extensos.</p>
-                    </div>
-                </div>
-
-                <!-- Reflection Point -->
-                <div class="reflection-point bg-blue-50 border-l-4 border-corporate-blue rounded-lg p-6">
-                    <h4 class="text-xl font-semibold mb-3 text-corporate-dark"><i class="fas fa-lightbulb mr-2"></i>Punto de Reflexión</h4>
-                    <p class="mb-4 text-gray-700">¿Has utilizado alguno de estos modelos de IA antes? ¿Cuál fue tu experiencia?</p>
-                    <button class="bg-corporate-blue text-white px-6 py-2 rounded hover:bg-corporate-dark transition-colors" onclick="toggleReflection('reflection-2')">
-                        Compartir Experiencia
-                    </button>
-                    <div id="reflection-2" class="hidden mt-4">
-                        <textarea class="w-full p-3 rounded border border-gray-300" rows="3" placeholder="Describe tu experiencia con IA..."></textarea>
-                        <button class="mt-2 bg-accent-green text-white px-4 py-2 rounded hover:bg-green-600 transition-colors">
-                            Guardar Experiencia
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: EL ALCANCE DE LA IA -->
-        <section id="alcance-ia" class="section-content min-h-screen p-6 md:p-12 bg-gray-50">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">El Alcance de la IA</h2>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                    <!-- Flip Cards for AI Types -->
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg p-6">
-                                <i class="fas fa-comments text-4xl mb-4"></i>
-                                <h4 class="text-xl font-bold mb-2">Modelos Conversacionales</h4>
-                                <p class="text-sm">ChatGPT, Claude, Gemini</p>
-                            </div>
-                            <div class="flip-card-back bg-white border border-gray-200 rounded-lg p-6">
-                                <h4 class="text-lg font-semibold mb-3 text-corporate-dark">Aplicaciones:</h4>
-                                <ul class="text-sm text-gray-600 mb-4">
-                                    <li>• Redacción de textos</li>
-                                    <li>• Correos profesionales</li>
-                                    <li>• Resúmenes de documentos</li>
-                                </ul>
-                                <div class="bg-gray-100 p-3 rounded text-xs">
-                                    <strong>Prompt ejemplo:</strong><br>
-                                    "Redacta un correo profesional para solicitar una reunión de equipo"
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg p-6">
-                                <i class="fas fa-search text-4xl mb-4"></i>
-                                <h4 class="text-xl font-bold mb-2">Investigación Abierta</h4>
-                                <p class="text-sm">Llama, DeepSeek</p>
-                            </div>
-                            <div class="flip-card-back bg-white border border-gray-200 rounded-lg p-6">
-                                <h4 class="text-lg font-semibold mb-3 text-corporate-dark">Aplicaciones:</h4>
-                                <ul class="text-sm text-gray-600 mb-4">
-                                    <li>• Análisis de datos avanzados</li>
-                                    <li>• Investigación de mercado</li>
-                                    <li>• Modelos personalizados</li>
-                                </ul>
-                                <div class="bg-gray-100 p-3 rounded text-xs">
-                                    <strong>Prompt ejemplo:</strong><br>
-                                    "Analiza las tendencias de ventas en los últimos 6 meses y proporciona insights"
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg p-6">
-                                <i class="fas fa-file-alt text-4xl mb-4"></i>
-                                <h4 class="text-xl font-bold mb-2">Comprensión Textual</h4>
-                                <p class="text-sm">BERT, NotebookLM</p>
-                            </div>
-                            <div class="flip-card-back bg-white border border-gray-200 rounded-lg p-6">
-                                <h4 class="text-lg font-semibold mb-3 text-corporate-dark">Aplicaciones:</h4>
-                                <ul class="text-sm text-gray-600 mb-4">
-                                    <li>• Búsqueda inteligente</li>
-                                    <li>• Análisis de sentimientos</li>
-                                    <li>• Clasificación de textos</li>
-                                </ul>
-                                <div class="bg-gray-100 p-3 rounded text-xs">
-                                    <strong>Prompt ejemplo:</strong><br>
-                                    "Analiza el sentimiento de estos comentarios de clientes y clasifícalos"
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-lg p-6">
-                                <i class="fas fa-image text-4xl mb-4"></i>
-                                <h4 class="text-xl font-bold mb-2">Generación de Imágenes</h4>
-                                <p class="text-sm">DALL-E, Midjourney</p>
-                            </div>
-                            <div class="flip-card-back bg-white border border-gray-200 rounded-lg p-6">
-                                <h4 class="text-lg font-semibold mb-3 text-corporate-dark">Aplicaciones:</h4>
-                                <ul class="text-sm text-gray-600 mb-4">
-                                    <li>• Contenido visual</li>
-                                    <li>• Prototipos de diseño</li>
-                                    <li>• Marketing creativo</li>
-                                </ul>
-                                <div class="bg-gray-100 p-3 rounded text-xs">
-                                    <strong>Prompt ejemplo:</strong><br>
-                                    "Crea una imagen profesional para presentación de empresa tecnológica"
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-lg p-6">
-                                <i class="fas fa-dna text-4xl mb-4"></i>
-                                <h4 class="text-xl font-bold mb-2">Bioinformática</h4>
-                                <p class="text-sm">AlphaFold</p>
-                            </div>
-                            <div class="flip-card-back bg-white border border-gray-200 rounded-lg p-6">
-                                <h4 class="text-lg font-semibold mb-3 text-corporate-dark">Aplicaciones:</h4>
-                                <ul class="text-sm text-gray-600 mb-4">
-                                    <li>• Investigación médica</li>
-                                    <li>• Análisis genómico</li>
-                                    <li>• Desarrollo farmacéutico</li>
-                                </ul>
-                                <div class="bg-gray-100 p-3 rounded text-xs">
-                                    <strong>Caso de uso:</strong><br>
-                                    Predicción de estructuras de proteínas para investigación médica
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-lg p-6">
-                                <i class="fas fa-chart-line text-4xl mb-4"></i>
-                                <h4 class="text-xl font-bold mb-2">IA para CRM/Ventas</h4>
-                                <p class="text-sm">Salesforce Einstein</p>
-                            </div>
-                            <div class="flip-card-back bg-white border border-gray-200 rounded-lg p-6">
-                                <h4 class="text-lg font-semibold mb-3 text-corporate-dark">Aplicaciones:</h4>
-                                <ul class="text-sm text-gray-600 mb-4">
-                                    <li>• Optimización de ventas</li>
-                                    <li>• Predicción de leads</li>
-                                    <li>• Personalización</li>
-                                </ul>
-                                <div class="bg-gray-100 p-3 rounded text-xs">
-                                    <strong>Prompt ejemplo:</strong><br>
-                                    "Identifica los mejores prospectos basado en comportamiento histórico"
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Group Question -->
-                <div class="bg-accent-orange/10 border-l-4 border-accent-orange rounded-lg p-6">
-                    <h4 class="text-xl font-semibold mb-3 text-corporate-dark"><i class="fas fa-users mr-2"></i>Pregunta Grupal</h4>
-                    <p class="mb-4 text-gray-700">¿Cuáles de estos tipos de IA ves más aplicables a tu área de trabajo en Grupo O2?</p>
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <button class="group-option bg-white border border-gray-300 rounded p-3 hover:bg-corporate-blue hover:text-white transition-colors">
-                            Modelos Conversacionales
-                        </button>
-                        <button class="group-option bg-white border border-gray-300 rounded p-3 hover:bg-corporate-blue hover:text-white transition-colors">
-                            Análisis de Datos
-                        </button>
-                        <button class="group-option bg-white border border-gray-300 rounded p-3 hover:bg-corporate-blue hover:text-white transition-colors">
-                            CRM/Ventas
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: IA EN ACCIÓN -->
-        <section id="ia-accion" class="section-content min-h-screen p-6 md:p-12 bg-white">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">IA en Acción</h2>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                    <!-- Example Cards -->
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('email-modal')">
-                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white">
-                            <i class="fas fa-envelope text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Redacción de Correos</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Automatiza la redacción de correos profesionales y comunicaciones internas.</p>
-                        </div>
-                    </div>
-
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('excel-modal')">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 p-4 text-white">
-                            <i class="fas fa-table text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Análisis de Datos en Excel</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Potencia tus análisis con IA para insights más profundos y precisos.</p>
-                        </div>
-                    </div>
-
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('nocode-modal')">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-4 text-white">
-                            <i class="fas fa-magic text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Fórmulas y Automatización</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Crea fórmulas complejas y automatizaciones sin programar.</p>
-                        </div>
-                    </div>
-
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('summary-modal')">
-                        <div class="bg-gradient-to-r from-teal-500 to-teal-600 p-4 text-white">
-                            <i class="fas fa-file-alt text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Resúmenes de Informes</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Transforma documentos extensos en resúmenes ejecutivos claros.</p>
-                        </div>
-                    </div>
-
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('creativity-modal')">
-                        <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-4 text-white">
-                            <i class="fas fa-lightbulb text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Creatividad e Innovación</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Genera ideas innovadoras y soluciones creativas a desafíos.</p>
-                        </div>
-                    </div>
-
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('communication-modal')">
-                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-4 text-white">
-                            <i class="fas fa-comments text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Mejora de la Comunicación</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Optimiza el tono, claridad y efectividad de tus comunicaciones.</p>
-                        </div>
-                    </div>
-
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('visual-modal')">
-                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-4 text-white">
-                            <i class="fas fa-image text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Contenido Visual</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Crea imágenes, gráficos y elementos visuales profesionales.</p>
-                        </div>
-                    </div>
-
-                    <div class="action-card bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all cursor-pointer" onclick="openModal('crm-modal')">
-                        <div class="bg-gradient-to-r from-red-500 to-red-600 p-4 text-white">
-                            <i class="fas fa-users text-2xl mb-2"></i>
-                            <h4 class="text-lg font-semibold">Asistencia en CRM y Ventas</h4>
-                        </div>
-                        <div class="p-4">
-                            <p class="text-gray-600 text-sm">Optimiza procesos de ventas y gestión de relaciones con clientes.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Reflection Point -->
-                <div class="reflection-point bg-blue-50 border-l-4 border-corporate-blue rounded-lg p-6">
-                    <h4 class="text-xl font-semibold mb-3 text-corporate-dark"><i class="fas fa-lightbulb mr-2"></i>Punto de Reflexión</h4>
-                    <p class="mb-4 text-gray-700">¿Cuáles de estos ejemplos encuentras más útiles para tu trabajo diario?</p>
-                    <button class="bg-corporate-blue text-white px-6 py-2 rounded hover:bg-corporate-dark transition-colors" onclick="toggleReflection('reflection-3')">
-                        Compartir Opinión
-                    </button>
-                    <div id="reflection-3" class="hidden mt-4">
-                        <textarea class="w-full p-3 rounded border border-gray-300" rows="3" placeholder="Comparte qué ejemplos te resultan más útiles..."></textarea>
-                        <button class="mt-2 bg-accent-green text-white px-4 py-2 rounded hover:bg-green-600 transition-colors">
-                            Guardar Opinión
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 5: LABORATORIO DE IA (CON PESTAÑAS) -->
-        <section id="laboratorio-ia" class="section-content min-h-screen p-6 md:p-12 bg-gray-50">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">Laboratorio de IA en la Práctica</h2>
-                <p class="text-xl text-gray-700 text-center mb-12">
-                    Experimenta de primera mano cómo la IA puede transformar tareas cotidianas.
+    
+    <main id="main-container" class="flex-1 overflow-y-auto p-6 md:p-10">
+        
+        <section id="inicio" class="main-content">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">IA en tu Día a Día: Herramientas para el Futuro en GrupoO2</h2>
+                <p class="text-lg text-slate-600 mb-6"><b>Objetivo General:</b> Este documento busca interiorizar y nivelar los conocimientos de todo el personal de GrupoO2 acerca de qué es la Inteligencia Artificial y cómo podemos aprovecharla de manera responsable.</p>
+                <p class="text-lg text-slate-600 mb-6"><b>En esta guía interactiva abordaremos:</b>
+                    <ul class="list-disc list-inside ml-4 text-slate-600 space-y-1">
+                        <li><b>Qué es la IA y cómo funciona:</b> Aprendiendo el concepto y entendiendo su lógica.</li>
+                        <li><b>El alcance de la IA:</b> Conociendo los diferentes tipos de modelos y sus utilidades, incluyendo ejemplos de uso.</li>
+                        <li><b>IA en Acción:</b> Ejemplos prácticos para mejorar tus tareas diarias en la oficina.</li>
+                        <li><b>Beneficios y Oportunidades:</b> Cómo la IA potencia nuestra eficiencia y creatividad.</li>
+                        <li><b>Política uso IA:</b> Entendiendo los riesgos, las políticas y las buenas prácticas para un uso ético y seguro.</li>
+                        <li><b>Recursos Interesantes:</b> Noticias y actualizaciones relevantes sobre IA.</li>
+                        <li><b>Equipo:</b> Conoce a los creadores de esta guía.</li>
+                        <li><b>Próximos Pasos:</b> El stack de IA de GrupoO2 y nuestro roadmap de apoyo.</li>
+                    </ul>
                 </p>
-        
-                <div class="bg-white rounded-lg shadow-2xl p-8 border border-gray-200">
-                    <!-- Pestañas de Navegación del Laboratorio -->
-                    <div class="border-b border-gray-200 mb-6">
-                        <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-                            <button class="tab-button active-tab" data-target="redaccion">
-                                <i class="fas fa-magic mr-2"></i>Asistente de Redacción
-                            </button>
-                            <button class="tab-button" data-target="formulas">
-                                <i class="fas fa-table mr-2"></i>Generador de Fórmulas Excel
-                            </button>
-                        </nav>
-                    </div>
-        
-                    <!-- Contenido de la Pestaña 1: Asistente de Redacción -->
-                    <div id="redaccion" class="tab-content">
-                        <h3 class="text-2xl font-semibold text-corporate-dark mb-6 text-center">Asistente de Redacción Inteligente</h3>
-                        <div class="mb-6">
-                            <label for="scenarioSelector" class="block font-semibold mb-2 text-gray-700">1. Elige un escenario de ejemplo:</label>
-                            <select id="scenarioSelector" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-corporate-blue focus:border-transparent transition"></select>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <div>
-                                <label for="inputText" class="block font-semibold mb-2 text-gray-700">2. Texto Original:</label>
-                                <textarea id="inputText" rows="12" class="w-full p-4 border border-gray-300 rounded-lg"></textarea>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-2 text-gray-700">4. Resultado de la IA:</label>
-                                <div id="outputPanel" class="w-full h-full p-4 border border-gray-200 rounded-lg bg-gray-50 flex items-center justify-center"></div>
-                            </div>
-                        </div>
-                        <div class="mt-8 text-center">
-                            <p class="font-semibold mb-4 text-gray-700">3. Elige una acción:</p>
-                            <button id="summarizeBtn" class="bg-corporate-blue text-white px-6 py-3 rounded-lg hover:bg-corporate-dark transition-transform hover:scale-105 mr-3 shadow-lg">Resumir Texto</button>
-                            <button id="improveBtn" class="bg-accent-green text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-transform hover:scale-105 shadow-lg">Mejorar a Tono Profesional</button>
-                        </div>
-                    </div>
-        
-                    <!-- Contenido de la Pestaña 2: Generador de Fórmulas -->
-                    <div id="formulas" class="tab-content hidden">
-                        <h3 class="text-2xl font-semibold text-corporate-dark mb-6 text-center">Generador de Fórmulas Excel</h3>
-                        <div class="mb-6">
-                            <label for="formulaScenarioSelector" class="block font-semibold mb-2 text-gray-700">1. Elige un problema a resolver:</label>
-                            <select id="formulaScenarioSelector" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-corporate-blue focus:border-transparent transition"></select>
-                        </div>
-                        <div class="text-center">
-                            <div class="mb-4">
-                                <p class="font-semibold text-gray-700 mb-2">2. Problema en lenguaje natural:</p>
-                                <div id="formulaProblem" class="p-4 bg-gray-100 rounded-lg text-lg italic text-gray-800"></div>
-                            </div>
-                            <div class="my-6">
-                                <button id="generateFormulaBtn" class="bg-corporate-blue text-white px-8 py-3 rounded-lg hover:bg-corporate-dark transition-transform hover:scale-105 shadow-lg">3. Generar Fórmula con IA</button>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-gray-700 mb-2">4. Fórmula generada por la IA:</p>
-                                <div id="formulaOutput" class="p-4 bg-gray-800 text-white font-mono text-left rounded-lg flex items-center justify-between">
-                                    <span class="text-gray-400">Aquí aparecerá la fórmula...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Qué tarea rutinaria de tu día a día te gustaría que fuera más sencilla o rápida? ¡Cuentanos!</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 6: BENEFICIOS Y OPORTUNIDADES -->
-        <section id="beneficios" class="section-content min-h-screen p-6 md:p-12 bg-gray-50">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">Beneficios y Oportunidades</h2>
+        <section id="que-es-ia" class="main-content hidden">
+             <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🧠 ¿Qué es la Inteligencia Artificial y Cómo Funciona?</h2>
+                <p class="text-lg text-slate-600 mb-6">La <b>Inteligencia Artificial (IA)</b> es una rama de las ciencias de la computación que permite que las máquinas puedan <b>simular el aprendizaje humano</b>, incluyendo capacidades como la comprensión, resolución de problemas, toma de decisiones y reconocimiento de patrones.</p>
                 
-                <div class="text-center mb-12">
-                    <p class="text-xl text-gray-700 leading-relaxed">
-                        La IA no reemplaza la creatividad humana, <strong>la potencia</strong>. Libera tiempo para tareas de alto valor y fomenta la innovación.
-                    </p>
+                <div class="flex justify-center my-8">
+                    <img src="https://synoptekmark.b-cdn.net/wp-content/uploads/2023/07/ai-ml-dl-and-generative-ai-face-off.webp" alt="" class="rounded-lg shadow-md max-w-xl h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F0F0F0/333333?text=Error+al+cargar+imagen';">
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <div class="benefit-card bg-white rounded-lg p-6 shadow-lg">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-rocket text-blue-600 text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-corporate-dark">Mayor Eficiencia y Productividad</h3>
-                        </div>
-                        <p class="text-gray-600">Automatiza tareas repetitivas y acelera procesos que normalmente tomarían horas.</p>
-                    </div>
-
-                    <div class="benefit-card bg-white rounded-lg p-6 shadow-lg">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-green-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-bullseye text-green-600 text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-corporate-dark">Enfoque en Tareas de Alto Valor</h3>
-                        </div>
-                        <p class="text-gray-600">Libera tiempo para estrategia, innovación y relaciones interpersonales.</p>
-                    </div>
-
-                    <div class="benefit-card bg-white rounded-lg p-6 shadow-lg">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-purple-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-palette text-purple-600 text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-corporate-dark">Fomento de la Creatividad e Innovación</h3>
-                        </div>
-                        <p class="text-gray-600">Genera ideas frescas y aborda problemas desde nuevas perspectivas.</p>
-                    </div>
-
-                    <div class="benefit-card bg-white rounded-lg p-6 shadow-lg">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-orange-100 p-3 rounded-full mr-4">
-                                <i class="fas fa-graduation-cap text-orange-600 text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-corporate-dark">Desarrollo Profesional</h3>
-                        </div>
-                        <p class="text-gray-600">Desarrolla nuevas habilidades y mantente al día con la tecnología emergente.</p>
-                    </div>
+                <div class="bg-slate-100 p-6 rounded-xl mb-6">
+                    <h3 class="font-bold text-xl text-slate-800 mb-2">Concepto Clave: Tú das la Entrada, la IA da el Resultado</h3>
+                    <p class="text-slate-600">La IA funciona procesando los datos que tú le "ingresas" (llamados <b>entradas</b> o "prompts") y generando una respuesta, un análisis o un <b>resultado</b> (llamado <b>salida</b>). ¡Es crucial entender que <b>la calidad del resultado depende directamente de la claridad y precisión de tu entrada</b>!</p>
                 </div>
 
-                <!-- Interactive Impact Chart -->
-                <div class="bg-white rounded-lg p-6 shadow-lg mb-12">
-                    <h3 class="text-2xl font-semibold text-corporate-dark mb-6 text-center">Impacto Potencial de la IA</h3>
-                    <div class="chart-container">
-                        <canvas id="impactChart" width="400" height="200"></canvas>
+                <p class="text-lg text-slate-600 mb-6">Hoy en día, la IA está más presente en nuestro día a día de lo que imaginamos. Muchos de ustedes ya están interactuando con ella, a veces sin darse cuenta. Desde las recomendaciones en servicios de streaming hasta los asistentes de voz en sus teléfonos. Pero veamos ejemplos de modelos de lenguaje que podemos usar activamente:</p>
+                
+                <h3 class="font-bold text-xl text-slate-800 mb-4">Modelos de IA más conocidos:</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://mcit.gov.qa/wp-content/uploads/sites/4/2023/02/MCIT-and-Microsoft-Launch-OpenAI-GPT-to-Empower-Government-Innovation.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">GPT (OpenAI)</h4>
+                        <p class="text-sm text-slate-600">Modelos de lenguaje grandes muy potentes, conocidos por <b>ChatGPT</b>. Versátiles para generar texto, código, resúmenes, ideas. Gran capacidad conversacional.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">No podemos ver cómo fueron entrenados.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">Gemini (Google)</h4>
+                        <p class="text-sm text-slate-600">Modelos multimodales que entienden y operan con texto, imágenes, audio y video. Muy versátiles para diversas tareas empresariales.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">Su proceso de entrenamiento no es público.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://osher.com.au/images/posts/how-to-build-ai-agent-claude-ai_0d2d6bcc.png" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">Claude (Anthropic)</h4>
+                        <p class="text-sm text-slate-600">Diseñado con énfasis en la seguridad y la utilidad, es ideal para conversaciones más largas y tareas que requieren gran cantidad de texto.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://bcrnews.com.ar/wp-content/uploads/2025/03/DeepSeek.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">DeepSeek (Open Source)</h4>
+                        <p class="text-sm text-slate-600">Un modelo de código abierto, especialmente bueno para la generación de código y tareas de programación, pero también útil en otras áreas.</p>
+                        <p class="text-sm font-bold mt-2 text-green-600">Open Source</p>
+                        <p class="text-xs text-green-500">Podemos ver y entender su entrenamiento.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://assets.bizclikmedia.net/1800/b9c92286e658119663b97a2267aee9d1:0006bf344b145b7046bf9b5f43b7a786/perplexity-logo.webp" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">Perplexity AI</h4>
+                        <p class="text-sm text-slate-600">Un motor de respuestas conversacional que te da fuentes. Ideal para investigación rápida y verificación de hechos.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 text-center">
+                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-semibold text-slate-800">NotebookLM (Google)</h4>
+                        <p class="text-sm text-slate-600">Para organizar, resumir y generar contenido a partir de tus documentos. Ideal para gestionar proyectos y análisis de información interna.</p>
+                        <p class="text-sm font-bold mt-2 text-red-600">No Open Source (Caja Negra)</p>
+                        <p class="text-xs text-red-500">Su funcionamiento interno no es transparente.</p>
                     </div>
                 </div>
-
-                <!-- Reflection Point -->
-                <div class="reflection-point bg-orange-50 border-l-4 border-accent-orange rounded-lg p-6">
-                    <h4 class="text-xl font-semibold mb-3 text-corporate-dark"><i class="fas fa-lightbulb mr-2"></i>Punto de Reflexión</h4>
-                    <p class="mb-4 text-gray-700">¿Cómo crees que la IA podría mejorar tu satisfacción y realización laboral?</p>
-                    <button class="bg-accent-orange text-white px-6 py-2 rounded hover:bg-orange-600 transition-colors" onclick="toggleReflection('reflection-4')">
-                        Reflexionar
-                    </button>
-                    <div id="reflection-4" class="hidden mt-4">
-                        <textarea class="w-full p-3 rounded border border-gray-300" rows="3" placeholder="Comparte cómo la IA podría mejorar tu satisfacción laboral..."></textarea>
-                        <button class="mt-2 bg-accent-green text-white px-4 py-2 rounded hover:bg-green-600 transition-colors">
-                            Guardar Reflexión
-                        </button>
-                    </div>
+                
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Habías interactuado ya con alguno de estos modelos? ¿Qué te sorprende más de su funcionamiento?</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 7: POLÍTICA USO IA -->
-        <section id="politica" class="section-content min-h-screen p-6 md:p-12 bg-white">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">Política de Uso de IA</h2>
-                
-                <div class="text-center mb-12">
-                    <div class="bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg p-6">
-                        <h3 class="text-2xl font-semibold mb-4">Uso Ético y Seguro</h3>
-                        <p class="text-lg">La responsabilidad en el uso de IA es fundamental para proteger la empresa y maximizar los beneficios.</p>
-                    </div>
-                </div>
-
-                <!-- Policy Cards -->
-                <div class="grid md:grid-cols-2 gap-6 mb-12">
-                    <div class="policy-card bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-6 hover:shadow-lg transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-shield-alt text-3xl text-blue-600 mr-3"></i>
-                            <h4 class="text-xl font-semibold text-corporate-dark">Privacidad de Datos</h4>
-                        </div>
-                        <p class="text-gray-700 mb-3">No compartir información confidencial de la empresa o datos personales de clientes.</p>
-                        <div class="bg-white p-3 rounded text-sm text-gray-600">
-                            <strong>Ejemplo:</strong> Evita usar nombres reales, direcciones o información financiera específica.
-                        </div>
-                    </div>
-
-                    <div class="policy-card bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg p-6 hover:shadow-lg transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-balance-scale text-3xl text-green-600 mr-3"></i>
-                            <h4 class="text-xl font-semibold text-corporate-dark">Sesgos y Equidad</h4>
-                        </div>
-                        <p class="text-gray-700 mb-3">Mantener pensamiento crítico y revisar resultados para evitar sesgos inadvertidos.</p>
-                        <div class="bg-white p-3 rounded text-sm text-gray-600">
-                            <strong>Práctica:</strong> Siempre revisa y valida las recomendaciones de IA con tu criterio profesional.
-                        </div>
-                    </div>
-
-                    <div class="policy-card bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-6 hover:shadow-lg transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-user-check text-3xl text-purple-600 mr-3"></i>
-                            <h4 class="text-xl font-semibold text-corporate-dark">Supervisión Humana</h4>
-                        </div>
-                        <p class="text-gray-700 mb-3">La IA es un asistente, no un reemplazo. Mantén control y supervisión sobre las decisiones.</p>
-                        <div class="bg-white p-3 rounded text-sm text-gray-600">
-                            <strong>Regla:</strong> Nunca envíes contenido generado por IA sin revisarlo y personalizarlo.
-                        </div>
-                    </div>
-
-                    <div class="policy-card bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-lg p-6 hover:shadow-lg transition-all">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-eye text-3xl text-orange-600 mr-3"></i>
-                            <h4 class="text-xl font-semibold text-corporate-dark">Transparencia</h4>
-                        </div>
-                        <p class="text-gray-700 mb-3">Conocer las limitaciones de la IA y ser transparente sobre su uso cuando sea relevante.</p>
-                        <div class="bg-white p-3 rounded text-sm text-gray-600">
-                            <strong>Comunicación:</strong> Informa cuando uses IA para generar contenido que compartirás externamente.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Guidelines -->
-                <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-red-800 mb-4">Directrices para Uso Responsable</h3>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="bg-white p-4 rounded">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
-                                <strong class="text-red-800">NO COMPARTIR DATOS SENSIBLES</strong>
+        <section id="alcance-ia" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🌐 El Alcance de la IA: Modelos para Casos de Uso Específicos</h2>
+                <p class="text-lg text-slate-600 mb-8">La Inteligencia Artificial se manifiesta en una amplia gama de modelos, cada uno diseñado para resolver necesidades muy específicas. Aquí te presentamos algunos ejemplos clave que ilustran cómo la IA se adapta a distintos escenarios y desafíos empresariales. ¡Pasa el mouse sobre las tarjetas para ver ejemplos de cómo usar la IA!</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">💬</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos Conversacionales (Ej: ChatGPT)</h3>
+                                <p class="text-slate-600">Versátiles para generar textos creativos, responder preguntas generales, redactar correos o resumir documentos. Es como hablar con un experto en casi cualquier tema.</p>
                             </div>
-                            <p class="text-sm text-gray-700">Nunca incluyas información confidencial, contraseñas, o datos personales en prompts.</p>
-                        </div>
-                        <div class="bg-white p-4 rounded">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-play text-green-500 mr-2"></i>
-                                <strong class="text-green-800">Empezar con tareas sencillas</strong>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Redacta un email formal a un cliente para informarle sobre una actualización de nuestro servicio, destacando los beneficios principales y la fecha de implementación."</p>
                             </div>
-                            <p class="text-sm text-gray-700">Comienza con tareas básicas y aumenta la complejidad gradualmente.</p>
                         </div>
-                        <div class="bg-white p-4 rounded">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-bullseye text-blue-500 mr-2"></i>
-                                <strong class="text-blue-800">Ser específico en prompts</strong>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">🦙</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos de Investigación Abierta (Ej: Llama)</h3>
+                                <p class="text-slate-600">Familias de modelos de código abierto, muy potentes para investigación y desarrollo. Se usan para tareas avanzadas de procesamiento de lenguaje y en aplicaciones especializadas.</p>
                             </div>
-                            <p class="text-sm text-gray-700">Proporciona contexto claro y objetivos específicos para mejores resultados.</p>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Analiza el siguiente conjunto de datos [pegar datos de ejemplo] e identifica patrones y anomalías que puedan indicar un fraude en transacciones financieras."</p>
+                            </div>
                         </div>
-                        <div class="bg-white p-4 rounded">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-search text-purple-500 mr-2"></i>
-                                <strong class="text-purple-800">Revisar siempre la salida</strong>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">📚</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos de Comprensión Textual (Ej: BERT)</h3>
+                                <p class="text-slate-600">Centrados en entender el contexto de las palabras en frases. Son excelentes para búsqueda de información, análisis de sentimientos y comprensión lectora en grandes volúmenes de texto.</p>
                             </div>
-                            <p class="text-sm text-gray-700">Verifica precisión, relevancia y adecuación antes de usar el contenido.</p>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Dada esta conversación de chat de soporte [pegar chat], clasifica el sentimiento general del cliente (positivo, negativo, neutro) y extrae las tres quejas recurrentes más importantes."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">🎨</p>
+                                <h3 class="font-bold text-xl text-slate-800">Generación de Imágenes (Ej: DALL-E)</h3>
+                                <p class="text-slate-600">Especializados en crear imágenes realistas o artísticas a partir de descripciones de texto. Útil para marketing, diseño y creación de contenido visual rápido.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Genera una imagen digital de un equipo trabajando colaborativamente en una oficina moderna y luminosa, con un estilo vibrante y optimista."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">🔬</p>
+                                <h3 class="font-bold text-xl text-slate-800">Modelos de Bioinformática (Ej: AlphaFold)</h3>
+                                <p class="text-slate-600">Capaces de predecir la estructura 3D de las proteínas. Transformador para la investigación médica, el desarrollo de fármacos y la biotecnología.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Describe la estructura molecular de la proteína [nombre de proteína] y su función principal en el organismo humano para un informe de investigación."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100">
+                                <p class="text-5xl mb-3">💼</p>
+                                <h3 class="font-bold text-xl text-slate-800">IA para CRM/Ventas (Ej: Salesforce Einstein)</h3>
+                                <p class="text-slate-600">Integrada en plataformas de gestión de clientes para predecir comportamientos, automatizar tareas de ventas y personalizar la interacción con el cliente.</p>
+                            </div>
+                            <div class="card-back">
+                                <h4 class="font-bold text-lg mb-2">Ejemplo de Prompt:</h4>
+                                <p class="text-sm">"Basado en el historial de interacción del cliente X en el CRM, ¿cuál es la probabilidad de que renueve su contrato el próximo mes y qué producto adicional podríamos ofrecerle para maximizar la venta?"</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Group Question -->
-                <div class="bg-blue-50 border-l-4 border-corporate-blue rounded-lg p-6">
-                    <h4 class="text-xl font-semibold mb-3 text-corporate-dark"><i class="fas fa-users mr-2"></i>Pregunta Grupal</h4>
-                    <p class="mb-4 text-gray-700">¿Cuál consideras la política más importante para el uso seguro de IA en Grupo O2?</p>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <button class="group-option bg-white border border-gray-300 rounded p-3 hover:bg-corporate-blue hover:text-white transition-colors">
-                            Privacidad de Datos
-                        </button>
-                        <button class="group-option bg-white border border-gray-300 rounded p-3 hover:bg-corporate-blue hover:text-white transition-colors">
-                            Supervisión Humana
-                        </button>
-                        <button class="group-option bg-white border border-gray-300 rounded p-3 hover:bg-corporate-blue hover:text-white transition-colors">
-                            Transparencia
-                        </button>
-                        <button class="group-option bg-white border border-gray-300 rounded p-3 hover:bg-corporate-blue hover:text-white transition-colors">
-                            Evitar Sesgos
-                        </button>
-                    </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Pregunta: ¿Qué otras aplicaciones de IA específicas visualizas en tu área de trabajo?</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 8: RECURSOS INTERESANTES -->
-        <section id="recursos" class="section-content min-h-screen p-6 md:p-12 bg-gray-50">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">Recursos Interesantes</h2>
-                
-                <div class="text-center mb-12">
-                    <p class="text-xl text-gray-700">Mantente actualizado con las últimas noticias y desarrollos en IA</p>
+        <section id="ia-en-accion" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">💡 La IA en Acción: Aplicaciones Prácticas en el Negocio</h2>
+                <p class="text-lg text-slate-600 mb-8">Aquí te mostramos ejemplos concretos y tangibles de cómo la IA puede usarse hoy en GrupoO2 para mejorar tu día a día en la oficina. Haz clic en cada tarjeta para ver cómo la IA te ayuda.</p>
+                <div id="examples-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <article class="news-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
-                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white">
-                            <i class="fas fa-briefcase text-2xl mb-2"></i>
-                            <span class="text-sm opacity-80">Julio 2025</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold text-corporate-dark mb-3">El Impacto de la IA en el Empleo y la Privacidad</h3>
-                            <p class="text-gray-600 text-sm mb-4">Sam Altman de OpenAI discute cómo la IA transformará el mercado laboral y los desafíos de privacidad que enfrentamos.</p>
-                            <a href="#" class="text-corporate-blue hover:text-corporate-dark font-medium text-sm">Leer más →</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 p-4 text-white">
-                            <i class="fas fa-history text-2xl mb-2"></i>
-                            <span class="text-sm opacity-80">Junio 2025</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold text-corporate-dark mb-3">IA Resuelve Misterios Históricos de Babilonia</h3>
-                            <p class="text-gray-600 text-sm mb-4">Investigadores usan machine learning para descifrar textos cuneiformes antiguos, revelando nuevos conocimientos históricos.</p>
-                            <a href="#" class="text-corporate-blue hover:text-corporate-dark font-medium text-sm">Leer más →</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-4 text-white">
-                            <i class="fab fa-apple text-2xl mb-2"></i>
-                            <span class="text-sm opacity-80">Julio 2025</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold text-corporate-dark mb-3">Apple Integra IA Avanzada en Siri</h3>
-                            <p class="text-gray-600 text-sm mb-4">La nueva actualización de iOS incluye capacidades de IA generativa que transforman la experiencia del usuario.</p>
-                            <a href="#" class="text-corporate-blue hover:text-corporate-dark font-medium text-sm">Leer más →</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
-                        <div class="bg-gradient-to-r from-red-500 to-red-600 p-4 text-white">
-                            <i class="fas fa-heartbeat text-2xl mb-2"></i>
-                            <span class="text-sm opacity-80">Junio 2025</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold text-corporate-dark mb-3">IA Predice Paros Cardíacos con 95% de Precisión</h3>
-                            <p class="text-gray-600 text-sm mb-4">Nuevo algoritmo de deep learning puede predecir paros cardíacos hasta 30 minutos antes, salvando vidas.</p>
-                            <a href="#" class="text-corporate-blue hover:text-corporate-dark font-medium text-sm">Leer más →</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
-                        <div class="bg-gradient-to-r from-teal-500 to-teal-600 p-4 text-white">
-                            <i class="fas fa-gavel text-2xl mb-2"></i>
-                            <span class="text-sm opacity-80">Julio 2025</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold text-corporate-dark mb-3">UE Establece Código de Conducta para Empresas de IA</h3>
-                            <p class="text-gray-600 text-sm mb-4">La Unión Europea publica nuevas directrices para el desarrollo responsable de inteligencia artificial empresarial.</p>
-                            <a href="#" class="text-corporate-blue hover:text-corporate-dark font-medium text-sm">Leer más →</a>
-                        </div>
-                    </article>
-
-                    <article class="news-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all">
-                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-4 text-white">
-                            <i class="fas fa-robot text-2xl mb-2"></i>
-                            <span class="text-sm opacity-80">Julio 2025</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold text-corporate-dark mb-3">Avances en IA Conversacional Multimodal</h3>
-                            <p class="text-gray-600 text-sm mb-4">Los nuevos modelos pueden procesar texto, voz, imágenes y video simultáneamente con mayor precisión.</p>
-                            <a href="#" class="text-corporate-blue hover:text-corporate-dark font-medium text-sm">Leer más →</a>
-                        </div>
-                    </article>
+                <div id="example-details" class="mt-8 p-6 bg-slate-50 rounded-xl border border-slate-200 hidden"></div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: De estos ejemplos, ¿cuál te parece más útil para tu rol?</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 9: EQUIPO -->
-        <section id="equipo" class="section-content min-h-screen p-6 md:p-12 bg-white">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold text-corporate-dark mb-8 text-center">Equipo de Desarrollo ADO</h2>
-                
-                <div class="text-center mb-12">
-                    <p class="text-xl text-gray-700">Conoce al equipo que hace posible la innovación en Grupo O2</p>
-                </div>
-
-                <div id="team-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                  <!-- El equipo se cargará aquí dinámicamente desde el archivo JSON -->
-                </div>
-
-                <div class="text-center">
-                    <div class="bg-gradient-to-r from-corporate-blue to-corporate-light text-white rounded-lg p-8 mb-8">
-                        <h3 class="text-2xl font-semibold mb-4">¿Tienes preguntas o sugerencias?</h3>
-                        <p class="mb-6">Nos encantaría escuchar tu feedback sobre esta guía de IA</p>
-                        <a href="https://forms.office.com/Pages/DesignPageV2.aspx?subpage=design&FormId=lWh_bITFcUKkM5ifl2ruiEVez2DOsgZEtbYSbt35jhdUNUFCQkhJTjUwNjlITUdESEtTWTg5U0dDNCQlQCN0PWcu&Token=1faa4a337a1b4c6997ac928e6dbb503a" class="bg-white text-corporate-blue px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block">
-                            <i class="fas fa-comment mr-2"></i>Contáctanos
-                        </a>
+        <section id="beneficios" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">📈 Beneficios y Oportunidades: ¿Cómo nos Potencia la IA?</h2>
+                <p class="text-lg text-slate-600 mb-8">La IA no solo simplifica tareas, sino que nos abre un mundo de oportunidades. Nos permite ser más eficientes, productivos y nos libera para enfocarnos en tareas que realmente agregan valor y requieren nuestra creatividad humana.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 border border-green-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">⏱️</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-green-800">Mayor Eficiencia y Productividad</h3>
+                            <p class="text-green-700">Automatiza lo repetitivo, optimiza tu tiempo.</p>
+                        </div>
                     </div>
+                    <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">✨</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-800">Enfoque en Tareas de Alto Valor</h3>
+                            <p class="text-blue-700">Libera tu mente para la estrategia y la innovación.</p>
+                        </div>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">💡</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-purple-800">Fomento de la Creatividad e Innovación</h3>
+                            <p class="text-purple-700">Nuevas ideas y soluciones con el apoyo de la IA.</p>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-xl flex items-center space-x-4">
+                        <span class="text-4xl">🎓</span>
+                        <div>
+                            <h3 class="font-bold text-lg text-yellow-700">Desarrollo Profesional</h3>
+                            <p class="text-yellow-700">Adquiere habilidades relevantes para el futuro del trabajo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container mt-10">
+                    <canvas id="impactoBeneficiosChart"></canvas>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Punto de Reflexión: ¿Cómo crees que la IA podría ayudarte a sentirte más realizado en tu trabajo?</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 10: PRÓXIMOS PASOS -->
-        <section id="proximos-pasos" class="section-content min-h-screen p-6 md:p-12 bg-gradient-to-br from-corporate-dark to-corporate-blue text-white">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-4xl font-bold mb-8 text-center">Próximos Pasos</h2>
+        <section id="politica-uso-ia" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🛡️ Política uso IA: Uso Ético y Seguro de la IA</h2>
+                <p class="text-lg text-slate-600 mb-8">La IA es una herramienta poderosa y, como tal, requiere un uso responsable. En GrupoO2, la gobernanza de la IA significa asegurarnos de que la usemos de forma segura, ética y efectiva, protegiendo nuestra información y la de nuestros clientes. ¡Tu compromiso es clave!</p>
                 
-                <div class="text-center mb-12">
-                    <h3 class="text-2xl font-semibold mb-4">Integración de IA en la Cultura Grupo O2</h3>
-                    <p class="text-lg opacity-90">Construyamos juntos un futuro más innovador y eficiente</p>
-                </div>
-
-                <!-- Recommended AI Stack -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-12">
-                    <h3 class="text-2xl font-semibold mb-6 text-center">Stack de IA Recomendado</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        
-                        <!-- Gemini -->
-                        <div class="text-center">
-                            <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="block p-4 rounded-lg hover:bg-white/10 transition-colors duration-300">
-                                <div class="w-16 h-16 rounded-full bg-white mx-auto mb-4 flex items-center justify-center shadow-md">
-                                    <img src="images/gemini.png" alt="Logo de Gemini" class="w-12 h-12 object-contain">
-                                </div>
-                                <h4 class="text-xl font-semibold mb-2">Gemini (Google)</h4>
-                                <p class="text-sm opacity-80">IA multimodal para análisis complejo y creatividad</p>
-                            </a>
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">Políticas Clave de Uso</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-red-100 border-2 border-red-300 p-6 flex flex-col items-center justify-center text-center">
+                                <p class="text-5xl mb-3">🔒</p>
+                                <h4 class="text-xl font-bold text-red-800">Privacidad de Datos (Riesgo Principal)</h4>
+                                <p class="text-sm text-red-600 mt-2">(Pasa el mouse para saber más)</p>
+                            </div>
+                            <div class="card-back bg-red-100 border-2 border-red-300 p-6 text-red-800">
+                                <h4 class="font-bold text-lg mb-2">¡NUNCA COMPARTAS INFORMACIÓN CONFIDENCIAL!</h4>
+                                <p class="text-sm">No ingreses datos de clientes, financieros, estrategias o personales en herramientas de IA públicas. La información sensible debe procesarse manualmente para evitar filtraciones.</p>
+                            </div>
                         </div>
-                
-                        <!-- Perplexity AI -->
-                        <div class="text-center">
-                            <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" class="block p-4 rounded-lg hover:bg-white/10 transition-colors duration-300">
-                                <div class="w-16 h-16 rounded-full bg-white mx-auto mb-4 flex items-center justify-center shadow-md">
-                                    <img src="images/perplexity.png" alt="Logo de Perplexity AI" class="w-12 h-12 object-contain">
-                                </div>
-                                <h4 class="text-xl font-semibold mb-2">Perplexity AI</h4>
-                                <p class="text-sm opacity-80">Investigación e información actualizada</p>
-                            </a>
-                        </div>
-                
-                        <!-- NotebookLM -->
-                        <div class="text-center">
-                            <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" class="block p-4 rounded-lg hover:bg-white/10 transition-colors duration-300">
-                                <div class="w-16 h-16 rounded-full bg-white mx-auto mb-4 flex items-center justify-center shadow-md">
-                                    <img src="images/notebooklm.png" alt="Logo de NotebookLM" class="w-12 h-12 object-contain">
-                                </div>
-                                <h4 class="text-xl font-semibold mb-2">NotebookLM</h4>
-                                <p class="text-sm opacity-80">Análisis de documentos y síntesis</p>
-                            </a>
-                        </div>
-                
-                        <!-- Manus AI -->
-                        <div class="text-center">
-                            <a href="https://www.manus.ai/" target="_blank" rel="noopener noreferrer" class="block p-4 rounded-lg hover:bg-white/10 transition-colors duration-300">
-                                <div class="w-16 h-16 rounded-full bg-white mx-auto mb-4 flex items-center justify-center shadow-md">
-                                     <img src="images/manus.png" alt="Logo de Manus AI" class="w-12 h-12 object-contain">
-                                </div>
-                                <h4 class="text-xl font-semibold mb-2">Manus AI</h4>
-                                <p class="text-sm opacity-80">Ideal para crear presentaciones y programar</p>
-                            </a>
-                        </div>
-                        
                     </div>
-                </div>
-
-                <!-- Roadmap -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-12">
-                    <h3 class="text-2xl font-semibold mb-8 text-center">Roadmap de Capacitación</h3>
-                    <div class="space-y-6">
-                        <div class="roadmap-item flex items-center">
-                            <div class="bg-accent-green rounded-full w-8 h-8 flex items-center justify-center mr-4">
-                                <i class="fas fa-check text-sm"></i>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-amber-100 border-2 border-amber-300 p-6 flex flex-col items-center justify-center text-center">
+                                <p class="text-5xl mb-3">🤔</p>
+                                <h4 class="text-xl font-bold text-amber-800">Sesgos y Equidad (Riesgo Potencial)</h4>
+                                <p class="text-sm text-amber-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="text-lg font-semibold">Fase 1: Capacitación Inicial</h4>
-                                <p class="text-sm opacity-80">Fundamentos de IA y mejores prácticas con materiales interactivos</p>
+                            <div class="card-back bg-amber-100 border-2 border-amber-300 p-6 text-amber-800">
+                                <h4 class="font-bold text-lg mb-2">La IA puede reflejar sesgos humanos</h4>
+                                <p class="text-sm">La IA aprende de los datos con los que fue entrenada. Por eso, es fundamental aplicar tu pensamiento crítico para detectar y corregir posibles sesgos en sus resultados y asegurar la equidad.</p>
                             </div>
                         </div>
-                        
-                        <div class="roadmap-item flex items-center">
-                            <div class="bg-accent-orange rounded-full w-8 h-8 flex items-center justify-center mr-4">
-                                <i class="fas fa-play text-sm"></i>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-sky-100 border-2 border-sky-300 p-6 flex flex-col items-center justify-center text-center">
+                                <p class="text-5xl mb-3">🧑‍💻</p>
+                                <h4 class="text-xl font-bold text-sky-800">Supervisión Humana (Tu Rol Clave)</h4>
+                                <p class="text-sm text-sky-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="text-lg font-semibold">Fase 2: Canal de Feedback</h4>
-                                <p class="text-sm opacity-80">Comunidad de práctica y canal dedicado para dudas y experiencias</p>
+                            <div class="card-back bg-sky-100 border-2 border-sky-300 p-6 text-sky-800">
+                                <h4 class="font-bold text-lg mb-2">La IA es un Asistente, no un Sustituto</h4>
+                                <p class="text-sm">Tu juicio, experiencia y ética son irremplazables. Revisa, edita y valida siempre cualquier contenido o resultado generado por la IA antes de utilizarlo en decisiones importantes.</p>
                             </div>
                         </div>
-                        
-                        <div class="roadmap-item flex items-center">
-                            <div class="bg-gray-400 rounded-full w-8 h-8 flex items-center justify-center mr-4">
-                                <i class="fas fa-clock text-sm"></i>
+                    </div>
+                    <div class="card-flip h-64">
+                        <div class="card-flip-inner">
+                            <div class="card-front bg-slate-100 border-2 border-slate-300 p-6 flex flex-col items-center justify-center text-center">
+                                <p class="text-5xl mb-3">🔍</p>
+                                <h4 class="text-xl font-bold text-slate-800">Transparencia (Entender la Herramienta)</h4>
+                                <p class="text-sm text-slate-600 mt-2">(Pasa el mouse para saber más)</p>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="text-lg font-semibold">Fase 3: Sesiones Especializadas</h4>
-                                <p class="text-sm opacity-80">Capacitación específica por equipos y roles (próximamente)</p>
+                            <div class="card-back bg-slate-100 border-2 border-slate-300 p-6 text-slate-800">
+                                <h4 class="font-bold text-lg mb-2">Conoce sus límites y funciones</h4>
+                                <p class="text-sm">Es importante conocer las limitaciones y el alcance de las herramientas de IA que utilizas. Si no entiendes cómo funciona un resultado, ¡pregunta y busca aclaración!</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Call to Action -->
-                <div class="text-center">
-                    <div class="bg-gradient-to-r from-accent-orange to-red-500 rounded-lg p-8">
-                        <h3 class="text-2xl font-semibold mb-4">¡Seamos Pioneros en IA!</h3>
-                        <p class="text-lg mb-6 opacity-90">
-                            Juntos construiremos el futuro de Grupo O2 con tecnología responsable e innovadora
-                        </p>
-                        <p class="text-sm opacity-80">
-                            Tu participación y feedback son esenciales para crear una cultura de IA exitosa
-                        </p>
+                <h3 class="text-2xl font-bold text-slate-800 mt-10 mb-4">Directrices para un Uso Responsable</h3>
+                <div class="space-y-4">
+                    <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
+                        <span class="text-2xl pt-1">🚫</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">No Compartir Datos Sensibles</h4>
+                            <p class="text-sm text-slate-600">Nunca ingreses información confidencial de clientes (ej. nombres completos, datos financieros), ni datos personales sensibles (ej. contraseñas, números de documentos, direcciones) en ninguna herramienta de IA. Esto es crucial para la seguridad y privacidad.</p>
+                        </div>
                     </div>
+                    <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
+                        <span class="text-2xl pt-1">🚀</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Empieza con Tareas Sencillas</h4>
+                            <p class="text-sm text-slate-600">Practica corrigiendo textos o generando listas de ideas antes de abordar tareas más complejas. Gana confianza.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
+                        <span class="text-2xl pt-1">🎯</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Sé Específico en tus Instrucciones (Prompts)</h4>
+                            <p class="text-sm text-slate-600">Cuanto más clara y detallada sea tu pregunta, mejor será la respuesta de la IA. Piensa en el tono, propósito y audiencia.</p>
+                        </div>
+                    </div>
+                    <div class="bg-slate-100 p-4 rounded-lg flex items-start space-x-4">
+                        <span class="text-2xl pt-1">🧐</span>
+                        <div>
+                            <h4 class="font-semibold text-slate-800">Revisa Siempre la Salida de la IA</h4>
+                            <p class="text-sm text-slate-600">La IA te da un borrador o sugerencia. Tú eres el responsable final de la calidad, veracidad y adecuación del contenido.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Pregunta para el Grupo: ¿Cuál de estas políticas te parece más importante en tu trabajo diario y por qué?</p>
                 </div>
             </div>
         </section>
+
+        <section id="recursos-interesantes" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">📰 Recursos Interesantes</h2>
+                <p class="text-lg text-slate-600 mb-6">Esta sección está dedicada a mantenerte informado sobre las últimas novedades y avances en el mundo de la Inteligencia Artificial que sean relevantes para GrupoO2.</p>
+                
+                <div class="space-y-6">
+                    <div class="news-article">
+                        <h3>Sam Altman (OpenAI) habla sobre el impacto de la IA en el empleo y la privacidad</h3>
+                        <p>En un evento reciente, Sam Altman, CEO de OpenAI, y Brad Lightcap, COO, abordaron el impacto de la IA en el empleo, la privacidad y los desafíos de la empresa. Altman afirmó que, hasta el momento, no hay pruebas de un reemplazo masivo de trabajos de entrada por la IA, aunque reconoce que algunas áreas y categorías de empleo podrían desaparecer. Subrayó la importancia de la privacidad de los usuarios frente a las demandas por derechos de autor.</p>
+                        <a href="https://www.infobae.com/tecno/2025/06/30/sam-altman-advierte-va-a-haber-un-impacto-negativo-real-y-va-a-suceder-mas-rapido-que-los-cambios-tecnologicos-anteriores/" target="_blank">Leer más en Infobae</a>
+                    </div>
+                    
+                    <div class="news-article">
+                        <h3>Un antiguo misterio de Babilonia resuelto gracias a la inteligencia artificial</h3>
+                        <p>La inteligencia artificial ha demostrado su capacidad para la investigación histórica al ayudar a desentrañar un antiguo misterio arqueológico de Babilonia. Este avance subraya el potencial de la IA para facilitar descubrimientos en campos humanísticos y científicos, abriendo nuevas vías para entender el pasado.</p>
+                        <a href="https://www.lanacion.com.ar/tema/inteligencia-artificial-tid58563/" target="_blank">Leer más en La Nación</a>
+                    </div>
+
+                    <div class="news-article">
+                        <h3>Apple planea reemplazar su IA por la de OpenAI y Anthropic para "salvar" a Siri</h3>
+                        <p>Se ha reportado que Apple está explorando activamente la posibilidad de integrar tecnologías de IA de OpenAI y Anthropic en sus sistemas, específicamente para potenciar y "rescatar" a Siri. Este movimiento estratégico indica la intención de Apple de mejorar drásticamente las capacidades de su asistente virtual y competir más eficazmente en el panorama de la inteligencia artificial.</p>
+                        <a href="https://andro4all.com/c/inteligencia-artificial" target="_blank">Leer más en Andro4all</a>
+                    </div>
+
+                    <div class="news-article">
+                        <h3>Desarrollan una inteligencia artificial que predice cuándo una persona puede sufrir un paro cardíaco</h3>
+                        <p>Un equipo de investigadores ha logrado desarrollar una inteligencia artificial innovadora capaz de predecir el riesgo de paro cardíaco en individuos. Este avance, que utiliza algoritmos avanzados para analizar datos médicos, promete ser una herramienta crucial en la prevención y el manejo de enfermedades cardíacas, permitiendo intervenciones tempranas que podrían salvar vidas.</p>
+                        <a href="https://tn.com.ar/tecno/novedades/2025/07/03/desarrollaron-una-inteligencia-artificial-que-predice-cuando-una-persona-puede-sufrir-un-paro-cardiaco/" target="_blank">Leer más en TN</a>
+                    </div>
+
+                    <div class="news-article">
+                        <h3>Código para ayudar a las empresas con las normas sobre IA podría llegar a finales de 2025, según la UE</h3>
+                        <p>La Unión Europea está avanzando en la creación de un código de conducta para guiar a las empresas en el cumplimiento de las futuras regulaciones sobre inteligencia artificial. Se espera que este marco esté listo para finales de 2025, reflejando el compromiso de la UE con un desarrollo ético y responsable de la IA, equilibrando la innovación con la protección de los derechos y la seguridad de los ciudadanos.</p>
+                        <a href="https://www.lanacion.com.ar/tema/inteligencia-artificial-tid58563/" target="_blank">Leer más en La Nación</a>
+                    </div>
+                </div>
+
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">Mantente atento para más noticias y actualizaciones relevantes sobre IA.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipo" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 text-center">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">👨‍💻 Nuestro Equipo de Desarrollo</h2>
+                <p class="text-lg text-slate-600 mb-8">Esta guía fue creada y es impulsada por el departamento de <b>ADO del GrupoO2</b>, con el compromiso de empoderar a todo el equipo con el conocimiento y las herramientas de la Inteligencia Artificial.</p>
+                
+                <h3 class="text-2xl font-bold text-slate-800 mb-6">Conoce a los creadores:</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                    <div class="team-member-card">
+                        <img src="https://raw.githubusercontent.com/Asnamy/IA-GRUPOO2/main/imagenes/luis-olcay.jpg" alt="">
+                        <p class="font-semibold text-slate-800">Luis Alberto Olcay</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://raw.githubusercontent.com/Asnamy/IA-GRUPOO2/main/imagenes/Daniel.jpg" alt="">
+                        <p class="font-semibold text-slate-800">Daniel Rodriguez</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://raw.githubusercontent.com/Asnamy/IA-GRUPOO2/main/imagenes/adan-cumana.jpg" alt="">
+                        <p class="font-semibold text-slate-800">Adan Cumana</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://raw.githubusercontent.com/Asnamy/IA-GRUPOO2/main/imagenes/carlos-gutierrez.jpg" alt="">
+                        <p class="font-semibold text-slate-800">Carlos Gutierrez</p>
+                    </div>
+                    <div class="team-member-card">
+                        <img src="https://raw.githubusercontent.com/Asnamy/IA-GRUPOO2/main/imagenes/claudio-pacheco.jpg" alt="">
+                        <p class="font-semibold text-slate-800">Claudio Pacheco</p>
+                    </div>
+                </div>
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">¡Estamos aquí para apoyar tu viaje en el mundo de la IA!</p>
+                    <a href="https://forms.office.com/Pages/DesignPageV2.aspx?subpage=design&FormId=lWh_bITFcUKkM5ifl2ruiEVez2DOsgZEtbYSbt35jhdUNUFCQkhJTjUwNjlITUdESEtTWTg5U0dDNCQlQCN0PWcu&Token=1faa4a337a1b4c6997ac928e6dbb503a" target="_blank" class="mt-4 inline-block bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                        Contáctanos
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="proximos-pasos" class="main-content hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h2 class="text-4xl font-bold text-sky-600 mb-4">🚀 Próximos Pasos: Integrando la IA en Nuestra Cultura</h2>
+                <p class="text-lg text-slate-600 mb-6">La IA no es el futuro, es el presente. Queremos construir una cultura en GrupoO2 donde la IA sea una aliada para tu crecimiento y para la eficiencia de la empresa. ¡Tu participación es esencial!</p>
+                
+                <h3 class="text-2xl font-bold text-slate-800 mb-4">Nuestro Stack de IA Sugerido para GrupoO2</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <img src="https://diarioia.com/wp-content/uploads/2023/12/Google-Gemini-versiones.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-bold text-xl text-slate-800">Gemini (Google)</h4>
+                        <p class="text-slate-600">Para generación de texto, ideas y análisis conversacional. Acceso a través de Google Workspace con tu correo empresarial.</p>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <img src="https://assets.bizclikmedia.net/1800/b9c92286e658119663b97a2267aee9d1:0006bf344b145b7046bf9b5f43b7a786/perplexity-logo.webp" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-bold text-xl text-slate-800">Perplexity AI</h4>
+                        <p class="text-slate-600">Un motor de respuestas conversacional que te da fuentes. Ideal para investigación rápida y verificación de hechos.</p>
+                    </div>
+                    <div class="bg-slate-100 p-6 rounded-xl text-center">
+                        <img src="https://cdn.gccbusinessnews.com/wp-content/uploads/2025/03/28212715/Google-NotebookLM-new-features.jpg" alt="" class="mx-auto my-3 rounded-full h-20 w-20 object-contain">
+                        <h4 class="font-bold text-xl text-slate-800">NotebookLM (Google)</h4>
+                        <p class="text-sm text-slate-600">Para organizar, resumir y generar contenido a partir de tus documentos. Ideal para gestionar proyectos y análisis de información interna.</p>
+                    </div>
+                </div>
+
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold mb-4">¡Importante! Creación de Cuentas:</p>
+                    <p class="text-lg text-slate-600 text-center">Pronto recibirás instrucciones detalladas para crear tus cuentas en estas plataformas utilizando <b>tu correo empresarial de GrupoO2</b>. Esto asegura la seguridad y la integración con nuestras herramientas.</p>
+                </div>
+
+                <h3 class="text-2xl font-bold text-slate-800 mt-10 mb-4">Roadmap de capacitación y soporte tecnológico</h3>
+                <div class="flex justify-center my-8">
+                    <img src="https://raw.githubusercontent.com/Asnamy/IA-GRUPOO2/main/imagenes/Roadmap.jpg" alt="" class="rounded-lg shadow-md max-w-xl h-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F0F0F0/333333?text=Error+al+cargar+imagen';">
+                </div>
+                <ul class="list-disc list-inside space-y-3 text-slate-600 text-lg">
+                    <li><b>Capacitación inicial:</b> sesión práctica para dominar el stack tecnológico definido, con acceso inmediato a materiales y grabaciones.</li>
+                    <li><b>Canal de feedback y comunidad de práctica:</b> espacio para registrar ideas, dudas y necesidades, con encuentros regulares y chat para compartir casos reales y resolver consultas.</li>
+                    <li><b>Sesiones especializadas por equipo:</b> talleres a demanda que se adaptan a tus desafíos y ofrecen acompañamiento práctico para potenciar tus proyectos.</li>
+                </ul>
+
+                <div class="bg-sky-50 p-6 rounded-xl border border-sky-200 mt-8">
+                    <p class="text-xl text-center text-sky-800 font-semibold">¡Juntos, construiremos un futuro laboral más eficiente, inteligente e innovador en GrupoO2 gracias a la IA!</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Modals for IA en Acción examples -->
-    <!-- Email Modal -->
-    <div id="email-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Redacción de Correos</h3>
-                    <button onclick="closeModal('email-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Tiempo: 15-30 minutos por correo, revisiones múltiples, inconsistencia en tono</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Tiempo: 2-5 minutos, tono consistente, estructura profesional automática</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Redacta un correo profesional para [PROPÓSITO] dirigido a [AUDIENCIA] con tono [FORMAL/AMIGABLE]. Incluye [PUNTOS CLAVE]"
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.main-content');
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+
+            const examplesData = [
+                {
+                    icon: '✉️',
+                    title: 'Redacción de Correos',
+                    description: '¿Necesitas redactar un correo formal o una propuesta rápidamente?',
+                    details: {
+                        sinIA: 'Te tomas mucho tiempo pensando en la estructura y las palabras exactas, o buscando ejemplos en correos anteriores.',
+                        conIA: 'Puedes pedirle a una IA generativa que redacte un borrador completo, ajustando el tono y el propósito. Solo revisas y envías.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Redacta un correo formal para el gerente de proyectos, solicitando una actualización urgente sobre el estado del proyecto X. El tono debe ser respetuoso pero firme."'
+                    }
+                },
+                {
+                    icon: '📊',
+                    title: 'Análisis de Datos en Excel',
+                    description: '¿Necesitas identificar tendencias o resumir grandes volúmenes de datos en Excel?',
+                    details: {
+                        sinIA: 'Pasar horas revisando manualmente filas y columnas, creando tablas dinámicas complejas o gráficos que no transmiten el mensaje.',
+                        conIA: 'Copia y pega tus datos (¡recuerda, sin información confidencial!) en una IA y pídele que identifique tendencias, resuma información clave o te sugiera gráficos.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Analiza estos datos de ventas [pega datos clave de una muestra no confidencial] e identifica los 3 productos con mejor rendimiento en el último trimestre y las 2 tendencias de compra principales."'
+                    }
+                },
+                {
+                    icon: '💻',
+                    title: 'Fórmulas y Automatización (No-Code)',
+                    description: '¿Necesitas una fórmula compleja en Excel o automatizar una tarea simple sin programar?',
+                    details: {
+                        sinIA: 'Buscar en manuales extensos, foros complicados, o intentar aprender lenguajes de script que no conoces.',
+                        conIA: 'Describe lo que necesitas en lenguaje simple y la IA te proporcionará la fórmula exacta, o el paso a paso para una automatización "no-code" con herramientas existentes.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Genera una fórmula de Excel para calcular el promedio de la columna \'Puntaje\' solo para las filas donde la columna \'Estado\' sea \'Completado\'." o "Dame los pasos para crear una automatización que mueva archivos PDF con la palabra \'Factura\' a una carpeta específica en mi equipo."'
+                    }
+                },
+                {
+                    icon: '📄',
+                    title: 'Resúmenes de Informes',
+                    description: '¿Tienes que leer un informe de 50 páginas o revisar notas de reunión y necesitas los puntos clave rápidamente?',
+                    details: {
+                        sinIA: 'Leer todo el documento, subrayar, tomar notas, lo que consume mucho tiempo valioso.',
+                        conIA: 'Pega el texto del informe (¡siempre que no sea confidencial!) o las notas en una herramienta de IA y pídele un resumen conciso con los puntos más importantes.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Resume este informe técnico [pega el texto del informe] destacando las 3 conclusiones más importantes y las 2 acciones recomendadas."'
+                    }
+                },
+                {
+                    icon: '💡',
+                    title: 'Creatividad e Innovación (Generación de Ideas)',
+                    description: '¿Necesitas nuevas ideas para un proyecto, una campaña de marketing, o para resolver un problema?',
+                    details: {
+                        sinIA: 'Sentirte "bloqueado" creativamente, o que las ideas no fluyen en el equipo.',
+                        conIA: 'La IA puede actuar como un "cerebro" adicional, generándote un sinfín de ideas para que las explores y adaptes a tus necesidades.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Genera 10 ideas innovadoras para una campaña interna de bienestar para empleados de oficina, enfocándose en bajo costo y alta participación."'
+                    }
+                },
+                {
+                    icon: '💬',
+                    title: 'Mejora de la Comunicación y Atención Interna',
+                    description: 'Si trabajas con clientes o en soporte interno, ¿quieres mejorar la calidad y rapidez de tus respuestas?',
+                    details: {
+                        sinIA: 'Buscar respuestas en manuales extensos, o tardar en formular la respuesta perfecta para una situación común.',
+                        conIA: 'Puedes usarla para generar borradores de respuestas estandarizadas y claras, o incluso para simular escenarios de interacción y practicar tus respuestas.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Redacta una respuesta concisa y empática para un colega que reporta un error recurrente en un sistema interno, indicando que ya estamos investigando y le daremos una actualización en 24 horas."'
+                    }
+                },
+                {
+                    icon: '🖼️',
+                    title: 'Creación de Contenido Visual',
+                    description: '¿Necesitas imágenes para presentaciones, redes sociales o campañas sin ser diseñador gráfico?',
+                    details: {
+                        sinIA: 'Depender de diseñadores, buscar imágenes de stock genéricas, o intentar crear algo con herramientas complejas sin experiencia.',
+                        conIA: 'Describe la imagen que necesitas a una IA generativa de imágenes (como DALL-E) y obtén propuestas visuales en segundos, que luego puedes ajustar.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA: "Crea una imagen de estilo minimalista que represente la colaboración en un entorno de oficina moderno, con colores suaves y un enfoque en la diversidad del equipo."'
+                    }
+                },
+                {
+                    icon: '🤝',
+                    title: 'Asistencia en CRM y Ventas',
+                    description: '¿Cómo la IA puede potenciar tus interacciones con clientes y optimizar procesos de venta?',
+                    details: {
+                        sinIA: 'Análisis manual de leads, escribir correos de seguimiento genéricos, o predecir ventas basándose solo en la intuición.',
+                        conIA: 'La IA integrada en un CRM (como Salesforce Einstein) puede puntuar leads, personalizar mensajes de correo, y ofrecer previsiones de ventas más precisas.',
+                        prompt: '<b>Cómo usarlo:</b> Pide a la IA (en tu sistema CRM con capacidades de IA): "Analiza el historial de interacción de este cliente y sugiere los 3 próximos pasos más efectivos para cerrar la venta."'
+                    }
+                }
+            ];
+
+            function navigateTo(hash) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === hash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                contentSections.forEach(section => {
+                    if ('#' + section.id === hash) {
+                        section.classList.remove('hidden');
+                        section.style.opacity = 0;
+                        setTimeout(() => section.style.opacity = 1, 50);
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+                if (sidebar.classList.contains('md:translate-x-0')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetHash = link.getAttribute('href');
+                    navigateTo(targetHash);
+                    window.location.hash = targetHash;
+                });
+            });
+
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+            
+            function populateExamples() {
+                const grid = document.getElementById('examples-grid');
+                grid.innerHTML = '';
+                examplesData.forEach((ex, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-slate-100 p-6 rounded-xl border-2 border-transparent hover:border-sky-500 hover:shadow-lg cursor-pointer transition-all duration-300 transform hover:-translate-y-1';
+                    card.innerHTML = `
+                        <p class="text-4xl mb-3">${ex.icon}</p>
+                        <h3 class="font-bold text-lg text-slate-800">${ex.title}</h3>
+                        <p class="text-sm text-slate-600">${ex.description}</p>
+                    `;
+                    card.addEventListener('click', () => showExampleDetails(index));
+                    grid.appendChild(card);
+                });
+            }
+
+            function showExampleDetails(index) {
+                const detailsContainer = document.getElementById('example-details');
+                const ex = examplesData[index];
+                detailsContainer.innerHTML = `
+                    <h3 class="text-2xl font-bold text-sky-600 mb-4 flex items-center"><span class="text-3xl mr-3">${ex.icon}</span> ${ex.title}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                            <h4 class="font-semibold text-red-800">Sin IA:</h4>
+                            <p class="text-sm text-red-700">${ex.details.sinIA}</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <h4 class="font-semibold text-green-800">Con IA:</h4>
+                            <p class="text-sm text-green-700">${ex.details.conIA}</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <div class="mt-4 bg-slate-200 p-4 rounded-lg">
+                        <p class="text-sm text-slate-700">${ex.details.prompt}</p>
+                    </div>
+                `;
+                detailsContainer.classList.remove('hidden');
+            }
+            
+            const impactoBeneficiosCtx = document.getElementById('impactoBeneficiosChart').getContext('2d');
+            new Chart(impactoBeneficiosCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mayor Eficiencia', 'Enfoque en Valor', 'Más Creatividad', 'Desarrollo Profesional'],
+                    datasets: [{
+                        label: 'Impacto Potencial (%)',
+                        data: [50, 40, 30, 25],
+                        backgroundColor: [
+                            'rgba(14, 165, 233, 0.6)', /* sky-500 */
+                            'rgba(59, 130, 246, 0.6)', /* blue-500 */
+                            'rgba(168, 85, 247, 0.6)', /* purple-500 */
+                            'rgba(234, 179, 8, 0.6)'  /* yellow-500 */
+                        ],
+                        borderColor: [
+                            'rgba(14, 165, 233, 1)',
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(168, 85, 247, 1)',
+                            'rgba(234, 179, 8, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                             ticks: {
+                                callback: function(value) {
+                                    return value + '%'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
 
-    <!-- Excel Modal -->
-    <div id="excel-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Análisis de Datos en Excel</h3>
-                    <button onclick="closeModal('excel-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Análisis manual, fórmulas complejas, insights limitados por tiempo</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Insights automáticos, patrones ocultos detectados, recomendaciones accionables</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Analiza esta tabla de datos de ventas y encuentra patrones, tendencias y oportunidades de mejora"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- NoCode Modal -->
-    <div id="nocode-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Fórmulas y Automatización No-Code</h3>
-                    <button onclick="closeModal('nocode-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Necesidad de programación, curva de aprendizaje alta, dependencia técnica</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Automatización en lenguaje natural, sin código, implementación rápida</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Crea una fórmula de Excel que calcule [OBJETIVO] basado en [CONDICIONES] y muestre [RESULTADO DESEADO]"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Summary Modal -->
-    <div id="summary-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Resúmenes de Informes</h3>
-                    <button onclick="closeModal('summary-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Lectura completa necesaria, tiempo extenso, riesgo de omitir puntos clave</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Resúmenes ejecutivos automáticos, puntos clave destacados, acción clara</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Resume este documento en puntos clave ejecutivos, destacando decisiones pendientes y acciones requeridas"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Creativity Modal -->
-    <div id="creativity-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Creatividad e Innovación</h3>
-                    <button onclick="closeModal('creativity-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Bloqueo creativo, perspectivas limitadas, sesiones largas de brainstorming</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Ideas frescas instantáneas, múltiples perspectivas, inspiración bajo demanda</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Genera 10 ideas innovadoras para [DESAFÍO] considerando [RESTRICCIONES] y enfoque en [OBJETIVO]"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Communication Modal -->
-    <div id="communication-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Mejora de la Comunicación</h3>
-                    <button onclick="closeModal('communication-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Revisiones múltiples, inconsistencia en tono, mensajes poco claros</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Tono optimizado, claridad mejorada, adaptación a audiencia automática</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Mejora este texto para que sea más [CLARO/PERSUASIVO/PROFESIONAL] dirigido a [AUDIENCIA ESPECÍFICA]"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Visual Modal -->
-    <div id="visual-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Creación de Contenido Visual</h3>
-                    <button onclick="closeModal('visual-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Dependencia de diseñadores, costos altos, tiempos de entrega largos</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Creación instantánea, múltiples variaciones, costos reducidos</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Crea una imagen profesional de [DESCRIPCIÓN] con estilo [CORPORATIVO/MODERNO] para [USO ESPECÍFICO]"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CRM Modal -->
-    <div id="crm-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="modal-content bg-white rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-corporate-dark">Asistencia en CRM y Ventas</h3>
-                    <button onclick="closeModal('crm-modal')" class="text-gray-400 hover:text-gray-600">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h4 class="font-semibold mb-2 text-red-600">Sin IA</h4>
-                        <p class="text-sm text-gray-600">Seguimiento manual, análisis básico, oportunidades perdidas</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-green-600">Con IA</h4>
-                        <p class="text-sm text-gray-600">Predicción de leads, seguimiento inteligente, personalización automática</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold mb-2 text-blue-600">Cómo usarlo</h4>
-                        <div class="bg-gray-100 p-3 rounded text-xs">
-                            <strong>Prompt:</strong><br>
-                            "Analiza este perfil de cliente y sugiere la mejor estrategia de acercamiento para [OBJETIVO DE VENTA]"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/main.js"></script>
+            const initialHash = window.location.hash || '#inicio';
+            navigateTo(initialHash);
+            populateExamples();
+        });
+    </script>
 </body>
 </html>
